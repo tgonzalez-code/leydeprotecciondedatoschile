@@ -109,20 +109,72 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
           {/* Legal references */}
           <div>
             <h4 className="font-mono font-bold text-zinc-950 uppercase text-[11px] mb-3">
-              Marco Regulatorio
+              Marco Regulatorio Oficial
             </h4>
-            <ul className="space-y-1.5 text-[11px] text-zinc-600 font-mono">
-              <li>• Ley Nº 21.719 (Protección de Datos)</li>
-              <li>• Ley Nº 19.628 (Vida Privada)</li>
-              <li>• Ley Nº 20.416 (Estatuto Pyme)</li>
-              <li>• Fiscalizador: APDP Chile</li>
+            <ul className="space-y-2 text-xs font-mono">
+              <li>
+                <a
+                  href="https://www.bcn.cl/leychile/navegar?idNorma=1208920"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-orange-600 transition-colors flex items-center justify-between group"
+                  title="Ver texto oficial de la Ley 21.719 en Biblioteca del Congreso Nacional de Chile"
+                >
+                  <span className="group-hover:underline">Ley Nº 21.719 (Datos Personales)</span>
+                  <span className="material-symbols-outlined text-xs text-zinc-400 group-hover:text-orange-600">open_in_new</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.bcn.cl/leychile/navegar?idNorma=141599"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-orange-600 transition-colors flex items-center justify-between group"
+                  title="Ver texto oficial de la Ley 19.628 en BCN"
+                >
+                  <span className="group-hover:underline">Ley Nº 19.628 (Vida Privada)</span>
+                  <span className="material-symbols-outlined text-xs text-zinc-400 group-hover:text-orange-600">open_in_new</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.bcn.cl/leychile/navegar?idNorma=1010344"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-orange-600 transition-colors flex items-center justify-between group"
+                  title="Ver texto oficial de la Ley 20.416 Estatuto Pyme en BCN"
+                >
+                  <span className="group-hover:underline">Ley Nº 20.416 (Estatuto Pyme)</span>
+                  <span className="material-symbols-outlined text-xs text-zinc-400 group-hover:text-orange-600">open_in_new</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.bcn.cl/leychile/navegar?idNorma=1202867"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-orange-600 transition-colors flex items-center justify-between group"
+                  title="Ver texto oficial de la Ley 21.663 Marco de Ciberseguridad en BCN"
+                >
+                  <span className="group-hover:underline">Ley Nº 21.663 (Ciberseguridad)</span>
+                  <span className="material-symbols-outlined text-xs text-zinc-400 group-hover:text-orange-600">open_in_new</span>
+                </a>
+              </li>
+              <li>
+                <button
+                  onClick={() => onNavigate('compendio-legal')}
+                  className="text-orange-600 font-bold hover:underline transition-colors flex items-center gap-1 mt-1"
+                >
+                  <span>→ Compendio de Artículos Analizados</span>
+                </button>
+              </li>
               <li className="pt-2">
                 <button
                   onClick={onOpenAiChat}
-                  className="inline-flex items-center gap-1.5 bg-zinc-950 hover:bg-zinc-800 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all"
+                  className="inline-flex items-center gap-1.5 bg-zinc-950 hover:bg-zinc-800 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm"
                 >
                   <span className="material-symbols-outlined text-sm text-orange-400">smart_toy</span>
-                  <span>Abrir Asistente IA</span>
+                  <span>Consultar Asistente Legal</span>
                 </button>
               </li>
             </ul>

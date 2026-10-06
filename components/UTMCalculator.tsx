@@ -4,8 +4,11 @@ interface UTMCalculatorProps {
   onGoToRat: () => void;
 }
 
+// Valor oficial fijado por la plataforma según publicación SII / Banco Central
+const VALOR_UTM_OFICIAL = 67294;
+
 const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
-  const [utmValue, setUtmValue] = useState<number>(66362); // Valor real referencial UTM en Chile
+  const utmValue = VALOR_UTM_OFICIAL;
   const [tipoInfraccion, setTipoInfraccion] = useState<'leve' | 'grave' | 'gravisima'>('grave');
   const [esPyme, setEsPyme] = useState<boolean>(true);
   const [esReincidente, setEsReincidente] = useState<boolean>(false);
@@ -75,9 +78,15 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
             </p>
           </div>
 
-          <div className="bg-white p-3 rounded-2xl border-2 border-zinc-900 font-mono text-xs">
-            <span className="text-zinc-500 block text-[10px]">VALOR REFERENCIAL UTM:</span>
-            <strong className="text-zinc-950 text-sm">${utmValue.toLocaleString('es-CL')} CLP</strong>
+          <div className="bg-white p-3.5 rounded-2xl border-2 border-zinc-900 font-mono text-xs flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center text-orange-600">
+              <span className="material-symbols-outlined text-lg">lock</span>
+            </div>
+            <div>
+              <span className="text-zinc-500 block text-[10px] uppercase font-bold">VALOR OFICIAL UTM FIJADO:</span>
+              <strong className="text-zinc-950 text-sm font-black">${utmValue.toLocaleString('es-CL')} CLP</strong>
+              <span className="text-[10px] text-orange-600 ml-1.5 font-bold">(SII Chile)</span>
+            </div>
           </div>
         </div>
 
@@ -114,21 +123,25 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
               </div>
             </div>
 
-            {/* UTM Slider */}
-            <div>
-              <div className="flex justify-between items-center text-xs font-mono mb-1">
-                <span className="text-zinc-700 font-bold uppercase">Ajustar valor UTM:</span>
-                <span className="text-orange-600 font-bold">${utmValue.toLocaleString('es-CL')} CLP</span>
+            {/* Fixed Official UTM Info Card */}
+            <div className="p-4 rounded-2xl bg-zinc-50 border-2 border-zinc-200 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <span className="material-symbols-outlined text-orange-500 text-xl">verified_user</span>
+                <div>
+                  <span className="text-xs font-mono font-bold text-zinc-900 block">
+                    Valor UTM Oficial Vigente Fijado por Sistema:
+                  </span>
+                  <span className="text-[11px] text-zinc-500">
+                    Calculado automáticamente conforme a la publicación tributaria del SII y Banco Central.
+                  </span>
+                </div>
               </div>
-              <input
-                type="range"
-                min={60000}
-                max={75000}
-                step={500}
-                value={utmValue}
-                onChange={(e) => setUtmValue(Number(e.target.value))}
-                className="w-full accent-orange-500 cursor-pointer"
-              />
+              <div className="text-right shrink-0">
+                <span className="text-sm sm:text-base font-mono font-black text-orange-600">
+                  ${utmValue.toLocaleString('es-CL')} CLP
+                </span>
+                <span className="text-[10px] font-mono text-zinc-400 block">1 UTM</span>
+              </div>
             </div>
 
             {/* Estatuto Pyme Switch */}

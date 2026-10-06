@@ -105,7 +105,7 @@ Debe aislar técnicamente los datos del titular de modo que ningún colaborador,
 
 Si la empresa no cuenta con un RAT que indique con exactitud la ubicación de los datos, cumplir este plazo resulta materialmente imposible.`,
     articulosRelacionados: ['Art. 10 bis', 'Art. 11', 'Art. 14 ter'],
-    enlaceAccionTexto: 'Revisar Catálogo y Modelos ARCOP',
+    enlaceAccionTexto: 'Revisar Catálogo de Derechos ARCOP',
     enlaceAccionDestino: 'derechos-arcop',
   },
   {

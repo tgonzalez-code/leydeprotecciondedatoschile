@@ -10,31 +10,9 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenAiChat }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleNavClick = (page: PageId, anchorId?: string) => {
+  const handleNavClick = (page: PageId) => {
     setMobileMenuOpen(false);
-    if (currentPage !== page) {
-      onNavigate(page);
-    }
-    if (anchorId) {
-      setTimeout(() => {
-        const el = document.getElementById(anchorId);
-        el?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    }
-  };
-
-  const handleScrollTo = (anchorId: string) => {
-    setMobileMenuOpen(false);
-    if (currentPage !== 'inicio') {
-      onNavigate('inicio');
-      setTimeout(() => {
-        const el = document.getElementById(anchorId);
-        el?.scrollIntoView({ behavior: 'smooth' });
-      }, 150);
-    } else {
-      const el = document.getElementById(anchorId);
-      el?.scrollIntoView({ behavior: 'smooth' });
-    }
+    onNavigate(page);
   };
 
   return (
@@ -49,7 +27,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenAiChat }
         </div>
         <div className="flex items-center gap-3 text-zinc-400 text-[10px]">
           <button 
-            onClick={() => handleScrollTo('diagnostico')} 
+            onClick={() => handleNavClick('test-cumplimiento')} 
             className="text-orange-400 font-bold hover:underline"
           >
             Diagnóstico en 3 minutos →
@@ -91,26 +69,52 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenAiChat }
           <nav aria-label="Navegación principal" className="hidden lg:flex items-center gap-1 font-mono text-xs font-semibold text-zinc-600">
             <button
               type="button"
-              onClick={() => handleScrollTo('como-funciona')}
-              className="px-3 py-2 rounded-xl hover:text-zinc-950 hover:bg-zinc-100 transition-colors"
+              onClick={() => handleNavClick('inicio')}
+              className={`px-3 py-2 rounded-xl transition-colors ${
+                currentPage === 'inicio' ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
+              }`}
             >
-              ¿Cómo funciona?
+              Inicio
             </button>
 
             <button
               type="button"
-              onClick={() => handleScrollTo('servicios')}
-              className="px-3 py-2 rounded-xl hover:text-zinc-950 hover:bg-zinc-100 transition-colors"
+              onClick={() => handleNavClick('agente-rat')}
+              className={`px-3 py-2 rounded-xl transition-colors ${
+                currentPage === 'agente-rat' ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
+              }`}
             >
-              Servicios
+              Agente RAT (IA)
             </button>
 
             <button
               type="button"
-              onClick={() => handleScrollTo('rat-metodologia')}
-              className="px-3 py-2 rounded-xl hover:text-zinc-950 hover:bg-zinc-100 transition-colors"
+              onClick={() => handleNavClick('test-cumplimiento')}
+              className={`px-3 py-2 rounded-xl transition-colors ${
+                currentPage === 'test-cumplimiento' ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
+              }`}
             >
-              El RAT
+              Diagnóstico
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleNavClick('multas-utm')}
+              className={`px-3 py-2 rounded-xl transition-colors ${
+                currentPage === 'multas-utm' ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
+              }`}
+            >
+              Multas UTM
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleNavClick('derechos-arcop')}
+              className={`px-3 py-2 rounded-xl transition-colors ${
+                currentPage === 'derechos-arcop' ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
+              }`}
+            >
+              ARCOP
             </button>
 
             <button
@@ -132,14 +136,6 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenAiChat }
             >
               Recursos
             </button>
-
-            <button
-              type="button"
-              onClick={() => handleScrollTo('faq')}
-              className="px-3 py-2 rounded-xl hover:text-zinc-950 hover:bg-zinc-100 transition-colors"
-            >
-              Preguntas frecuentes
-            </button>
           </nav>
 
           {/* CTA & AI Assistant */}
@@ -156,7 +152,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenAiChat }
 
             <button
               type="button"
-              onClick={() => handleScrollTo('diagnostico')}
+              onClick={() => handleNavClick('test-cumplimiento')}
               className="inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold text-xs font-mono px-5 py-2.5 rounded-xl shadow-md shadow-orange-500/20 transition-all"
             >
               <span>Evaluar mi empresa</span>
@@ -168,7 +164,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenAiChat }
           <div className="flex lg:hidden items-center gap-2">
             <button
               type="button"
-              onClick={() => handleScrollTo('diagnostico')}
+              onClick={() => handleNavClick('test-cumplimiento')}
               className="bg-orange-500 text-white font-bold text-xs font-mono px-3 py-2 rounded-lg"
             >
               Evaluar
@@ -195,28 +191,46 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenAiChat }
         <div className="lg:hidden border-t border-zinc-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-xl animate-fadeIn">
           <button
             type="button"
-            onClick={() => handleScrollTo('como-funciona')}
+            onClick={() => handleNavClick('inicio')}
             className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
           >
-            <span>¿Cómo funciona?</span>
+            <span>Inicio</span>
             <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
           </button>
 
           <button
             type="button"
-            onClick={() => handleScrollTo('servicios')}
+            onClick={() => handleNavClick('agente-rat')}
             className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
           >
-            <span>Servicios</span>
+            <span>Agente RAT (IA)</span>
             <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
           </button>
 
           <button
             type="button"
-            onClick={() => handleScrollTo('rat-metodologia')}
+            onClick={() => handleNavClick('test-cumplimiento')}
             className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
           >
-            <span>El RAT (Registro de Datos)</span>
+            <span>Test Diagnóstico (60 seg)</span>
+            <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleNavClick('multas-utm')}
+            className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
+          >
+            <span>Simulador de Multas UTM</span>
+            <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleNavClick('derechos-arcop')}
+            className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
+          >
+            <span>Derechos ARCOP & SLAs</span>
             <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
           </button>
 
@@ -225,7 +239,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenAiChat }
             onClick={() => handleNavClick('ley-21719')}
             className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
           >
-            <span>Ley 21.719</span>
+            <span>La Ley 21.719 & Vigencia</span>
             <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
           </button>
 
@@ -238,19 +252,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenAiChat }
             <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => handleScrollTo('faq')}
-            className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
-          >
-            <span>Preguntas frecuentes</span>
-            <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
-          </button>
-
           <div className="pt-3 border-t border-zinc-100 space-y-2">
             <button
               type="button"
-              onClick={() => handleScrollTo('diagnostico')}
+              onClick={() => handleNavClick('test-cumplimiento')}
               className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs py-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
             >
               <span>Evaluar mi empresa (3 min)</span>

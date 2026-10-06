@@ -44,20 +44,12 @@ const RUBROS_DEMO = [
 const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenAiChat }) => {
   const [rubroSeleccionado, setRubroSeleccionado] = useState(RUBROS_DEMO[0]);
 
-  const scrollToDiagnosis = () => {
-    const el = document.getElementById('diagnostico');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      onNavigate('test-cumplimiento');
-    }
+  const goToDiagnosis = () => {
+    onNavigate('test-cumplimiento');
   };
 
-  const scrollToHowItWorks = () => {
-    const el = document.getElementById('como-funciona');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+  const goToRat = () => {
+    onNavigate('agente-rat');
   };
 
   return (
@@ -97,20 +89,41 @@ const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenAiChat }) => {
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
               <button
                 type="button"
-                onClick={scrollToDiagnosis}
+                onClick={goToDiagnosis}
                 className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold text-sm sm:text-base px-8 py-4 rounded-xl shadow-lg shadow-orange-500/25 transition-all"
               >
-                <span>Evaluar mi empresa ahora</span>
+                <span>Evaluar mi empresa (3 min)</span>
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </button>
 
               <button
                 type="button"
-                onClick={scrollToHowItWorks}
-                className="inline-flex items-center justify-center gap-2 bg-white hover:bg-zinc-50 border-2 border-zinc-200 hover:border-zinc-300 text-zinc-800 font-bold text-sm sm:text-base px-6 py-4 rounded-xl transition-all"
+                onClick={goToRat}
+                className="inline-flex items-center justify-center gap-2 bg-zinc-950 hover:bg-zinc-800 active:scale-95 text-white font-bold text-sm sm:text-base px-6 py-4 rounded-xl transition-all shadow-md"
               >
-                <span>Ver cómo funciona</span>
-                <span className="material-symbols-outlined text-base text-zinc-400">expand_more</span>
+                <span className="material-symbols-outlined text-base text-orange-400">psychology</span>
+                <span>Generar RAT con IA</span>
+              </button>
+            </div>
+
+            {/* Quick Access Links */}
+            <div className="flex flex-wrap items-center gap-4 text-xs font-mono pt-1">
+              <button
+                type="button"
+                onClick={() => onNavigate('multas-utm')}
+                className="text-zinc-600 hover:text-orange-600 font-bold transition-colors inline-flex items-center gap-1"
+              >
+                <span>Simulador de multas UTM</span>
+                <span className="material-symbols-outlined text-xs">calculate</span>
+              </button>
+              <span className="text-zinc-300">•</span>
+              <button
+                type="button"
+                onClick={() => onNavigate('derechos-arcop')}
+                className="text-zinc-600 hover:text-orange-600 font-bold transition-colors inline-flex items-center gap-1"
+              >
+                <span>Catálogo derechos ARCOP</span>
+                <span className="material-symbols-outlined text-xs">shield_person</span>
               </button>
             </div>
 
@@ -206,7 +219,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenAiChat }) => {
               <div className="pt-1">
                 <button
                   type="button"
-                  onClick={scrollToDiagnosis}
+                  onClick={goToDiagnosis}
                   className="w-full bg-zinc-950 hover:bg-zinc-800 text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined text-sm text-orange-400">psychology</span>

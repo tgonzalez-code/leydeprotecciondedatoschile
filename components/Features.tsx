@@ -1,40 +1,12 @@
 import React from 'react';
+import { RAT_METHODOLOGY_STEPS } from '../config/rat.config';
 
 interface FeaturesProps {
   onStartRat: () => void;
 }
 
 const Features: React.FC<FeaturesProps> = ({ onStartRat }) => {
-  const steps = [
-    {
-      step: '01',
-      title: 'Entrevista de Negocio (3 min)',
-      desc: 'Preguntas simples y cotidianas sobre las operaciones de tu Pyme: nóminas, CRM, ventas, ecommerce, facturación o cámaras CCTV.',
-      icon: 'forum',
-      badge: 'Sin jerga legal',
-    },
-    {
-      step: '02',
-      title: 'Detección Automática de Sensibles',
-      desc: 'El Agente identifica categorías de especial resguardo legal (salud en licencias médicas, biometría en relojes de control, RUT chileno).',
-      icon: 'security',
-      badge: 'Art. 2 y 16',
-    },
-    {
-      step: '03',
-      title: 'Asignación de Base de Licitud',
-      desc: 'Fundamenta jurídicamente cada tratamiento conforme a los Artículos 12 y 13 (ejecución contractual, mandato legal, consentimiento o interés legítimo).',
-      icon: 'balance',
-      badge: 'Art. 12 y 13',
-    },
-    {
-      step: '04',
-      title: 'Exportación Oficial APDP',
-      desc: 'Descarga inmediata de tu Ficha Oficial del Registro de Actividades de Tratamiento (RAT) en JSON y versión PDF para acreditar diligencia.',
-      icon: 'download_for_offline',
-      badge: 'Art. 14 ter',
-    },
-  ];
+  const steps = RAT_METHODOLOGY_STEPS;
 
   return (
     <section className="py-14 bg-white border-b border-zinc-200">

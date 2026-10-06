@@ -20,6 +20,7 @@ El proyecto implementa una estricta separación de capas para garantizar que **n
 │
 ├── content/            # Contenidos, textos legales y copys estructurados
 │   ├── home.ts               # Propuesta de valor Hero, métricas y rubros
+│   ├── chat.ts               # Mensaje inicial del Asistente y preguntas frecuentes
 │   ├── arcop.ts              # Catálogo exhaustivo de Derechos ARCOP y SLAs
 │   ├── law-21719.ts          # Hitos de vigencia y compendio de artículos
 │   ├── cases.ts              # Casos prácticos operativos en Pymes

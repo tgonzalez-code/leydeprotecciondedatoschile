@@ -39,16 +39,17 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
             {/* Single High-Impact H1 */}
             <h1 id="main-heading" className="text-3xl sm:text-5xl lg:text-6xl font-display font-black text-zinc-950 tracking-tight leading-[1.08]">
-              ¿Tu empresa está preparada para la nueva <br className="hidden sm:inline" />
+              {HERO_CONTENT.headline.prefix} <br className="hidden sm:inline" />
               <span className="text-orange-500 underline decoration-orange-300/80 underline-offset-8">
-                Ley de Datos Personales?
+                {HERO_CONTENT.headline.highlight}
               </span>
             </h1>
 
             {/* Direct Value Proposition */}
             <p className="text-base sm:text-lg text-zinc-600 leading-relaxed font-normal max-w-2xl">
-              Descubre en <strong className="text-zinc-950 font-bold">3 minutos</strong> qué necesitas hacer para proteger la información de tus clientes, 
-              trabajadores y proveedores. Evita multas de la APDP y <strong className="text-orange-600 font-bold">cumple sin frenar tu negocio</strong>.
+              {HERO_CONTENT.subheadline.prefix} <strong className="text-zinc-950 font-bold">{HERO_CONTENT.subheadline.time}</strong>{' '}
+              {HERO_CONTENT.subheadline.middle}{' '}
+              <strong className="text-orange-600 font-bold">{HERO_CONTENT.subheadline.highlight}</strong>.
             </p>
 
             {/* Primary Action Buttons */}

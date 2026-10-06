@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MAIN_NAV_ITEMS } from '../config/site.config';
 import { PageId } from '../types';
 
 interface NavbarProps {
@@ -67,75 +68,18 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenAiChat }
 
           {/* Desktop Navigation Links */}
           <nav aria-label="Navegación principal" className="hidden lg:flex items-center gap-1 font-mono text-xs font-semibold text-zinc-600">
-            <button
-              type="button"
-              onClick={() => handleNavClick('inicio')}
-              className={`px-3 py-2 rounded-xl transition-colors ${
-                currentPage === 'inicio' ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
-              }`}
-            >
-              Inicio
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNavClick('agente-rat')}
-              className={`px-3 py-2 rounded-xl transition-colors ${
-                currentPage === 'agente-rat' ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
-              }`}
-            >
-              Agente RAT (IA)
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNavClick('test-cumplimiento')}
-              className={`px-3 py-2 rounded-xl transition-colors ${
-                currentPage === 'test-cumplimiento' ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
-              }`}
-            >
-              Diagnóstico
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNavClick('multas-utm')}
-              className={`px-3 py-2 rounded-xl transition-colors ${
-                currentPage === 'multas-utm' ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
-              }`}
-            >
-              Multas UTM
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNavClick('derechos-arcop')}
-              className={`px-3 py-2 rounded-xl transition-colors ${
-                currentPage === 'derechos-arcop' ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
-              }`}
-            >
-              ARCOP
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNavClick('ley-21719')}
-              className={`px-3 py-2 rounded-xl transition-colors ${
-                currentPage === 'ley-21719' ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
-              }`}
-            >
-              Ley 21.719
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNavClick('guias-recursos')}
-              className={`px-3 py-2 rounded-xl transition-colors ${
-                currentPage === 'guias-recursos' ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
-              }`}
-            >
-              Recursos
-            </button>
+            {MAIN_NAV_ITEMS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => handleNavClick(item.id)}
+                className={`px-3 py-2 rounded-xl transition-colors ${
+                  currentPage === item.id ? 'text-orange-600 font-bold bg-orange-50' : 'hover:text-zinc-950 hover:bg-zinc-100'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
           </nav>
 
           {/* CTA & AI Assistant */}
@@ -189,68 +133,19 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenAiChat }
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-zinc-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-xl animate-fadeIn">
-          <button
-            type="button"
-            onClick={() => handleNavClick('inicio')}
-            className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
-          >
-            <span>Inicio</span>
-            <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleNavClick('agente-rat')}
-            className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
-          >
-            <span>Agente RAT (IA)</span>
-            <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleNavClick('test-cumplimiento')}
-            className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
-          >
-            <span>Test Diagnóstico (60 seg)</span>
-            <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleNavClick('multas-utm')}
-            className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
-          >
-            <span>Simulador de Multas UTM</span>
-            <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleNavClick('derechos-arcop')}
-            className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
-          >
-            <span>Derechos ARCOP & SLAs</span>
-            <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleNavClick('ley-21719')}
-            className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
-          >
-            <span>La Ley 21.719 & Vigencia</span>
-            <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleNavClick('guias-recursos')}
-            className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 flex items-center justify-between"
-          >
-            <span>Recursos & Guías</span>
-            <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
-          </button>
+          {MAIN_NAV_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => handleNavClick(item.id)}
+              className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-mono font-bold flex items-center justify-between ${
+                currentPage === item.id ? 'bg-orange-50 text-orange-600' : 'text-zinc-800 hover:bg-zinc-100'
+              }`}
+            >
+              <span>{item.label}</span>
+              <span className="material-symbols-outlined text-sm text-zinc-400">arrow_forward</span>
+            </button>
+          ))}
 
           <div className="pt-3 border-t border-zinc-100 space-y-2">
             <button

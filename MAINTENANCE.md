@@ -74,9 +74,11 @@ Para agregar nuevos posts al carrusel del Home y a la biblioteca de recursos:
 
 ---
 
-## 5. Actualización de Textos y Casos Prácticos
+## 5. Actualización de Textos, Copys y Configuración
 
-- **Home y Hero**: Editar `content/home.ts`.
+- **Home, Hero y Métricas**: Editar `content/home.ts` (`HERO_CONTENT`, `HOME_TOOLS_CONTENT`, `HOME_CTA_CONTENT`, `HOME_METRICS`).
+- **Navegación y Páginas**: Editar `config/site.config.ts` (`SITE_PAGES`, `MAIN_NAV_ITEMS`, `SITE_CONFIG`).
+- **Asistente IA y Preguntas Rápidas**: Editar `content/chat.ts` (`PREGUNTAS_RAPIDAS_CHAT`, `MENSAJE_INICIAL_CHAT`).
 - **Catálogo ARCOP**: Editar `content/arcop.ts`.
 - **Hitos de la Ley y Articulado**: Editar `content/law-21719.ts`.
 - **Casos Prácticos Pymes**: Editar `content/cases.ts`.

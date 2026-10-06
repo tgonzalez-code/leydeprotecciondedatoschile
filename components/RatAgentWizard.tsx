@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
-import { ACTIVIDADES_PREDEFINIDAS_RAT } from '../config/rat.config';
-import { generarCodigoCertificadoRAT } from '../lib/rat/ratGenerator';
+import { ACTIVIDADES_PREDEFINIDAS_RAT, DEFAULT_EMPRESA_RAT } from '../config/rat.config';
+import { exportarRATaJSON, generarCodigoCertificadoRAT } from '../lib/rat/ratGenerator';
 import { ActividadRAT, DatosEmpresaRAT } from '../types';
 
 const RatAgentWizard: React.FC = () => {
   const [paso, setPaso] = useState<number>(1);
   const [datosEmpresa, setDatosEmpresa] = useState<DatosEmpresaRAT>({
-    razonSocial: 'Comercial & Servicios SpA',
-    rutEmpresa: '76.845.120-K',
-    representanteLegal: 'Carlos Muñoz Rojas',
-    rubro: 'Servicios Profesionales y Comercio',
-    clasificacionTamano: 'Pequeña Pyme',
-    responsableTratamientoDPO: 'Carlos Muñoz (Gerente General)',
-    emailContacto: 'contacto@pyme-ejemplo.cl',
-    ciudadRegion: 'Santiago, Región Metropolitana',
-    fechaCreacion: new Date().toLocaleDateString('es-CL'),
-    codigoCertificadoRAT: generarCodigoCertificadoRAT('76845120K'),
+    ...DEFAULT_EMPRESA_RAT,
+    codigoCertificadoRAT: generarCodigoCertificadoRAT(DEFAULT_EMPRESA_RAT.rutEmpresa),
   });
 
   const [actividades, setActividades] = useState<ActividadRAT[]>(ACTIVIDADES_PREDEFINIDAS_RAT);
@@ -59,37 +51,8 @@ const RatAgentWizard: React.FC = () => {
   const actividadesFiltradas = actividades.filter(a => filtroCategoria === 'todas' || a.categoria === filtroCategoria);
 
   const exportarJSON = () => {
-    const payload = {
-      documentoOficial: "Registro de Actividades de Tratamiento (RAT) - Ley 21.719",
-      articuloFundante: "Artículo 14 ter de la Ley 19.628 modificada por Ley 21.719",
-      entidadFiscalizadora: "Agencia de Protección de Datos Personales (APDP) - Chile",
-      codigoCertificacion: datosEmpresa.codigoCertificadoRAT,
-      fechaGeneracion: new Date().toISOString(),
-      responsableTratamiento: datosEmpresa,
-      resumenEstadistico: {
-        totalActividadesRegistradas: actividadesSeleccionadas.length,
-        actividadesConDatosSensibles: actividadesSeleccionadas.filter(a => a.contieneSensibles).length,
-        estadoCumplimientoTramo1: "COMPLETO Y VIGENTE"
-      },
-      actividadesDeTratamiento: actividadesSeleccionadas.map(a => ({
-        id: a.id,
-        nombreActividad: a.nombre,
-        categoria: a.categoria,
-        finalidadEspecifica: a.finalidad,
-        categoriasTitulares: a.titulares,
-        datosTratados: a.datosTratados,
-        trataDatosSensiblesOEspeciales: a.contieneSensibles,
-        detalleCategoriasSensibles: a.categoriasSensibles,
-        baseDeLicitudAsignada: a.baseLicitud,
-        fundamentoJuridico: a.justificacionLegal,
-        lugarDeAlmacenamiento: a.almacenamiento,
-        plazoDeConservacion: a.plazoConservacion,
-        destinatariosTransferencias: a.destinatarios,
-        medidasDeSeguridadTecnicasYOrganizativas: a.medidasSeguridad
-      }))
-    };
-
-    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const jsonStr = exportarRATaJSON(datosEmpresa, actividades);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;

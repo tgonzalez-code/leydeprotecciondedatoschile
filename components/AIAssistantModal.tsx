@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { getAiResponse } from '../services/geminiService';
 import { MensajeChat } from '../types';
+import { PREGUNTAS_RAPIDAS_CHAT, MENSAJE_INICIAL_CHAT } from '../content/chat';
 
 interface AIAssistantModalProps {
   isOpen: boolean;
@@ -8,30 +9,8 @@ interface AIAssistantModalProps {
   onGoToRat: () => void;
 }
 
-const PREGUNTAS_RAPIDAS = [
-  '¿Qué multas arriesga mi empresa bajo la Ley 21.719?',
-  '¿Qué es el RAT (Art. 14 ter) y por qué es obligatorio?',
-  '¿Cómo beneficia el Estatuto Pyme (Ley 20.416) a mi negocio?',
-  '¿Cuáles son los plazos para responder derechos ARCO+?',
-  '¿Cómo evalúo los datos de mi empresa en 3 minutos?',
-];
-
-const MENSAJE_INICIAL: MensajeChat = {
-  id: 'init-1',
-  remitente: 'asistente',
-  texto: `¡Hola! Soy el **Asistente Oficial de leydedatospersonaleschile.cl**. 
-
-Mi misión es ayudarte a cumplir con la nueva **Ley 21.719 de Protección de Datos Personales en Chile** bajo nuestro principio rector: **"Cumplir sin frenar el negocio"**.
-
-El paso 1 obligatorio que fiscalizará la Agencia de Protección de Datos Personales (APDP) es el **Tramo 1: Registro de Actividades de Tratamiento (RAT - Art. 14 ter)**. Sin él, tu Pyme no puede defenderse ni justificar sus tratamientos.
-
-¿Quieres que evaluemos en 3 minutos qué datos maneja tu empresa y generemos tu RAT inicial?`,
-  timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-  sugerencias: PREGUNTAS_RAPIDAS,
-};
-
 const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose, onGoToRat }) => {
-  const [mensajes, setMensajes] = useState<MensajeChat[]>([MENSAJE_INICIAL]);
+  const [mensajes, setMensajes] = useState<MensajeChat[]>([MENSAJE_INICIAL_CHAT]);
   const [input, setInput] = useState('');
   const [cargando, setCargando] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -41,6 +20,16 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose, on
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [mensajes, cargando]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -103,18 +92,18 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose, on
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-3 sm:p-4">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-3 sm:p-4" role="dialog" aria-modal="true" aria-labelledby="modal-ai-title">
       <div className="w-full max-w-2xl bg-white border-2 border-zinc-900 rounded-3xl overflow-hidden flex flex-col shadow-2xl h-[86vh] max-h-[720px]">
         
         {/* Header */}
         <div className="p-4 sm:p-5 border-b-2 border-zinc-900 flex justify-between items-center bg-zinc-950 text-white">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-orange-500 text-white flex items-center justify-center font-bold">
-              <span className="material-symbols-outlined text-lg">smart_toy</span>
+              <span className="material-symbols-outlined text-lg" aria-hidden="true">smart_toy</span>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-display font-black text-sm sm:text-base text-white">
+                <h3 id="modal-ai-title" className="font-display font-black text-sm sm:text-base text-white">
                   Asistente Ley 21.719 & Agente RAT
                 </h3>
                 <span className="bg-orange-500 text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded-full">
@@ -128,7 +117,9 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose, on
           </div>
 
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Cerrar modal de Asistente IA"
             className="w-8 h-8 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white flex items-center justify-center text-sm font-bold transition-colors"
           >
             ✕

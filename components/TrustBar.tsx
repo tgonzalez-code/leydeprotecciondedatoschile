@@ -1,4 +1,5 @@
 import React from 'react';
+import { TRUST_BAR_ITEMS } from '../content/home';
 
 const TrustBar: React.FC = () => {
   return (
@@ -15,22 +16,12 @@ const TrustBar: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 w-full md:w-auto">
-            <div className="flex items-center gap-2 text-zinc-800">
-              <span className="material-symbols-outlined text-orange-500 text-lg">verified</span>
-              <span className="text-xs font-semibold">Ley Nº 21.719</span>
-            </div>
-            <div className="flex items-center gap-2 text-zinc-800">
-              <span className="material-symbols-outlined text-orange-500 text-lg">speed</span>
-              <span className="text-xs font-semibold">Diagnóstico en 3 min</span>
-            </div>
-            <div className="flex items-center gap-2 text-zinc-800">
-              <span className="material-symbols-outlined text-orange-500 text-lg">lock</span>
-              <span className="text-xs font-semibold">100% Confidencial</span>
-            </div>
-            <div className="flex items-center gap-2 text-zinc-800">
-              <span className="material-symbols-outlined text-orange-500 text-lg">business_center</span>
-              <span className="text-xs font-semibold">Enfoque de Negocio</span>
-            </div>
+            {TRUST_BAR_ITEMS.map((item, idx) => (
+              <div key={idx} className="flex items-center gap-2 text-zinc-800">
+                <span className="material-symbols-outlined text-orange-500 text-lg">{item.icon}</span>
+                <span className="text-xs font-semibold">{item.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

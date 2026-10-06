@@ -29,16 +29,35 @@ export function validarDatosEmpresa(datos: DatosEmpresaRAT): { valido: boolean; 
 }
 
 export function exportarRATaJSON(empresa: DatosEmpresaRAT, actividades: ActividadRAT[]): string {
+  const seleccionadas = actividades.filter(a => a.seleccionada);
   const data = {
-    metadatos: {
-      estandar: 'Ley Nº 21.719 - Art. 14 ter (RAT)',
-      organismo: 'Agencia de Protección de Datos Personales (APDP Chile)',
-      generador: 'leydedatospersonaleschile.cl - Agente LegalTech RAT',
-      fechaGeneracion: new Date().toISOString(),
-      codigoCertificado: empresa.codigoCertificadoRAT,
-    },
+    documentoOficial: "Registro de Actividades de Tratamiento (RAT) - Ley 21.719",
+    articuloFundante: "Artículo 14 ter de la Ley 19.628 modificada por Ley 21.719",
+    entidadFiscalizadora: "Agencia de Protección de Datos Personales (APDP) - Chile",
+    codigoCertificacion: empresa.codigoCertificadoRAT,
+    fechaGeneracion: new Date().toISOString(),
     responsableTratamiento: empresa,
-    actividadesTratamiento: actividades.filter(a => a.seleccionada),
+    resumenEstadistico: {
+      totalActividadesRegistradas: seleccionadas.length,
+      actividadesConDatosSensibles: seleccionadas.filter(a => a.contieneSensibles).length,
+      estadoCumplimientoTramo1: "COMPLETO Y VIGENTE",
+    },
+    actividadesDeTratamiento: seleccionadas.map(a => ({
+      id: a.id,
+      nombreActividad: a.nombre,
+      categoria: a.categoria,
+      finalidadEspecifica: a.finalidad,
+      categoriasTitulares: a.titulares,
+      datosTratados: a.datosTratados,
+      trataDatosSensiblesOEspeciales: a.contieneSensibles,
+      detalleCategoriasSensibles: a.categoriasSensibles,
+      baseDeLicitudAsignada: a.baseLicitud,
+      fundamentoJuridico: a.justificacionLegal,
+      lugarDeAlmacenamiento: a.almacenamiento,
+      plazoDeConservacion: a.plazoConservacion,
+      destinatariosTransferencias: a.destinatarios,
+      medidasDeSeguridadTecnicasYOrganizativas: a.medidasSeguridad,
+    })),
   };
 
   return JSON.stringify(data, null, 2);

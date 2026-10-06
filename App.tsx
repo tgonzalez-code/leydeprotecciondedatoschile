@@ -3,7 +3,8 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import TrustBar from './components/TrustBar';
 import InformativeCarousel from './components/InformativeCarousel';
-import { HOME_METRICS } from './content/home';
+import { HOME_METRICS, HOME_TOOLS_CONTENT, HOME_CTA_CONTENT } from './content/home';
+import { SITE_PAGES } from './config/site.config';
 import TimelineVigencia from './components/TimelineVigencia';
 import ComplianceChecklist from './components/ComplianceChecklist';
 import Features from './components/Features';
@@ -59,45 +60,6 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
-  const pageNames: Record<PageId, { title: string; subtitle: string }> = {
-    'inicio': { 
-      title: 'Portal Ley de Protección de Datos Personales Chile', 
-      subtitle: 'Cumplimiento oficial Ley 21.719 y Agente RAT con IA' 
-    },
-    'ley-21719': { 
-      title: 'La Ley 21.719 & Calendario de Vigencia', 
-      subtitle: 'Plazos legales, vacancia de 24 meses e instalación de la APDP' 
-    },
-    'agente-rat': { 
-      title: 'Agente de IA para el Registro RAT (Art. 14 ter)', 
-      subtitle: 'Entrevista de 3 minutos para generar la Ficha Oficial para la APDP' 
-    },
-    'derechos-arcop': { 
-      title: 'Catálogo de Derechos ARCOP & Monitoreo de SLAs', 
-      subtitle: 'SLA crítico de 2 días para Bloqueo Temporal y 30 días para ARCOP+' 
-    },
-    'multas-utm': { 
-      title: 'Simulador de Sanciones y Multas en UTM', 
-      subtitle: 'Régimen sancionatorio de la APDP y Beneficio Pyme (Ley 20.416)' 
-    },
-    'test-cumplimiento': { 
-      title: 'Test Diagnóstico de Cumplimiento', 
-      subtitle: 'Evalúa en 60 segundos el nivel de riesgo y preparación de tu empresa' 
-    },
-    'casos-pymes': { 
-      title: 'Casos Prácticos en Pymes Chilenas', 
-      subtitle: 'Situaciones operativas cotidianas: huellas, marketing y bloqueos' 
-    },
-    'guias-recursos': { 
-      title: 'Guías Especializadas, Artículos & Recursos', 
-      subtitle: 'Análisis de fiscalización, accountability y modelos de prevención' 
-    },
-    'compendio-legal': { 
-      title: 'Compendio Normativo Interactivo Ley 21.719', 
-      subtitle: 'Articulado completo con comentarios de aplicación práctica' 
-    },
-  };
-
   return (
     <div className="relative min-h-screen bg-white text-zinc-950 flex flex-col font-sans selection:bg-orange-500 selection:text-white">
       
@@ -122,7 +84,7 @@ const App: React.FC = () => {
               </button>
               <span className="text-zinc-300">/</span>
               <span className="text-orange-600 font-bold truncate max-w-xs sm:max-w-md">
-                {pageNames[currentPage]?.title}
+                {SITE_PAGES[currentPage]?.title}
               </span>
             </div>
 
@@ -173,85 +135,62 @@ const App: React.FC = () => {
               <div className="bg-zinc-50 border-2 border-zinc-200 rounded-3xl p-6 sm:p-10">
                 <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
                   <span className="text-[11px] font-mono font-bold bg-orange-100 text-orange-950 px-3 py-1 rounded-full border border-orange-200 uppercase">
-                    HERRAMIENTAS CLAVE DE CUMPLIMIENTO
+                    {HOME_TOOLS_CONTENT.header.badge}
                   </span>
                   <h2 className="text-2xl sm:text-3xl font-display font-black text-zinc-950 mt-3 tracking-tight">
-                    Todo lo esencial para preparar tu empresa
+                    {HOME_TOOLS_CONTENT.header.title}
                   </h2>
                   <p className="text-xs sm:text-sm text-zinc-600 mt-2">
-                    Accede a las 3 soluciones centrales para cumplir la Ley 21.719 de forma simple, rápida y sin burocracia.
+                    {HOME_TOOLS_CONTENT.header.subtitle}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {/* Card 1: Test Diagnóstico */}
-                  <div className="bg-white rounded-2xl border-2 border-zinc-950 p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all">
-                    <div>
-                      <div className="w-12 h-12 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center mb-4">
-                        <span className="material-symbols-outlined text-2xl">checklist</span>
+                  {HOME_TOOLS_CONTENT.tools.map((tool) => {
+                    const isHighlight = tool.highlight;
+                    return (
+                      <div
+                        key={tool.id}
+                        className={`bg-white rounded-2xl border-2 p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all relative ${
+                          isHighlight ? 'border-orange-500' : 'border-zinc-950'
+                        }`}
+                      >
+                        {tool.floatingBadge && (
+                          <span className="absolute -top-3 right-6 bg-orange-500 text-white text-[10px] font-mono font-black px-2.5 py-0.5 rounded-full shadow-xs uppercase">
+                            {tool.floatingBadge}
+                          </span>
+                        )}
+                        <div>
+                          <div
+                            className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
+                              isHighlight
+                                ? 'bg-orange-500 text-white shadow-md shadow-orange-500/30'
+                                : 'bg-orange-100 text-orange-600'
+                            }`}
+                          >
+                            <span className="material-symbols-outlined text-2xl">{tool.icon}</span>
+                          </div>
+                          <span className="text-[11px] font-mono font-bold text-orange-600 uppercase">
+                            {tool.badge}
+                          </span>
+                          <h3 className="text-lg font-bold text-zinc-950 mt-1 mb-2">{tool.title}</h3>
+                          <p className="text-xs text-zinc-600 leading-relaxed font-normal">{tool.desc}</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleNavigate(tool.id as PageId)}
+                          className={`mt-6 w-full inline-flex items-center justify-center gap-2 font-bold text-xs py-3 rounded-xl transition-all shadow-sm ${
+                            isHighlight
+                              ? 'bg-orange-500 hover:bg-orange-600 text-white shadow-md shadow-orange-500/25'
+                              : 'bg-zinc-950 hover:bg-zinc-800 text-white'
+                          }`}
+                        >
+                          <span>{tool.cta}</span>
+                          <span className="material-symbols-outlined text-sm">{tool.ctaIcon}</span>
+                        </button>
                       </div>
-                      <span className="text-[11px] font-mono font-bold text-orange-600 uppercase">Diagnóstico Inicial</span>
-                      <h3 className="text-lg font-bold text-zinc-950 mt-1 mb-2">Test de Cumplimiento (60 seg)</h3>
-                      <p className="text-xs text-zinc-600 leading-relaxed">
-                        Detecta en 1 minuto las principales brechas de tu empresa frente a la Ley 21.719 y recibe prioridades inmediatas.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => handleNavigate('test-cumplimiento')}
-                      className="mt-6 w-full inline-flex items-center justify-center gap-2 bg-zinc-950 hover:bg-zinc-800 text-white font-bold text-xs py-3 rounded-xl transition-all shadow-sm"
-                    >
-                      <span>Iniciar Diagnóstico</span>
-                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                    </button>
-                  </div>
-
-                  {/* Card 2: Agente RAT con IA */}
-                  <div className="bg-white rounded-2xl border-2 border-orange-500 p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all relative">
-                    <span className="absolute -top-3 right-6 bg-orange-500 text-white text-[10px] font-mono font-black px-2.5 py-0.5 rounded-full shadow-xs uppercase">
-                      Obligatorio Art. 14 ter
-                    </span>
-                    <div>
-                      <div className="w-12 h-12 rounded-xl bg-orange-500 text-white flex items-center justify-center mb-4 shadow-md shadow-orange-500/30">
-                        <span className="material-symbols-outlined text-2xl">psychology</span>
-                      </div>
-                      <span className="text-[11px] font-mono font-bold text-orange-600 uppercase">LegalTech con IA</span>
-                      <h3 className="text-lg font-bold text-zinc-950 mt-1 mb-2">Agente RAT Inteligente</h3>
-                      <p className="text-xs text-zinc-600 leading-relaxed">
-                        Entrevista guiada de 3 minutos para generar la Ficha Oficial del Registro de Actividades de Tratamiento para la APDP.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => handleNavigate('agente-rat')}
-                      className="mt-6 w-full inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs py-3 rounded-xl transition-all shadow-md shadow-orange-500/25"
-                    >
-                      <span>Generar Ficha con IA</span>
-                      <span className="material-symbols-outlined text-sm">auto_awesome</span>
-                    </button>
-                  </div>
-
-                  {/* Card 3: Simulador de Multas UTM */}
-                  <div className="bg-white rounded-2xl border-2 border-zinc-950 p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all">
-                    <div>
-                      <div className="w-12 h-12 rounded-xl bg-zinc-100 text-zinc-900 flex items-center justify-center mb-4">
-                        <span className="material-symbols-outlined text-2xl">calculate</span>
-                      </div>
-                      <span className="text-[11px] font-mono font-bold text-zinc-500 uppercase">Impacto Financiero</span>
-                      <h3 className="text-lg font-bold text-zinc-950 mt-1 mb-2">Simulador de Multas UTM</h3>
-                      <p className="text-xs text-zinc-600 leading-relaxed">
-                        Calcula sanciones en UTM y CLP ($67.294) según la gravedad y conoce los requisitos del Beneficio Pyme (Ley 20.416).
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => handleNavigate('multas-utm')}
-                      className="mt-6 w-full inline-flex items-center justify-center gap-2 bg-zinc-950 hover:bg-zinc-800 text-white font-bold text-xs py-3 rounded-xl transition-all shadow-sm"
-                    >
-                      <span>Calcular Multas</span>
-                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                    </button>
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
             </section>
@@ -276,13 +215,13 @@ const App: React.FC = () => {
               <div className="bg-gradient-to-r from-orange-500 to-amber-600 rounded-3xl p-6 sm:p-10 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
                 <div className="max-w-xl space-y-2 text-center md:text-left">
                   <span className="text-xs font-mono font-bold bg-white/20 text-white px-3 py-1 rounded-full uppercase">
-                    Orientación Inmediata
+                    {HOME_CTA_CONTENT.badge}
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-display font-black">
-                    ¿Tienes dudas sobre los datos en tu empresa?
+                    {HOME_CTA_CONTENT.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-orange-100">
-                    Resuelve consultas sobre la Ley 21.719 con nuestro Asistente Especializado o realiza el diagnóstico de 60 segundos.
+                  <p className="text-xs sm:text-sm text-orange-100 font-normal">
+                    {HOME_CTA_CONTENT.subtitle}
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
@@ -292,14 +231,14 @@ const App: React.FC = () => {
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-zinc-950 hover:bg-zinc-100 font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl transition-all shadow-md active:scale-95"
                   >
                     <span className="material-symbols-outlined text-orange-500 text-base">smart_toy</span>
-                    <span>Consultar Asistente IA</span>
+                    <span>{HOME_CTA_CONTENT.primaryBtn}</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => handleNavigate('test-cumplimiento')}
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-zinc-950 hover:bg-zinc-800 text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl transition-all shadow-md active:scale-95"
                   >
-                    <span>Iniciar Diagnóstico</span>
+                    <span>{HOME_CTA_CONTENT.secondaryBtn}</span>
                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
                   </button>
                 </div>

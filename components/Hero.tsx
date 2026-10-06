@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PageId } from '../types';
+import InformativeCarousel from './InformativeCarousel';
 
 interface HeroProps {
   onNavigate: (page: PageId) => void;
@@ -152,6 +153,11 @@ const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenAiChat }) => {
             </div>
           )}
 
+        </div>
+
+        {/* Informative Carousel with links to posts for continuous law content */}
+        <div className="mt-10">
+          <InformativeCarousel onNavigate={onNavigate} />
         </div>
 
         {/* 4 Metrics Quadrant */}

@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenBeta 2026 - El Futuro es Hoy</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#bc06f9",
+                        "acid-green": "#bfff00",
+                        "background-light": "#f8f5f8",
+                        "background-dark": "#000000",
+                        "void": "#1e0f23",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(188, 6, 249, 0.4);
+        }
+        .liquid-blob-placeholder {
+            background: radial-gradient(circle at center, #bc06f9 0%, #1e0f23 70%);
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+        .grain-overlay {
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 100;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #bc06f9; border-radius: 10px; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.37.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-background-dark overflow-x-hidden">
+    <div id="root"></div>
+    <div class="fixed inset-0 grain-overlay"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

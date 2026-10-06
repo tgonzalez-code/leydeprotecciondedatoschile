@@ -1,0 +1,9 @@
+{
+  "name": "GenBeta 2026",
+  "description": "A futuristic, high-innovation digital experience featuring liquid architecture and disruptive AI integration.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": []
+}

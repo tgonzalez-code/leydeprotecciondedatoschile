@@ -1,9 +1,11 @@
 {
-  "name": "GenBeta 2026",
-  "description": "A futuristic, high-innovation digital experience featuring liquid architecture and disruptive AI integration.",
+  "name": "Ley de Datos Personales Chile - Agente RAT",
+  "description": "Plataforma oficial de orientación Ley 21.719 y Agente de IA para el Registro de Actividades de Tratamiento (RAT - Art. 14 ter) para Pymes en Chile.",
   "requestFramePermissions": [
     "camera",
     "microphone"
   ],
-  "majorCapabilities": []
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

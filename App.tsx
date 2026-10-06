@@ -150,50 +150,10 @@ const App: React.FC = () => {
         
         {/* VIEW 1: INICIO (Ultra-fast summary hub & executive dashboard) */}
         {currentPage === 'inicio' && (
-          <div>
-            <Hero
-              onNavigate={handleNavigate}
-              onOpenAiChat={() => setIsAiOpen(true)}
-            />
-
-            {/* 4-Step Methodology quick view */}
-            <Features
-              onStartRat={() => handleNavigate('agente-rat')}
-            />
-
-            {/* High Impact Conversion Callout */}
-            <section className="py-14 sm:py-16 px-4 sm:px-6 lg:px-8 bg-zinc-950 text-white relative overflow-hidden">
-              <div className="max-w-5xl mx-auto text-center relative z-10">
-                <span className="inline-block bg-orange-500 text-white font-mono text-xs font-bold px-3 py-1 rounded-full mb-3">
-                  TRAMO 1 OBLIGATORIO • ARTÍCULO 14 TER
-                </span>
-                <h2 className="text-2xl sm:text-4xl font-display font-black tracking-tight text-white">
-                  ¿Tu empresa está preparada para una fiscalización de la APDP?
-                </h2>
-                <p className="mt-3 text-sm sm:text-base text-zinc-300 max-w-2xl mx-auto font-normal leading-relaxed">
-                  En solo 3 minutos tendrás tu Registro de Actividades de Tratamiento (RAT) listo para acreditar 
-                  cumplimiento, acceder al beneficio del Estatuto Pyme y proteger a tu organización.
-                </p>
-
-                <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-3">
-                  <button
-                    onClick={() => handleNavigate('agente-rat')}
-                    className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold px-7 py-3.5 rounded-xl text-sm shadow-xl shadow-orange-500/25 transition-all flex items-center justify-center gap-2"
-                  >
-                    <span>Construir RAT con IA ahora (Gratis)</span>
-                    <span className="material-symbols-outlined text-base">arrow_forward</span>
-                  </button>
-                  <button
-                    onClick={() => handleNavigate('test-cumplimiento')}
-                    className="w-full sm:w-auto bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 font-mono font-bold px-6 py-3.5 rounded-xl text-xs transition-all flex items-center justify-center gap-2"
-                  >
-                    <span className="material-symbols-outlined text-base text-orange-400">fact_check</span>
-                    <span>Test de Cumplimiento (60 seg)</span>
-                  </button>
-                </div>
-              </div>
-            </section>
-          </div>
+          <Hero
+            onNavigate={handleNavigate}
+            onOpenAiChat={() => setIsAiOpen(true)}
+          />
         )}
 
         {/* VIEW 2: LA LEY 21.719 (Timeline + Compendio) */}

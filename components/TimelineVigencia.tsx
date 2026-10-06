@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PageId } from '../types';
 
 interface TimelineEvent {
   fase: string;
@@ -49,7 +50,11 @@ const HITOS_LEY: TimelineEvent[] = [
   },
 ];
 
-const TimelineVigencia: React.FC = () => {
+interface TimelineVigenciaProps {
+  onNavigate?: (page: PageId) => void;
+}
+
+const TimelineVigencia: React.FC<TimelineVigenciaProps> = ({ onNavigate }) => {
   const [selectedHito, setSelectedHito] = useState<number>(1);
 
   return (
@@ -156,6 +161,31 @@ const TimelineVigencia: React.FC = () => {
               </p>
             </div>
           </div>
+
+          {onNavigate && (
+            <div className="mt-6 pt-4 border-t border-zinc-200 flex flex-wrap items-center justify-between gap-3">
+              <p className="text-xs text-zinc-500 font-mono">
+                ¿Tu empresa ya cuenta con el inventario del Art. 14 ter exigido para el Hito 3 y 4?
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => onNavigate('agente-rat')}
+                  className="inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md shadow-orange-500/20 transition-all"
+                >
+                  <span className="material-symbols-outlined text-sm">psychology</span>
+                  <span>Generar RAT con IA (3 min)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('multas-utm')}
+                  className="inline-flex items-center gap-1 bg-white hover:bg-zinc-100 border border-zinc-300 text-zinc-800 font-mono text-xs font-bold px-3 py-2 rounded-xl transition-all"
+                >
+                  <span>Simular Multas</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
       </div>

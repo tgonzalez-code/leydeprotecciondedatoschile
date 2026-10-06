@@ -1,11 +1,12 @@
 import React from 'react';
+import { PageId } from '../types';
 
 interface FooterProps {
-  onScrollTo: (id: string) => void;
+  onNavigate: (page: PageId) => void;
   onOpenAiChat: () => void;
 }
 
-const Footer: React.FC<FooterProps> = ({ onScrollTo, onOpenAiChat }) => {
+const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
   return (
     <footer className="bg-white border-t-2 border-zinc-950 pt-12 pb-8 text-xs text-zinc-600 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,13 +35,29 @@ const Footer: React.FC<FooterProps> = ({ onScrollTo, onOpenAiChat }) => {
           {/* Direct Navigation */}
           <div>
             <h4 className="font-mono font-bold text-zinc-950 uppercase text-[11px] mb-3">
-              Módulos del Sistema
+              Páginas del Sistema
             </h4>
             <ul className="space-y-2 text-xs font-mono">
               <li>
                 <button 
-                  onClick={() => onScrollTo('agente-rat')}
-                  className="hover:text-orange-600 transition-colors font-bold text-zinc-950 flex items-center gap-1.5"
+                  onClick={() => onNavigate('inicio')}
+                  className="hover:text-orange-600 transition-colors"
+                >
+                  Inicio
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate('ley-21719')}
+                  className="hover:text-orange-600 transition-colors"
+                >
+                  La Ley 21.719 & Vigencia
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate('agente-rat')}
+                  className="hover:text-orange-600 transition-colors font-bold text-orange-600 flex items-center gap-1.5"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
                   <span>Agente RAT (Art. 14 ter)</span>
@@ -48,15 +65,7 @@ const Footer: React.FC<FooterProps> = ({ onScrollTo, onOpenAiChat }) => {
               </li>
               <li>
                 <button 
-                  onClick={() => onScrollTo('multas-utm')}
-                  className="hover:text-orange-600 transition-colors"
-                >
-                  Simulador de Multas UTM
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onScrollTo('derechos-arco')}
+                  onClick={() => onNavigate('derechos-arcop')}
                   className="hover:text-orange-600 transition-colors"
                 >
                   SLAs Derechos ARCO+ (2 días)
@@ -64,7 +73,23 @@ const Footer: React.FC<FooterProps> = ({ onScrollTo, onOpenAiChat }) => {
               </li>
               <li>
                 <button 
-                  onClick={() => onScrollTo('casos')}
+                  onClick={() => onNavigate('multas-utm')}
+                  className="hover:text-orange-600 transition-colors"
+                >
+                  Simulador de Multas UTM
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate('test-cumplimiento')}
+                  className="hover:text-orange-600 transition-colors"
+                >
+                  Test Diagnóstico
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate('casos-pymes')}
                   className="hover:text-orange-600 transition-colors"
                 >
                   Casos Prácticos en Pymes
@@ -72,10 +97,10 @@ const Footer: React.FC<FooterProps> = ({ onScrollTo, onOpenAiChat }) => {
               </li>
               <li>
                 <button 
-                  onClick={() => onScrollTo('guia-legal')}
+                  onClick={() => onNavigate('guias-recursos')}
                   className="hover:text-orange-600 transition-colors"
                 >
-                  Compendio Normativo Ley 21.719
+                  Guías & Recursos
                 </button>
               </li>
             </ul>
@@ -112,9 +137,13 @@ const Footer: React.FC<FooterProps> = ({ onScrollTo, onOpenAiChat }) => {
             y facilita la estructuración del Registro de Actividades de Tratamiento (RAT - Art. 14 ter) para entidades en Chile. 
             Para asuntos contenciosos específicos, reclamaciones formales o litigios complejos, siempre se recomienda validación jurídica profesional.
           </p>
-          <p className="text-[10px] text-zinc-400 font-mono">
-            © {new Date().getFullYear()} leydedatospersonaleschile.cl • Santiago de Chile • República de Chile
-          </p>
+          <div className="flex items-center justify-center gap-3 text-[10px] text-zinc-400 font-mono">
+            <span>© 2026 leydedatospersonaleschile.cl</span>
+            <span>•</span>
+            <span>Santiago de Chile</span>
+            <span>•</span>
+            <span>República de Chile</span>
+          </div>
         </div>
 
       </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PageId } from '../types';
 
 interface ArticuloBlog {
   id: string;
@@ -9,7 +10,7 @@ interface ArticuloBlog {
   extracto: string;
   contenidoCompleto: string;
   enlaceInternoTexto: string;
-  enlaceInternoDestino: string;
+  enlaceInternoDestino: PageId;
 }
 
 const ARTICULOS_ESPECIALIZADOS: ArticuloBlog[] = [
@@ -65,16 +66,26 @@ Un modelo de prevención eficaz debe contar con:
 3. Mecanismos de auditoría periódica y actualización continua del RAT.
 4. Cláusulas contractuales estrictas con los encargados de tratamiento (proveedores de hosting, nóminas y marketing).`,
     enlaceInternoTexto: 'Revisar plazos legales en el Gestor de Derechos ARCOP',
-    enlaceInternoDestino: 'derechos-arco',
+    enlaceInternoDestino: 'derechos-arcop',
   },
 ];
 
 interface BlogSectionProps {
-  onScrollTo: (id: string) => void;
+  onNavigate?: (page: PageId) => void;
+  onScrollTo?: (id: string) => void;
 }
 
-const BlogSection: React.FC<BlogSectionProps> = ({ onScrollTo }) => {
+const BlogSection: React.FC<BlogSectionProps> = ({ onNavigate, onScrollTo }) => {
   const [articuloAbierto, setArticuloAbierto] = useState<string | null>(null);
+
+  const handleLinkClick = (destino: PageId) => {
+    setArticuloAbierto(null);
+    if (onNavigate) {
+      onNavigate(destino);
+    } else if (onScrollTo) {
+      onScrollTo(destino);
+    }
+  };
 
   return (
     <section id="guias-recursos" aria-labelledby="heading-blog" className="py-14 bg-white border-b border-zinc-200">
@@ -136,7 +147,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({ onScrollTo }) => {
 
                 <button
                   type="button"
-                  onClick={() => onScrollTo(art.enlaceInternoDestino)}
+                  onClick={() => handleLinkClick(art.enlaceInternoDestino)}
                   className="w-full text-left text-[11px] font-mono text-orange-700 bg-orange-50/80 p-2 rounded-lg border border-orange-200 hover:bg-orange-100 transition-colors block"
                 >
                   → {art.enlaceInternoTexto}
@@ -179,10 +190,7 @@ const BlogSection: React.FC<BlogSectionProps> = ({ onScrollTo }) => {
                 <div className="mt-6 pt-4 border-t border-zinc-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <button
                     type="button"
-                    onClick={() => {
-                      setArticuloAbierto(null);
-                      onScrollTo(art.enlaceInternoDestino);
-                    }}
+                    onClick={() => handleLinkClick(art.enlaceInternoDestino)}
                     className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md transition-all"
                   >
                     {art.enlaceInternoTexto} →

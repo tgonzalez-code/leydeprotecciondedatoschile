@@ -1,3 +1,14 @@
+export type PageId = 
+  | 'inicio'
+  | 'ley-21719'
+  | 'agente-rat'
+  | 'derechos-arcop'
+  | 'multas-utm'
+  | 'test-cumplimiento'
+  | 'casos-pymes'
+  | 'guias-recursos'
+  | 'compendio-legal';
+
 export type CategoriaActividad = 
   | 'rrhh' 
   | 'clientes' 

@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
+import { PageId } from '../types';
 
 interface HeroProps {
-  onStartRat: () => void;
-  onOpenCalculator: () => void;
+  onNavigate: (page: PageId) => void;
   onOpenAiChat: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ onStartRat, onOpenCalculator, onOpenAiChat }) => {
+const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenAiChat }) => {
   const [perfilActivo, setPerfilActivo] = useState<'empresas' | 'ciudadanos'>('empresas');
 
   return (
-    <section id="top" aria-labelledby="main-heading" className="relative overflow-hidden pt-8 pb-14 lg:pt-14 lg:pb-20 bg-white border-b border-zinc-200">
+    <section id="top" aria-labelledby="main-heading" className="relative overflow-hidden pt-8 pb-14 lg:pt-12 lg:pb-16 bg-white border-b border-zinc-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Monospaced Badge */}
@@ -90,20 +90,28 @@ const Hero: React.FC<HeroProps> = ({ onStartRat, onOpenCalculator, onOpenAiChat 
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   type="button"
-                  onClick={onStartRat}
+                  onClick={() => onNavigate('agente-rat')}
                   className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-lg shadow-orange-500/25 transition-all"
                 >
                   <span className="material-symbols-outlined text-lg" aria-hidden="true">psychology</span>
-                  <span>Construir mi RAT con IA (3 min)</span>
+                  <span>Ir al Agente RAT con IA (3 min)</span>
                   <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
                 </button>
                 <button
                   type="button"
-                  onClick={onOpenCalculator}
+                  onClick={() => onNavigate('multas-utm')}
                   className="inline-flex items-center gap-1.5 bg-white hover:bg-zinc-100 border-2 border-zinc-300 text-zinc-900 font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all"
                 >
                   <span className="material-symbols-outlined text-orange-500 text-base" aria-hidden="true">calculate</span>
                   <span>Calcular Sanciones UTM</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('test-cumplimiento')}
+                  className="inline-flex items-center gap-1.5 bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 text-zinc-800 font-mono text-xs font-bold px-4 py-3 rounded-xl transition-all"
+                >
+                  <span className="material-symbols-outlined text-sm text-orange-600" aria-hidden="true">fact_check</span>
+                  <span>Test Diagnóstico (60 seg)</span>
                 </button>
               </div>
             </div>
@@ -124,13 +132,14 @@ const Hero: React.FC<HeroProps> = ({ onStartRat, onOpenCalculator, onOpenAiChat 
               </p>
               
               <div className="flex flex-wrap items-center gap-3 pt-2">
-                <a
-                  href="#derechos-arco"
+                <button
+                  type="button"
+                  onClick={() => onNavigate('derechos-arcop')}
                   className="inline-flex items-center gap-2 bg-zinc-950 hover:bg-zinc-800 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md transition-all"
                 >
                   <span className="material-symbols-outlined text-orange-400 text-lg" aria-hidden="true">verified_user</span>
-                  <span>Ver Guía de Derechos ARCOP</span>
-                </a>
+                  <span>Ver Página de Derechos ARCOP</span>
+                </button>
                 <button
                   type="button"
                   onClick={onOpenAiChat}
@@ -149,11 +158,11 @@ const Hero: React.FC<HeroProps> = ({ onStartRat, onOpenCalculator, onOpenAiChat 
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           
           <div 
-            onClick={onOpenCalculator}
+            onClick={() => onNavigate('multas-utm')}
             className="p-5 rounded-2xl bg-zinc-50 border border-zinc-200 hover:border-orange-500 transition-all cursor-pointer group"
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => e.key === 'Enter' && onOpenCalculator()}
+            onKeyDown={(e) => e.key === 'Enter' && onNavigate('multas-utm')}
             aria-label="Abrir simulador de multas en UTM"
           >
             <div className="flex items-center justify-between text-xs font-mono mb-1.5">
@@ -169,11 +178,11 @@ const Hero: React.FC<HeroProps> = ({ onStartRat, onOpenCalculator, onOpenAiChat 
           </div>
 
           <div 
-            onClick={onStartRat}
+            onClick={() => onNavigate('agente-rat')}
             className="p-5 rounded-2xl bg-orange-50 border-2 border-orange-500 shadow-sm transition-all cursor-pointer group hover:bg-orange-100/50"
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => e.key === 'Enter' && onStartRat()}
+            onKeyDown={(e) => e.key === 'Enter' && onNavigate('agente-rat')}
             aria-label="Iniciar generación del RAT con inteligencia artificial"
           >
             <div className="flex items-center justify-between text-xs font-mono mb-1.5">
@@ -188,10 +197,16 @@ const Hero: React.FC<HeroProps> = ({ onStartRat, onOpenCalculator, onOpenAiChat 
             </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-zinc-50 border border-zinc-200">
+          <div 
+            onClick={() => onNavigate('derechos-arcop')}
+            className="p-5 rounded-2xl bg-zinc-50 border border-zinc-200 hover:border-orange-500 transition-all cursor-pointer group"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && onNavigate('derechos-arcop')}
+          >
             <div className="flex items-center justify-between text-xs font-mono mb-1.5">
               <span className="text-zinc-500 font-bold uppercase">Bloqueo Temporal</span>
-              <span className="text-zinc-500">ART. 10 BIS</span>
+              <span className="text-orange-600 font-bold">ART. 10 BIS</span>
             </div>
             <p className="text-3xl sm:text-4xl font-black font-display text-zinc-950 tracking-tight">
               2 <span className="text-base text-zinc-600">Días</span>
@@ -201,7 +216,13 @@ const Hero: React.FC<HeroProps> = ({ onStartRat, onOpenCalculator, onOpenAiChat 
             </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-zinc-50 border border-zinc-200">
+          <div 
+            onClick={() => onNavigate('multas-utm')}
+            className="p-5 rounded-2xl bg-zinc-50 border border-zinc-200 hover:border-emerald-500 transition-all cursor-pointer group"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && onNavigate('multas-utm')}
+          >
             <div className="flex items-center justify-between text-xs font-mono mb-1.5">
               <span className="text-zinc-500 font-bold uppercase">Estatuto Pyme</span>
               <span className="text-emerald-700 font-bold">LEY 20.416</span>
@@ -216,8 +237,191 @@ const Hero: React.FC<HeroProps> = ({ onStartRat, onOpenCalculator, onOpenAiChat 
 
         </div>
 
+        {/* High-Impact Section Hub Grid: Explora las Secciones del Portal */}
+        <div className="mt-14 pt-10 border-t border-zinc-200">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
+            <div>
+              <span className="text-xs font-mono font-bold text-orange-600 uppercase tracking-wider block">
+                ARQUITECTURA DE INFORMACIÓN
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-display font-black text-zinc-950 mt-1">
+                Explora el Portal por Secciones
+              </h2>
+            </div>
+            <p className="text-xs text-zinc-500 font-mono">
+              Acceso directo a herramientas, calculadoras y compendio legal
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            
+            {/* Card 1: La Ley 21.719 */}
+            <div 
+              onClick={() => onNavigate('ley-21719')}
+              className="p-6 rounded-3xl bg-zinc-50 hover:bg-orange-50/40 border-2 border-zinc-200 hover:border-orange-500 transition-all cursor-pointer group flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
+                    <span className="material-symbols-outlined text-xl">event_repeat</span>
+                  </span>
+                  <span className="text-[10px] font-mono font-bold bg-white text-zinc-700 px-2.5 py-1 rounded-full border border-zinc-300">
+                    24 meses de vacancia
+                  </span>
+                </div>
+                <h3 className="text-lg font-display font-black text-zinc-950 group-hover:text-orange-600 transition-colors">
+                  La Ley 21.719 & Vigencia
+                </h3>
+                <p className="text-xs text-zinc-600 mt-1.5 leading-relaxed">
+                  Línea de tiempo detallada con las 4 fases de implementación gradual, estatuto orgánico de la APDP y reglamentos.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-zinc-200/60 flex items-center justify-between text-xs font-mono font-bold text-orange-600">
+                <span>Ver calendario completo</span>
+                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </div>
+            </div>
+
+            {/* Card 2: Agente RAT */}
+            <div 
+              onClick={() => onNavigate('agente-rat')}
+              className="p-6 rounded-3xl bg-orange-50 border-2 border-orange-500 shadow-sm transition-all cursor-pointer group flex flex-col justify-between hover:bg-orange-100/60"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center font-bold">
+                    <span className="material-symbols-outlined text-xl">psychology</span>
+                  </span>
+                  <span className="text-[10px] font-mono font-bold bg-white text-orange-800 px-2.5 py-1 rounded-full border border-orange-300">
+                    Tramo 1 Obligatorio
+                  </span>
+                </div>
+                <h3 className="text-lg font-display font-black text-zinc-950 group-hover:text-orange-600 transition-colors">
+                  Agente RAT con Inteligencia Artificial
+                </h3>
+                <p className="text-xs text-zinc-800 mt-1.5 leading-relaxed">
+                  Entrevista inteligente de 3 minutos. Asigna bases de licitud, clasifica datos sensibles y descarga tu ficha técnica oficial.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-orange-200 flex items-center justify-between text-xs font-mono font-bold text-orange-950">
+                <span>Construir RAT ahora</span>
+                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </div>
+            </div>
+
+            {/* Card 3: Derechos ARCOP */}
+            <div 
+              onClick={() => onNavigate('derechos-arcop')}
+              className="p-6 rounded-3xl bg-zinc-50 hover:bg-orange-50/40 border-2 border-zinc-200 hover:border-orange-500 transition-all cursor-pointer group flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
+                    <span className="material-symbols-outlined text-xl">verified_user</span>
+                  </span>
+                  <span className="text-[10px] font-mono font-bold bg-white text-zinc-700 px-2.5 py-1 rounded-full border border-zinc-300">
+                    SLA 2d / 30d
+                  </span>
+                </div>
+                <h3 className="text-lg font-display font-black text-zinc-950 group-hover:text-orange-600 transition-colors">
+                  Derechos ARCOP & Gestor de SLAs
+                </h3>
+                <p className="text-xs text-zinc-600 mt-1.5 leading-relaxed">
+                  Acceso, Rectificación, Supresión, Oposición, Portabilidad y Bloqueo. Simulador de bandeja y plantillas de respuesta.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-zinc-200/60 flex items-center justify-between text-xs font-mono font-bold text-orange-600">
+                <span>Gestionar derechos</span>
+                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </div>
+            </div>
+
+            {/* Card 4: Multas UTM */}
+            <div 
+              onClick={() => onNavigate('multas-utm')}
+              className="p-6 rounded-3xl bg-zinc-50 hover:bg-orange-50/40 border-2 border-zinc-200 hover:border-orange-500 transition-all cursor-pointer group flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
+                    <span className="material-symbols-outlined text-xl">calculate</span>
+                  </span>
+                  <span className="text-[10px] font-mono font-bold bg-white text-zinc-700 px-2.5 py-1 rounded-full border border-zinc-300">
+                    Hasta 20.000 UTM
+                  </span>
+                </div>
+                <h3 className="text-lg font-display font-black text-zinc-950 group-hover:text-orange-600 transition-colors">
+                  Simulador de Multas & Beneficio Pyme
+                </h3>
+                <p className="text-xs text-zinc-600 mt-1.5 leading-relaxed">
+                  Calcula el valor real en pesos chilenos según la severidad de la infracción y verifica si aplicas a la amonestación escrita.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-zinc-200/60 flex items-center justify-between text-xs font-mono font-bold text-orange-600">
+                <span>Simular sanciones</span>
+                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </div>
+            </div>
+
+            {/* Card 5: Test Diagnóstico */}
+            <div 
+              onClick={() => onNavigate('test-cumplimiento')}
+              className="p-6 rounded-3xl bg-zinc-50 hover:bg-orange-50/40 border-2 border-zinc-200 hover:border-orange-500 transition-all cursor-pointer group flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
+                    <span className="material-symbols-outlined text-xl">fact_check</span>
+                  </span>
+                  <span className="text-[10px] font-mono font-bold bg-white text-zinc-700 px-2.5 py-1 rounded-full border border-zinc-300">
+                    60 segundos
+                  </span>
+                </div>
+                <h3 className="text-lg font-display font-black text-zinc-950 group-hover:text-orange-600 transition-colors">
+                  Test Diagnóstico de Cumplimiento
+                </h3>
+                <p className="text-xs text-zinc-600 mt-1.5 leading-relaxed">
+                  Evalúa con 6 preguntas clave el nivel de preparación de tu empresa ante una fiscalización formal de la APDP.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-zinc-200/60 flex items-center justify-between text-xs font-mono font-bold text-orange-600">
+                <span>Iniciar test diagnóstico</span>
+                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </div>
+            </div>
+
+            {/* Card 6: Guías, Casos y Compendio */}
+            <div 
+              onClick={() => onNavigate('guias-recursos')}
+              className="p-6 rounded-3xl bg-zinc-50 hover:bg-orange-50/40 border-2 border-zinc-200 hover:border-orange-500 transition-all cursor-pointer group flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold">
+                    <span className="material-symbols-outlined text-xl">menu_book</span>
+                  </span>
+                  <span className="text-[10px] font-mono font-bold bg-white text-zinc-700 px-2.5 py-1 rounded-full border border-zinc-300">
+                    Recursos & Blog
+                  </span>
+                </div>
+                <h3 className="text-lg font-display font-black text-zinc-950 group-hover:text-orange-600 transition-colors">
+                  Guías, Casos Prácticos & Compendio
+                </h3>
+                <p className="text-xs text-zinc-600 mt-1.5 leading-relaxed">
+                  Artículos técnicos sobre la APDP, accountability, modelos de prevención y casos reales en Pymes chilenas.
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-zinc-200/60 flex items-center justify-between text-xs font-mono font-bold text-orange-600">
+                <span>Explorar guías y casos</span>
+                <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         {/* High-Impact Minimalist Comparison Matrix: Tradicional vs Agente IA */}
-        <div className="mt-10 bg-white rounded-3xl border-2 border-zinc-950 p-6 sm:p-8 shadow-xl">
+        <div className="mt-14 bg-white rounded-3xl border-2 border-zinc-950 p-6 sm:p-8 shadow-xl">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 pb-4 mb-6">
             <div>
               <span className="text-xs font-mono font-bold text-orange-600 uppercase tracking-wider block">
@@ -281,7 +485,7 @@ const Hero: React.FC<HeroProps> = ({ onStartRat, onOpenCalculator, onOpenAiChat 
               Empieza ahora sin costo y evita multas de hasta <strong>20.000 UTM</strong> ante la APDP.
             </p>
             <button
-              onClick={onStartRat}
+              onClick={() => onNavigate('agente-rat')}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow-md shadow-orange-500/25 transition-all"
             >
               <span>Generar RAT Gratis en 3 min</span>

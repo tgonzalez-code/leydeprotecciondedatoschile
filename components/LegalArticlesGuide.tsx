@@ -98,40 +98,35 @@ const LegalArticlesGuide: React.FC<LegalArticlesGuideProps> = ({ onGoToRat }) =>
   );
 
   return (
-    <div className="bg-slate-50 min-h-screen py-8 border-b border-slate-200">
+    <div id="guia-legal" className="py-14 bg-white border-b border-zinc-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="bg-white p-5 sm:p-6 rounded-xl border border-slate-200 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 mb-1 text-xs">
-              <span className="font-mono font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-                COMPENDIO NORMATIVO CHILE
-              </span>
-              <span className="text-slate-500 font-mono">
-                Ley Nº 21.719 en el Diario Oficial
-              </span>
+            <div className="inline-flex items-center gap-1.5 bg-orange-100 text-orange-900 border border-orange-200 text-xs font-mono font-bold px-3 py-1 rounded-full mb-2">
+              <span>COMPENDIO NORMATIVO CHILENO</span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-slate-900">
-              Guía Legal Articulada de Protección de Datos
-            </h1>
-            <p className="text-xs text-slate-600 mt-0.5">
-              Acceso directo a las exigencias normativas esenciales para preparar a tu empresa ante la APDP.
+            <h2 className="text-3xl sm:text-5xl font-display font-black text-zinc-950 tracking-tight">
+              Artículos Clave Ley 21.719
+            </h2>
+            <p className="text-sm sm:text-base text-zinc-600 mt-1 max-w-2xl font-normal">
+              Acceso articulado a las exigencias jurídicas aplicables a toda empresa en Chile.
             </p>
           </div>
 
-          <div className="w-full md:w-72">
+          <div className="w-full md:w-80">
             <input
               type="text"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               placeholder="Buscar por artículo, término..."
-              className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-blue-900"
+              className="w-full bg-zinc-50 border-2 border-zinc-300 rounded-xl px-4 py-3 text-xs sm:text-sm text-zinc-950 focus:border-orange-500 focus:outline-none"
             />
           </div>
         </div>
 
-        {/* Articles Accordion List */}
+        {/* Accordions */}
         <div className="space-y-3">
           {articulosFiltrados.map((art) => {
             const isOpen = articuloAbierto === art.numero;
@@ -139,51 +134,53 @@ const LegalArticlesGuide: React.FC<LegalArticlesGuideProps> = ({ onGoToRat }) =>
             return (
               <div
                 key={art.numero}
-                className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+                className="bg-zinc-50 rounded-2xl border-2 border-zinc-200 overflow-hidden transition-all hover:border-zinc-300"
               >
                 <button
                   onClick={() => setArticuloAbierto(isOpen ? '' : art.numero)}
-                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50/50 transition-colors"
+                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4"
                 >
                   <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-mono font-bold text-blue-900 bg-blue-50 px-2 py-0.2 rounded border border-blue-200">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-xs font-mono font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded border border-orange-200">
                         {art.numero}
                       </span>
-                      <span className="text-[10px] font-mono text-slate-600 bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200">
+                      <span className="text-[10px] font-mono font-bold text-zinc-600 bg-white px-2 py-0.5 rounded border border-zinc-300">
                         {art.tag}
                       </span>
                     </div>
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                    <h3 className="text-base sm:text-lg font-display font-black text-zinc-950">
                       {art.titulo}
                     </h3>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="text-xs text-zinc-600 mt-1">
                       {art.resumen}
                     </p>
                   </div>
 
-                  <span className="material-symbols-outlined text-slate-400 text-sm">
-                    {isOpen ? 'expand_less' : 'expand_more'}
+                  <span className="w-8 h-8 rounded-full bg-white border border-zinc-300 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-zinc-600 text-sm">
+                      {isOpen ? 'expand_less' : 'expand_more'}
+                    </span>
                   </span>
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-2 border-t border-slate-200 text-xs text-slate-700 leading-relaxed whitespace-pre-line bg-slate-50/30">
+                  <div className="px-6 pb-6 pt-2 border-t border-zinc-200 text-xs sm:text-sm text-zinc-700 leading-relaxed whitespace-pre-line bg-white">
                     {art.contenido}
 
                     {art.numero === 'Artículo 14 ter' && (
-                      <div className="mt-4 p-3.5 rounded-lg bg-blue-50 border border-blue-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div className="mt-6 p-5 rounded-2xl bg-orange-50 border-2 border-orange-500 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
-                          <strong className="text-xs text-blue-950 block">
-                            Genera tu RAT conforme al Art. 14 ter
+                          <strong className="text-sm font-display font-black text-zinc-950 block">
+                            Cumple el Art. 14 ter con nuestro Agente IA
                           </strong>
-                          <span className="text-[11px] text-blue-800">
-                            El Agente de IA entrevista a tu empresa en 3 minutos y descarga la ficha en JSON/PDF.
+                          <span className="text-xs text-zinc-700 mt-0.5 block">
+                            Entrevista en 3 minutos y descarga de la ficha oficial en JSON y PDF.
                           </span>
                         </div>
                         <button
                           onClick={onGoToRat}
-                          className="bg-blue-900 hover:bg-blue-800 text-white font-bold px-4 py-2 rounded-lg text-xs shrink-0"
+                          className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm shadow-md shadow-orange-500/25 shrink-0"
                         >
                           Crear mi RAT ahora →
                         </button>

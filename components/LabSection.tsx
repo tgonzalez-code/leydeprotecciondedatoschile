@@ -9,23 +9,23 @@ const CASOS_PRACTICOS = [
   {
     titulo: 'Caso 1: Empresa de Servicios y Reloj Control Biométrico',
     rubro: 'Servicios de Aseo y Seguridad (35 trabajadores)',
-    situacion: 'Implementaron reloj de asistencia por huella dactilar sin cláusula en contrato ni registro en el RAT.',
-    riesgo: 'La huella dactilar es un dato biométrico (categoría especial/sensible según Art. 2 y 16). Exige consentimiento específico o justificación estricta de proporcionalidad y medidas de cifrado.',
-    solucionRAT: 'En nuestro Agente RAT se clasifica automáticamente como dato biométrico laboral (Art. 13 letra a), documentando el fin y las medidas de seguridad para la APDP.',
+    situacion: 'Implementaron reloj de asistencia por huella dactilar sin cláusula en contrato laboral ni registro formal en el RAT.',
+    riesgo: 'La huella dactilar es un dato biométrico (categoría especial/sensible según Art. 2 y 16). Exige consentimiento específico o justificación estricta de proporcionalidad y medidas reforzadas de seguridad.',
+    solucionRAT: 'En nuestro Agente RAT se clasifica automáticamente como dato biométrico laboral (Art. 13 letra a), documentando el fin legítimo y las medidas de cifrado para la APDP.',
   },
   {
     titulo: 'Caso 2: Tienda Online y Carrito Abandonado por WhatsApp',
     rubro: 'Ecommerce de Calzado y Accesorios',
     situacion: 'Enviaban mensajes promocionales y recordatorios por WhatsApp a números de clientes que no habían finalizado la compra.',
-    riesgo: 'Si el cliente no dio consentimiento expreso (Art. 12) para prospección comercial por mensajería, puede formular una denuncia por spam ante la APDP.',
+    riesgo: 'Si el cliente no dio consentimiento previo e informado (Art. 12) para prospección comercial por mensajería, puede formular una denuncia por spam ante la APDP.',
     solucionRAT: 'El Agente segrega la base de datos de marketing con base en Consentimiento (Art. 12) y establece el mecanismo de desuscripción obligatoria.',
   },
   {
     titulo: 'Caso 3: Ex-colaborador exige Bloqueo Temporal de sus Datos',
     rubro: 'Consultora de Ingeniería (12 personas)',
-    situacion: 'Un ex-empleado en litigio laboral exigió por correo formal el Bloqueo Temporal de sus antecedentes.',
+    situacion: 'Un ex-empleado en litigio laboral exigió por correo formal el Bloqueo Temporal de sus antecedentes personales.',
     riesgo: 'La empresa tardó 10 días hábiles en contestar. El SLA perentorio de la Ley 21.719 para Bloqueo Temporal es de sólo 2 DÍAS HÁBILES.',
-    solucionRAT: 'Al tener el RAT al día, la empresa sabe de inmediato en qué carpetas y sistemas están los datos y aplica el bloqueo sin superar las 48 horas hábiles.',
+    solucionRAT: 'Al tener el RAT al día, la empresa sabe de inmediato en qué carpetas y sistemas están los datos y ejecuta el bloqueo sin superar las 48 horas hábiles.',
   },
 ];
 
@@ -33,88 +33,95 @@ const LabSection: React.FC<LabSectionProps> = ({ onGoToRat, onOpenAiChat }) => {
   const [casoActivo, setCasoActivo] = useState(0);
 
   return (
-    <section className="bg-white py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-200">
-      <div className="max-w-7xl mx-auto">
+    <section id="casos" className="py-14 bg-zinc-50 border-b border-zinc-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="mb-8">
-          <span className="text-blue-900 font-mono text-[10px] font-bold uppercase tracking-wider bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-            CASOS PRÁCTICOS EN PYMES CHILENAS
-          </span>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 mt-1">
-            Situaciones Reales donde las Empresas Arriesgan Sanciones
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
-            Cómo opera la fiscalización de la APDP en operaciones cotidianas y cómo el RAT previene contingencias.
-          </p>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div>
+            <div className="inline-flex items-center gap-1.5 bg-orange-100 text-orange-900 border border-orange-200 text-xs font-mono font-bold px-3 py-1 rounded-full mb-2">
+              <span>CASOS PRÁCTICOS EN PYMES CHILENAS</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-display font-black text-zinc-950 tracking-tight">
+              Riesgos Reales del Día a Día
+            </h2>
+            <p className="text-sm sm:text-base text-zinc-600 mt-1 max-w-2xl font-normal">
+              Aprende cómo opera la fiscalización de la APDP en operaciones cotidianas y cómo el RAT te protege.
+            </p>
+          </div>
+
+          <button
+            onClick={onOpenAiChat}
+            className="inline-flex items-center gap-2 bg-white hover:bg-zinc-100 border-2 border-zinc-300 text-zinc-900 font-mono font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-all self-start md:self-auto"
+          >
+            <span className="material-symbols-outlined text-orange-500 text-base">smart_toy</span>
+            <span>Consultar mi caso particular</span>
+          </button>
         </div>
 
-        {/* Case Study Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Buttons */}
-          <div className="lg:col-span-5 space-y-2">
+          <div className="lg:col-span-5 space-y-3">
             {CASOS_PRACTICOS.map((c, i) => (
               <button
                 key={i}
                 onClick={() => setCasoActivo(i)}
-                className={`w-full p-3.5 rounded-lg text-left border transition-all ${
+                className={`w-full p-5 rounded-2xl text-left border-2 transition-all ${
                   casoActivo === i
-                    ? 'bg-blue-50/50 border-blue-900 shadow-sm'
-                    : 'bg-white border-slate-200 hover:bg-slate-50'
+                    ? 'bg-white border-orange-500 shadow-lg shadow-orange-500/10'
+                    : 'bg-white border-zinc-200 hover:border-zinc-300'
                 }`}
               >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[10px] font-mono text-slate-500 font-bold">CASO #{i + 1}</span>
-                  <span className="text-[10px] text-slate-400 font-mono">{c.rubro}</span>
+                <div className="flex items-center justify-between mb-1.5 font-mono text-[11px]">
+                  <span className={`font-bold ${casoActivo === i ? 'text-orange-600' : 'text-zinc-400'}`}>CASO #{i + 1}</span>
+                  <span className="text-zinc-500">{c.rubro}</span>
                 </div>
-                <strong className={`block text-xs font-bold ${casoActivo === i ? 'text-blue-950' : 'text-slate-800'}`}>
+                <strong className={`block text-sm font-display font-bold ${casoActivo === i ? 'text-zinc-950' : 'text-zinc-700'}`}>
                   {c.titulo}
                 </strong>
               </button>
             ))}
-
-            <div className="pt-2">
-              <button
-                onClick={onOpenAiChat}
-                className="w-full inline-flex items-center justify-center gap-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-300 text-slate-700 p-2.5 rounded-lg text-xs font-medium transition-all"
-              >
-                <span className="material-symbols-outlined text-sm text-amber-500">smart_toy</span>
-                <span>Consultar caso específico de mi negocio con IA</span>
-              </button>
-            </div>
           </div>
 
-          {/* Right Detail Card */}
-          <div className="lg:col-span-7 bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-              <h3 className="font-bold text-xs uppercase tracking-wider text-slate-800">
+          {/* Right Active Case Box */}
+          <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border-2 border-zinc-900 shadow-xl space-y-4">
+            <div className="flex items-center justify-between border-b border-zinc-200 pb-3">
+              <h3 className="font-display font-black text-lg text-zinc-950">
                 {CASOS_PRACTICOS[casoActivo].titulo}
               </h3>
-              <span className="text-[10px] font-mono text-slate-500">{CASOS_PRACTICOS[casoActivo].rubro}</span>
+              <span className="text-xs font-mono font-bold text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full border border-orange-200">
+                {CASOS_PRACTICOS[casoActivo].rubro}
+              </span>
             </div>
 
-            <div className="bg-white p-3 rounded-lg border border-slate-200 text-xs">
-              <span className="font-bold text-slate-900 block mb-0.5">1. Situación Operativa:</span>
-              <p className="text-slate-600 leading-relaxed">{CASOS_PRACTICOS[casoActivo].situacion}</p>
+            <div className="bg-zinc-50 p-4 rounded-xl border border-zinc-200 text-xs">
+              <span className="font-bold text-zinc-900 block mb-1 font-mono uppercase text-[10px]">1. Situación Operativa:</span>
+              <p className="text-zinc-700 leading-relaxed font-normal">{CASOS_PRACTICOS[casoActivo].situacion}</p>
             </div>
 
-            <div className="bg-red-50 p-3 rounded-lg border border-red-200 text-xs">
-              <span className="font-bold text-red-900 block mb-0.5">2. Riesgo ante la APDP (Ley 21.719):</span>
-              <p className="text-red-800 leading-relaxed">{CASOS_PRACTICOS[casoActivo].riesgo}</p>
+            <div className="bg-red-50 p-4 rounded-xl border border-red-200 text-xs">
+              <span className="font-bold text-red-900 block mb-1 font-mono uppercase text-[10px] flex items-center gap-1">
+                <span className="material-symbols-outlined text-sm">warning</span>
+                2. Riesgo ante la APDP (Ley 21.719):
+              </span>
+              <p className="text-red-800 leading-relaxed font-medium">{CASOS_PRACTICOS[casoActivo].riesgo}</p>
             </div>
 
-            <div className="bg-emerald-50 p-3 rounded-lg border border-emerald-200 text-xs">
-              <span className="font-bold text-emerald-900 block mb-0.5">3. Solución con el Agente RAT:</span>
-              <p className="text-emerald-800 leading-relaxed">{CASOS_PRACTICOS[casoActivo].solucionRAT}</p>
+            <div className="bg-orange-50 p-4 rounded-xl border border-orange-200 text-xs">
+              <span className="font-bold text-orange-900 block mb-1 font-mono uppercase text-[10px] flex items-center gap-1">
+                <span className="material-symbols-outlined text-sm text-orange-600">verified</span>
+                3. Solución con el Agente RAT:
+              </span>
+              <p className="text-zinc-900 leading-relaxed font-medium">{CASOS_PRACTICOS[casoActivo].solucionRAT}</p>
             </div>
 
             <div className="pt-2 flex justify-end">
               <button
                 onClick={onGoToRat}
-                className="inline-flex items-center gap-1 bg-blue-900 hover:bg-blue-800 text-white font-bold px-4 py-2 rounded-lg text-xs"
+                className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-xl text-xs sm:text-sm shadow-md shadow-orange-500/25 transition-all"
               >
                 <span>Generar mi RAT para este caso</span>
-                <span className="material-symbols-outlined text-xs">arrow_forward</span>
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </button>
             </div>
           </div>

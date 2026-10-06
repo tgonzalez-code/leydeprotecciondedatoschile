@@ -21,9 +21,9 @@ const MENSAJE_INICIAL: MensajeChat = {
   remitente: 'asistente',
   texto: `¡Hola! Soy el **Asistente Oficial de leydedatospersonaleschile.cl**. 
 
-Mi objetivo es ayudarte a entender y cumplir con la nueva **Ley 21.719 de Protección de Datos Personales en Chile** bajo nuestro principio rector: **"Cumplir sin frenar el negocio"**.
+Mi misión es ayudarte a cumplir con la nueva **Ley 21.719 de Protección de Datos Personales en Chile** bajo nuestro principio rector: **"Cumplir sin frenar el negocio"**.
 
-¿Sabías que el primer paso obligatorio que fiscalizará la Agencia de Protección de Datos Personales (APDP) es el **Tramo 1: Registro de Actividades de Tratamiento (RAT - Art. 14 ter)**?
+El paso 1 obligatorio que fiscalizará la Agencia de Protección de Datos Personales (APDP) es el **Tramo 1: Registro de Actividades de Tratamiento (RAT - Art. 14 ter)**. Sin él, tu Pyme no puede defenderse ni justificar sus tratamientos.
 
 ¿Quieres que evaluemos en 3 minutos qué datos maneja tu empresa y generemos tu RAT inicial?`,
   timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -72,7 +72,7 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose, on
       const errorMsg: MensajeChat = {
         id: `asistente-${Date.now()}`,
         remitente: 'asistente',
-        texto: 'Ha ocurrido una interrupción. Recuerda que para evitar multas de la APDP, el primer paso es contar con tu Registro de Actividades de Tratamiento (RAT - Art. 14 ter). ¿Quieres que evaluemos en 3 minutos qué datos maneja tu empresa y generemos tu RAT inicial?',
+        texto: 'Interrupción temporal. Recuerda que para evitar multas de la APDP, el primer paso es contar con tu Registro de Actividades de Tratamiento (RAT - Art. 14 ter). ¿Quieres que generemos tu RAT en 3 minutos?',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMensajes((prev) => [...prev, errorMsg]);
@@ -93,7 +93,7 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose, on
         <p key={i} className={line.trim().startsWith('•') || line.trim().startsWith('-') ? 'pl-2 my-1' : 'my-1'}>
           {partes.map((p, j) => {
             if (p.startsWith('**') && p.endsWith('**')) {
-              return <strong key={j} className="font-bold text-slate-900">{p.slice(2, -2)}</strong>;
+              return <strong key={j} className="font-bold text-zinc-950">{p.slice(2, -2)}</strong>;
             }
             return p;
           })}
@@ -103,25 +103,25 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose, on
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-3 sm:p-4">
-      <div className="w-full max-w-2xl bg-white border border-slate-300 rounded-2xl overflow-hidden flex flex-col shadow-2xl h-[86vh] max-h-[720px]">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-3 sm:p-4">
+      <div className="w-full max-w-2xl bg-white border-2 border-zinc-900 rounded-3xl overflow-hidden flex flex-col shadow-2xl h-[86vh] max-h-[720px]">
         
         {/* Header */}
-        <div className="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-blue-900 text-white flex items-center justify-center">
-              <span className="material-symbols-outlined text-base">smart_toy</span>
+        <div className="p-4 sm:p-5 border-b-2 border-zinc-900 flex justify-between items-center bg-zinc-950 text-white">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-orange-500 text-white flex items-center justify-center font-bold">
+              <span className="material-symbols-outlined text-lg">smart_toy</span>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-bold text-sm text-slate-900">
+                <h3 className="font-display font-black text-sm sm:text-base text-white">
                   Asistente Ley 21.719 & Agente RAT
                 </h3>
-                <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-mono px-1.5 py-0.2 rounded font-bold">
-                  En línea
+                <span className="bg-orange-500 text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded-full">
+                  ACTIVO
                 </span>
               </div>
-              <p className="text-[10px] text-slate-500 font-mono">
+              <p className="text-[10px] text-zinc-400 font-mono">
                 leydedatospersonaleschile.cl • Especialista APDP
               </p>
             </div>
@@ -129,62 +129,59 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose, on
 
           <button
             onClick={onClose}
-            className="w-7 h-7 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-200/60 flex items-center justify-center transition-colors text-sm"
+            className="w-8 h-8 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white flex items-center justify-center text-sm font-bold transition-colors"
           >
             ✕
           </button>
         </div>
 
-        {/* Quick RAT Banner CTA */}
-        <div className="bg-blue-50/80 px-4 py-2 border-b border-blue-200 flex items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-1.5 text-blue-950 font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-            <span>Tramo 1 Obligatorio: "Cumplir sin frenar"</span>
-          </div>
+        {/* Banner CTA */}
+        <div className="bg-orange-500 text-white px-4 py-2 flex items-center justify-between gap-3 text-xs font-mono font-bold">
+          <span>Tramo 1 Obligatorio: "Cumplir sin frenar"</span>
           <button
             onClick={handleIrARAT}
-            className="bg-blue-900 hover:bg-blue-800 text-white font-bold px-3 py-1 rounded-md text-[11px] shadow-sm"
+            className="bg-zinc-950 hover:bg-zinc-800 text-white px-3 py-1 rounded-lg text-[11px] shadow-sm"
           >
             Abrir Agente RAT (3 min) →
           </button>
         </div>
 
         {/* Chat Messages */}
-        <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3 text-xs">
+        <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 text-xs sm:text-sm bg-zinc-50">
           {mensajes.map((m) => (
             <div
               key={m.id}
               className={`flex ${m.remitente === 'usuario' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-[85%] p-3.5 rounded-xl leading-relaxed ${
+                className={`max-w-[85%] p-4 rounded-2xl leading-relaxed ${
                   m.remitente === 'usuario'
-                    ? 'bg-blue-900 text-white rounded-tr-none shadow-sm'
-                    : 'bg-slate-50 text-slate-800 rounded-tl-none border border-slate-200 shadow-sm'
+                    ? 'bg-zinc-950 text-white rounded-tr-none shadow-md'
+                    : 'bg-white text-zinc-800 rounded-tl-none border-2 border-zinc-200 shadow-md'
                 }`}
               >
-                <div className={m.remitente === 'usuario' ? 'text-white' : 'text-slate-800'}>
+                <div className={m.remitente === 'usuario' ? 'text-white' : 'text-zinc-800'}>
                   {renderTexto(m.texto)}
                 </div>
                 
-                <span className={`block text-[9px] mt-1 font-mono ${
-                  m.remitente === 'usuario' ? 'text-blue-200 text-right' : 'text-slate-400'
+                <span className={`block text-[9px] mt-1.5 font-mono ${
+                  m.remitente === 'usuario' ? 'text-zinc-400 text-right' : 'text-zinc-400'
                 }`}>
                   {m.timestamp}
                 </span>
 
-                {/* Suggestions Pills if present */}
+                {/* Suggestions */}
                 {m.sugerencias && (
-                  <div className="mt-3 pt-2.5 border-t border-slate-200 space-y-1.5">
-                    <span className="text-[10px] text-slate-500 uppercase tracking-wider font-bold block">
-                      Preguntas sugeridas:
+                  <div className="mt-3 pt-3 border-t border-zinc-200 space-y-2">
+                    <span className="text-[10px] font-mono font-bold text-orange-600 uppercase tracking-wider block">
+                      Preguntas frecuentes sugeridas:
                     </span>
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-1.5">
                       {m.sugerencias.map((s, idx) => (
                         <button
                           key={idx}
                           onClick={() => handleEnviar(s)}
-                          className="bg-white hover:bg-slate-100 border border-slate-300 text-slate-700 text-[11px] px-2 py-1 rounded-md text-left transition-colors"
+                          className="bg-zinc-50 hover:bg-orange-50 hover:border-orange-500 border border-zinc-300 text-zinc-900 text-xs px-2.5 py-1.5 rounded-lg text-left transition-all"
                         >
                           {s}
                         </button>
@@ -198,8 +195,8 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose, on
 
           {cargando && (
             <div className="flex justify-start">
-              <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl rounded-tl-none text-slate-600 text-xs flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-900 animate-ping"></span>
+              <div className="bg-white border-2 border-zinc-200 p-3.5 rounded-2xl rounded-tl-none text-zinc-700 text-xs flex items-center gap-2 font-mono">
+                <span className="w-2 h-2 rounded-full bg-orange-500 animate-ping"></span>
                 <span>Consultando normativa Ley 21.719...</span>
               </div>
             </div>
@@ -207,27 +204,27 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose, on
         </div>
 
         {/* Input Bar */}
-        <div className="p-3 border-t border-slate-200 bg-white">
+        <div className="p-4 border-t-2 border-zinc-200 bg-white">
           <div className="flex gap-2">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleEnviar()}
-              placeholder="Escribe tu consulta sobre multas, plazos ARCO+ o el RAT..."
-              className="flex-1 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs sm:text-sm text-slate-900 focus:bg-white focus:outline-none focus:border-blue-900"
+              placeholder="Pregúntale al experto sobre multas, plazos ARCO+ o el RAT..."
+              className="flex-1 bg-zinc-50 border-2 border-zinc-300 rounded-xl px-4 py-3 text-xs sm:text-sm text-zinc-950 focus:border-orange-500 focus:outline-none"
             />
             <button
               onClick={() => handleEnviar()}
               disabled={cargando || !input.trim()}
-              className="bg-blue-900 hover:bg-blue-800 disabled:opacity-40 text-white font-bold px-3.5 rounded-lg flex items-center justify-center transition-all"
+              className="bg-orange-500 hover:bg-orange-600 disabled:opacity-40 text-white font-bold px-5 rounded-xl flex items-center justify-center transition-all shadow-md shadow-orange-500/25"
             >
               <span className="material-symbols-outlined text-base">send</span>
             </button>
           </div>
           
-          <div className="mt-1.5 text-center text-[10px] text-slate-500">
-            Orientación técnica y operativa sobre Ley 21.719. Para litigios específicos, consulte validación jurídica.
+          <div className="mt-2 text-center text-[10px] text-zinc-500 font-mono">
+            Orientación técnica y operativa sobre Ley 21.719. Para asuntos judiciales específicos, consulte asesoría legal.
           </div>
         </div>
 

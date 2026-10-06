@@ -10,7 +10,7 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
   const [esPyme, setEsPyme] = useState<boolean>(true);
   const [esReincidente, setEsReincidente] = useState<boolean>(false);
 
-  // Checklist de cumplimiento rápido
+  // Checklist de cumplimiento
   const [tieneRAT, setTieneRAT] = useState<boolean>(false);
   const [respondeBloqueo2Dias, setRespondeBloqueo2Dias] = useState<boolean>(false);
   const [manejaDatosSensibles, setManejaDatosSensibles] = useState<boolean>(true);
@@ -22,9 +22,9 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
           nombre: 'Infracción Leve',
           maxUtm: 5000,
           ejemplos: [
-            'No mantener actualizado el Registro de Actividades de Tratamiento (RAT).',
-            'Demoras no sustanciales en la entrega de copias ante solicitudes de acceso.',
-            'No comunicar modificaciones menores en la política de privacidad.',
+            'No mantener debidamente actualizado el Registro de Actividades de Tratamiento (RAT).',
+            'Demoras no graves en la entrega de información ante solicitudes de acceso.',
+            'No comunicar modificaciones menores en los avisos de privacidad.',
           ],
         };
       case 'grave':
@@ -32,10 +32,10 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
           nombre: 'Infracción Grave',
           maxUtm: 10000,
           ejemplos: [
-            'Tratar datos sin base de licitud (sin consentimiento ni relación contractual).',
+            'Tratar datos personales sin base de licitud (sin consentimiento expreso ni contrato).',
             'No contar con el Registro de Actividades de Tratamiento (RAT - Art. 14 ter).',
-            'Incumplir el plazo legal perentorio de 2 días hábiles para el Bloqueo Temporal.',
-            'Traspasar bases de datos a proveedores sin contrato de encargado de datos.',
+            'Incumplir el plazo perentorio de 2 días hábiles para el Bloqueo Temporal.',
+            'Traspasar bases de datos a proveedores sin cláusula de encargado de tratamiento.',
           ],
         };
       case 'gravisima':
@@ -43,9 +43,9 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
           nombre: 'Infracción Gravísima',
           maxUtm: 20000,
           ejemplos: [
-            'Fuga o filtración masiva de datos sensibles (salud, biometría) por negligencia grave.',
-            'Comercialización ilícita de datos de clientes o colaboradores.',
-            'Desacato deliberado de medidas cautelares o resoluciones de la APDP.',
+            'Fuga masiva de datos sensibles (salud, biometría, RUT) por negligencia grave.',
+            'Venta o comercialización ilícita de datos personales de clientes o trabajadores.',
+            'Desacato reiterado de instrucciones o medidas cautelares de la APDP.',
           ],
         };
     }
@@ -54,144 +54,130 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
   const detalle = getDetallesInfraccion();
   const montoMaximoCLP = detalle.maxUtm * utmValue;
   const puntosRiesgo = (!tieneRAT ? 40 : 0) + (!respondeBloqueo2Dias ? 30 : 0) + (manejaDatosSensibles ? 20 : 0);
-  const nivelRiesgo = puntosRiesgo >= 60 ? 'Crítico' : puntosRiesgo >= 30 ? 'Medio' : 'Bajo';
+  const nivelRiesgo = puntosRiesgo >= 60 ? 'Crítico' : puntosRiesgo >= 30 ? 'Medio' : 'Controlado';
 
   return (
-    <div className="bg-slate-50 min-h-screen py-8 border-b border-slate-200">
+    <div id="multas-utm" className="py-14 bg-zinc-50 border-b border-zinc-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="bg-white p-5 sm:p-6 rounded-xl border border-slate-200 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 mb-1 text-xs">
-              <span className="font-mono font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded border border-red-200">
-                APDP • RÉGIMEN SANCIONATORIO
-              </span>
-              <span className="text-slate-500 font-mono">
-                Artículos 40 al 52 de la Ley 21.719
-              </span>
+            <div className="inline-flex items-center gap-1.5 bg-orange-100 text-orange-900 border border-orange-200 text-xs font-mono font-bold px-3 py-1 rounded-full mb-2">
+              <span className="material-symbols-outlined text-sm text-orange-600">gavel</span>
+              <span>POTESTAD SANCIONATORIA DE LA APDP</span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-slate-900">
-              Simulador Oficial de Multas UTM & Evaluación de Riesgo
-            </h1>
-            <p className="text-xs text-slate-600 mt-0.5">
-              Calcula las sanciones económicas máximas según la gravedad de la falta y la aplicación del Estatuto Pyme (Ley 20.416).
+            <h2 className="text-3xl sm:text-5xl font-display font-black text-zinc-950 tracking-tight">
+              Simulador de Multas en UTM
+            </h2>
+            <p className="text-sm sm:text-base text-zinc-600 mt-1 max-w-2xl">
+              Proyecta el riesgo financiero real ante fiscalizaciones de la Agencia de Protección de Datos Personales (Ley 21.719).
             </p>
           </div>
 
-          <div className="flex items-center gap-2 bg-slate-100 p-2 rounded-lg border border-slate-200 text-xs font-mono">
-            <span className="text-slate-600">UTM Vigente:</span>
-            <strong className="text-slate-900">${utmValue.toLocaleString('es-CL')} CLP</strong>
+          <div className="bg-white p-3 rounded-2xl border-2 border-zinc-900 font-mono text-xs">
+            <span className="text-zinc-500 block text-[10px]">VALOR REFERENCIAL UTM:</span>
+            <strong className="text-zinc-950 text-sm">${utmValue.toLocaleString('es-CL')} CLP</strong>
           </div>
         </div>
 
-        {/* Dense Grid: Controls + Calculation + Matrix */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Calculation & Controls Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Controls Col */}
-          <div className="lg:col-span-7 space-y-5">
+          <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border-2 border-zinc-900 shadow-xl space-y-6">
             
-            {/* Severity selector */}
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-                <h3 className="font-bold text-xs uppercase tracking-wider text-slate-700">
-                  1. Gravedad de la Infracción Evaluada
-                </h3>
-                <span className="text-[11px] font-mono text-slate-400">Escala APDP</span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2">
+            {/* Severity selection */}
+            <div>
+              <label className="block text-xs font-mono font-bold text-zinc-900 uppercase mb-2">
+                1. Selecciona la Gravedad de la Infracción
+              </label>
+              <div className="grid grid-cols-3 gap-3">
                 {[
-                  { key: 'leve', label: 'Infracción Leve', utm: 'Hasta 5.000 UTM' },
-                  { key: 'grave', label: 'Infracción Grave', utm: 'Hasta 10.000 UTM' },
-                  { key: 'gravisima', label: 'Infracción Gravísima', utm: 'Hasta 20.000 UTM' },
+                  { key: 'leve', label: 'Leve', utm: 'Hasta 5.000 UTM' },
+                  { key: 'grave', label: 'Grave', utm: 'Hasta 10.000 UTM' },
+                  { key: 'gravisima', label: 'Gravísima', utm: 'Hasta 20.000 UTM' },
                 ].map((g) => (
                   <button
                     key={g.key}
                     onClick={() => setTipoInfraccion(g.key as any)}
-                    className={`p-3 rounded-lg border text-left transition-all ${
+                    className={`p-3.5 rounded-xl border-2 text-left transition-all ${
                       tipoInfraccion === g.key
-                        ? 'border-blue-900 bg-blue-50/50 ring-1 ring-blue-900 font-bold'
-                        : 'border-slate-200 bg-white hover:bg-slate-50'
+                        ? 'border-orange-500 bg-orange-50/60 shadow-sm'
+                        : 'border-zinc-200 bg-white hover:border-zinc-300'
                     }`}
                   >
-                    <strong className="block text-slate-900 text-xs">{g.label}</strong>
-                    <span className="text-[10px] text-slate-500 font-mono block mt-0.5">{g.utm}</span>
+                    <strong className="block text-zinc-950 font-display font-bold text-xs sm:text-sm">{g.label}</strong>
+                    <span className="text-[10px] text-orange-600 font-mono font-bold block mt-1">{g.utm}</span>
                   </button>
                 ))}
               </div>
+            </div>
 
-              {/* UTM Slider */}
-              <div className="pt-2">
-                <div className="flex justify-between items-center text-xs mb-1">
-                  <span className="text-slate-700 font-medium">Ajustar valor UTM de referencia:</span>
-                  <span className="font-mono text-slate-900 font-bold">${utmValue.toLocaleString('es-CL')} CLP</span>
+            {/* UTM Slider */}
+            <div>
+              <div className="flex justify-between items-center text-xs font-mono mb-1">
+                <span className="text-zinc-700 font-bold uppercase">Ajustar valor UTM:</span>
+                <span className="text-orange-600 font-bold">${utmValue.toLocaleString('es-CL')} CLP</span>
+              </div>
+              <input
+                type="range"
+                min={60000}
+                max={75000}
+                step={500}
+                value={utmValue}
+                onChange={(e) => setUtmValue(Number(e.target.value))}
+                className="w-full accent-orange-500 cursor-pointer"
+              />
+            </div>
+
+            {/* Estatuto Pyme Switch */}
+            <div className="p-4 rounded-2xl bg-zinc-50 border-2 border-zinc-200 flex items-start justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-1.5 font-display font-bold text-sm text-zinc-950">
+                  <span className="material-symbols-outlined text-orange-500 text-lg">verified</span>
+                  Beneficio Pyme: Amonestación Escrita (Ley 20.416)
                 </div>
+                <p className="text-xs text-zinc-600 mt-1 leading-relaxed">
+                  Para Micro y Pequeñas empresas sin reincidencia, la APDP sustituye la multa por amonestación escrita, 
+                  <strong className="text-zinc-950"> con la condición obligatoria de presentar de inmediato el RAT regularizado</strong>.
+                </p>
+              </div>
+
+              <label className="relative inline-flex items-center cursor-pointer shrink-0 mt-1">
                 <input
-                  type="range"
-                  min={60000}
-                  max={75000}
-                  step={500}
-                  value={utmValue}
-                  onChange={(e) => setUtmValue(Number(e.target.value))}
-                  className="w-full accent-blue-900 cursor-pointer"
+                  type="checkbox"
+                  checked={esPyme}
+                  onChange={(e) => setEsPyme(e.target.checked)}
+                  className="sr-only peer"
                 />
-              </div>
+                <div className="w-11 h-6 bg-zinc-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-500"></div>
+              </label>
             </div>
 
-            {/* Pyme Switch & Reincidencia */}
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-                <h3 className="font-bold text-xs uppercase tracking-wider text-slate-700">
-                  2. Calificación de la Empresa & Agravantes
-                </h3>
-                <span className="text-[11px] font-mono text-emerald-700 font-bold">Ley 20.416</span>
-              </div>
-
-              <div className="flex items-start justify-between gap-4 p-3 rounded-lg bg-slate-50 border border-slate-200">
-                <div>
-                  <strong className="text-xs text-slate-900 block">
-                    Beneficio Pyme: Amonestación Escrita en 1ra Falta
-                  </strong>
-                  <p className="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
-                    Aplica para Micro y Pequeñas empresas sin sanciones previas. La APDP sustituye la multa en dinero por amonestación, 
-                    <strong> bajo condición resolutoria de acreditar de inmediato el RAT (Art. 14 ter)</strong>.
-                  </p>
-                </div>
-                <label className="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
-                  <input
-                    type="checkbox"
-                    checked={esPyme}
-                    onChange={(e) => setEsPyme(e.target.checked)}
-                    className="sr-only peer"
-                  />
-                  <div className="w-10 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
-                </label>
-              </div>
-
-              <div className="flex items-center justify-between text-xs text-slate-700 px-1">
-                <span>¿Registra reincidencia en los últimos 24 meses?</span>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={esReincidente}
-                    onChange={(e) => setEsReincidente(e.target.checked)}
-                    className="sr-only peer"
-                  />
-                  <div className="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-red-600"></div>
-                </label>
-              </div>
+            {/* Reincidencia */}
+            <div className="flex items-center justify-between text-xs font-mono text-zinc-700 px-1">
+              <span>¿Registra infracciones previas en los últimos 24 meses?</span>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={esReincidente}
+                  onChange={(e) => setEsReincidente(e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className="w-10 h-5 bg-zinc-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-red-600"></div>
+              </label>
             </div>
 
-            {/* Examples of specific infractions */}
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-              <h4 className="font-bold text-xs uppercase tracking-wider text-slate-700 mb-2">
-                Conductas típicas que configuran {detalle.nombre}:
-              </h4>
-              <ul className="space-y-1.5 text-xs text-slate-600">
+            {/* Infracciones tipificadas */}
+            <div className="p-4 rounded-xl bg-orange-50/50 border border-orange-200">
+              <span className="text-[11px] font-mono font-bold text-orange-900 uppercase block mb-1.5">
+                Hechos que constituyen {detalle.nombre}:
+              </span>
+              <ul className="space-y-1.5 text-xs text-zinc-700">
                 {detalle.ejemplos.map((ej, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <span className="text-blue-900 font-bold">•</span>
+                    <span className="text-orange-500 font-bold">•</span>
                     <span>{ej}</span>
                   </li>
                 ))}
@@ -200,107 +186,106 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
 
           </div>
 
-          {/* Results & Scorecard Col */}
-          <div className="lg:col-span-5 space-y-5">
+          {/* Right Results Card */}
+          <div className="lg:col-span-5 space-y-6">
             
-            {/* Calculation Result Box */}
-            <div className="bg-white p-6 rounded-xl border-2 border-slate-300 shadow-sm space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold text-slate-500 uppercase">
-                  Sanción Económica Proyectada
+            <div className="bg-white p-6 sm:p-8 rounded-3xl border-2 border-zinc-900 shadow-2xl relative overflow-hidden">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-mono font-bold text-zinc-500 uppercase">
+                  Sanción Máxima Proyectada
                 </span>
-                <span className="text-xs font-mono font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded border border-red-200">
-                  {detalle.maxUtm.toLocaleString('es-CL')} UTM MÁX
+                <span className="text-xs font-mono font-bold bg-orange-100 text-orange-900 px-2.5 py-1 rounded-full border border-orange-300">
+                  {detalle.maxUtm.toLocaleString('es-CL')} UTM
                 </span>
               </div>
 
               <div>
-                <span className="text-2xl sm:text-3xl font-black text-slate-900 font-mono tracking-tight block">
-                  ${montoMaximoCLP.toLocaleString('es-CL')} <span className="text-xs font-sans text-slate-500">CLP</span>
-                </span>
-                <span className="text-[11px] text-slate-500 block mt-0.5">
-                  Calculado a valor UTM de ${utmValue.toLocaleString('es-CL')} CLP
+                <p className="text-3xl sm:text-4xl font-display font-black text-zinc-950 tracking-tight">
+                  ${montoMaximoCLP.toLocaleString('es-CL')} <span className="text-sm font-sans text-zinc-500">CLP</span>
+                </p>
+                <span className="text-xs font-mono text-orange-600 font-bold block mt-1">
+                  Potestad sancionatoria de la APDP
                 </span>
               </div>
 
-              {/* Pyme Benefit Outcome */}
+              {/* Status Outcome */}
               {esPyme && !esReincidente ? (
-                <div className="p-3.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-900">
-                  <div className="flex items-center gap-1.5 font-bold mb-1">
-                    <span className="material-symbols-outlined text-emerald-700 text-base">verified</span>
-                    <span>Atenuante Aplicable: Amonestación Escrita</span>
+                <div className="mt-6 p-4 rounded-2xl bg-orange-50 border-2 border-orange-500 text-xs text-zinc-900">
+                  <div className="flex items-center gap-1.5 font-bold font-display text-sm text-zinc-950 mb-1">
+                    <span className="material-symbols-outlined text-orange-600 text-base">verified</span>
+                    Atenuante Activa: Amonestación Escrita
                   </div>
-                  <p className="text-[11px] leading-relaxed text-emerald-800">
-                    Bajo el Estatuto Pyme (Ley 20.416), puedes evitar el desembolso de esta multa si 
-                    <strong> regularizas y exhibes el RAT de inmediato ante la APDP</strong>.
+                  <p className="leading-relaxed text-zinc-700">
+                    Bajo el Estatuto Pyme (Ley 20.416), la APDP no cobra la multa si 
+                    <strong> acreditas de inmediato el RAT (Art. 14 ter)</strong>. Si no tienes el RAT, la multa se aplica en su totalidad.
                   </p>
                 </div>
               ) : (
-                <div className="p-3.5 rounded-lg bg-red-50 border border-red-200 text-xs text-red-900">
-                  <strong className="block mb-0.5">Cobro Forzoso Tesorería General</strong>
-                  <p className="text-[11px] leading-relaxed text-red-800">
-                    Sin atenuante de Pyme o con reincidencia, la APDP ejecuta la cobranza inmediata de la sanción económica.
+                <div className="mt-6 p-4 rounded-2xl bg-red-50 border border-red-300 text-xs text-red-950">
+                  <strong className="block text-sm font-bold text-red-900 mb-1">Cobro Coactivo Inmediato</strong>
+                  <p className="leading-relaxed text-red-800">
+                    Sin amparo de Pyme o con reincidencia, la multa se deriva directamente a la Tesorería General de la República.
                   </p>
                 </div>
               )}
 
               <button
                 onClick={onGoToRat}
-                className="w-full inline-flex items-center justify-center gap-2 bg-blue-900 hover:bg-blue-800 text-white font-bold py-2.5 px-4 rounded-lg text-xs shadow-sm transition-all"
+                className="mt-6 w-full inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold py-4 px-6 rounded-xl text-sm shadow-xl shadow-orange-500/25 transition-all"
               >
-                <span className="material-symbols-outlined text-sm">shield</span>
+                <span className="material-symbols-outlined text-base">shield</span>
                 <span>Generar RAT y blindar mi empresa ahora</span>
               </button>
             </div>
 
-            {/* Quick Compliance Thermometer */}
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+            {/* Quick checklist */}
+            <div className="bg-white p-6 rounded-3xl border-2 border-zinc-200 shadow-sm space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-900">Termómetro de Riesgo Rápido</span>
-                <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${
-                  nivelRiesgo === 'Crítico' ? 'bg-red-50 text-red-700 border-red-200' :
-                  nivelRiesgo === 'Medio' ? 'bg-amber-50 text-amber-800 border-amber-200' :
-                  'bg-emerald-50 text-emerald-800 border-emerald-200'
+                <span className="text-xs font-bold font-mono text-zinc-900 uppercase">Termómetro de Riesgo Pyme</span>
+                <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full ${
+                  nivelRiesgo === 'Crítico' ? 'bg-red-100 text-red-800 border border-red-300' :
+                  nivelRiesgo === 'Medio' ? 'bg-orange-100 text-orange-800 border border-orange-300' :
+                  'bg-emerald-100 text-emerald-800 border border-emerald-300'
                 }`}>
                   Riesgo {nivelRiesgo}
                 </span>
               </div>
 
               <div className="space-y-2 text-xs">
-                <label className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
-                  <span className="text-slate-700">¿Cuentas con tu RAT (Art. 14 ter)?</span>
+                <label className="flex items-center justify-between p-3 rounded-xl bg-zinc-50 border border-zinc-200 cursor-pointer">
+                  <span className="text-zinc-800">¿Ya tienes tu RAT (Art. 14 ter)?</span>
                   <input
                     type="checkbox"
                     checked={tieneRAT}
                     onChange={(e) => setTieneRAT(e.target.checked)}
-                    className="rounded text-blue-900 focus:ring-0 w-4 h-4 cursor-pointer"
+                    className="rounded text-orange-500 focus:ring-0 w-4 h-4 cursor-pointer"
                   />
                 </label>
 
-                <label className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
-                  <span className="text-slate-700">¿Puedes bloquear datos en 2 días hábiles?</span>
+                <label className="flex items-center justify-between p-3 rounded-xl bg-zinc-50 border border-zinc-200 cursor-pointer">
+                  <span className="text-zinc-800">¿Puedes bloquear datos en 2 días hábiles?</span>
                   <input
                     type="checkbox"
                     checked={respondeBloqueo2Dias}
                     onChange={(e) => setRespondeBloqueo2Dias(e.target.checked)}
-                    className="rounded text-blue-900 focus:ring-0 w-4 h-4 cursor-pointer"
+                    className="rounded text-orange-500 focus:ring-0 w-4 h-4 cursor-pointer"
                   />
                 </label>
 
-                <label className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-200 cursor-pointer">
-                  <span className="text-slate-700">¿Tratas RUT, nóminas o cámaras CCTV?</span>
+                <label className="flex items-center justify-between p-3 rounded-xl bg-zinc-50 border border-zinc-200 cursor-pointer">
+                  <span className="text-zinc-800">¿Manejas RUT, planillas o cámaras CCTV?</span>
                   <input
                     type="checkbox"
                     checked={manejaDatosSensibles}
                     onChange={(e) => setManejaDatosSensibles(e.target.checked)}
-                    className="rounded text-blue-900 focus:ring-0 w-4 h-4 cursor-pointer"
+                    className="rounded text-orange-500 focus:ring-0 w-4 h-4 cursor-pointer"
                   />
                 </label>
               </div>
 
               {!tieneRAT && (
-                <p className="text-[11px] text-amber-800 bg-amber-50 p-2 rounded border border-amber-200">
-                  🚨 <strong>Causal Inmediata:</strong> No contar con el RAT tipifica como infracción grave según el Art. 14 ter y Art. 44 de la ley.
+                <p className="text-[11px] text-orange-900 bg-orange-100/70 p-3 rounded-xl border border-orange-300 leading-relaxed">
+                  🚨 <strong>Atención:</strong> Sin el RAT formalizado, tu empresa está en causal de infracción grave directa ante cualquier denuncia ciudadana en la APDP.
                 </p>
               )}
             </div>

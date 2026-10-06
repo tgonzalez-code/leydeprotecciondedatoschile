@@ -8,275 +8,242 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ onStartRat, onOpenCalculator, onOpenAiChat }) => {
   return (
-    <section className="bg-white border-b border-slate-200 py-8 lg:py-12">
+    <section className="relative overflow-hidden pt-10 pb-16 lg:pt-16 lg:pb-24 bg-white border-b border-zinc-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Top Badges / Context line */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4 mb-6 text-xs">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="font-mono font-bold text-slate-900 bg-slate-100 px-2 py-0.5 rounded border border-slate-300">
-              REPÚBLICA DE CHILE
-            </span>
-            <span className="text-slate-600 font-medium">Ley Nº 21.719 • Modifica Ley Nº 19.628</span>
-            <span className="text-slate-300">|</span>
-            <span className="text-blue-800 font-semibold flex items-center gap-1">
-              <span className="material-symbols-outlined text-xs">account_balance</span>
-              Agencia de Protección de Datos Personales (APDP)
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="bg-emerald-50 text-emerald-800 font-medium px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-              Estatuto Pyme (Ley 20.416) Activo
-            </span>
-            <span className="bg-amber-50 text-amber-800 font-mono font-medium px-2 py-0.5 rounded border border-amber-200">
-              Multas: hasta 20.000 UTM
-            </span>
-          </div>
+        {/* Top Monospaced Badge */}
+        <div className="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 text-orange-900 px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold mb-6">
+          <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+          <span>LEY Nº 21.719 EN CHILE</span>
+          <span className="text-orange-300">•</span>
+          <span className="text-zinc-600">TRAMO 1 OBLIGATORIO: ART. 14 TER</span>
         </div>
 
-        {/* Header Title & Subtitle */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-8">
-          
-          <div className="lg:col-span-8">
-            <div className="inline-block bg-blue-50 text-blue-900 font-mono text-[11px] font-bold px-2.5 py-1 rounded border border-blue-200 mb-2">
-              SISTEMA DE CUMPLIMIENTO REGULATORIO CHILENO
-            </div>
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-              Cumplir la Ley de Datos Personales <br className="hidden sm:inline" />
-              <span className="text-blue-900 underline decoration-blue-300 underline-offset-4">sin frenar el negocio</span>
-            </h1>
-            <p className="mt-3 text-sm sm:text-base text-slate-700 leading-relaxed max-w-3xl">
-              Plataforma tecnológica diseñada para directores, gerentes y dueños de Pymes en Chile. 
-              Sustituye consultorías tradicionales de meses por una <strong>entrevista inteligente de 3 minutos con IA</strong> para 
-              estructurar de inmediato el <strong>Registro de Actividades de Tratamiento (RAT - Art. 14 ter)</strong>, 
-              el Tramo 1 obligatorio exigido ante la APDP.
-            </p>
+        {/* Main Massive Headline */}
+        <div className="max-w-5xl">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-black text-zinc-950 tracking-tighter leading-[0.95]">
+            CUMPLIR LA LEY DE DATOS <br />
+            <span className="text-orange-500 underline decoration-orange-300 underline-offset-8">
+              SIN FRENAR EL NEGOCIO.
+            </span>
+          </h1>
 
-            {/* Main Action Buttons */}
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <button
-                onClick={onStartRat}
-                className="inline-flex items-center gap-2 bg-blue-900 hover:bg-blue-800 text-white font-bold px-5 py-2.5 rounded-lg text-xs sm:text-sm shadow-sm transition-all"
-              >
-                <span className="material-symbols-outlined text-base">psychology</span>
-                <span>Construir RAT con IA (3 min)</span>
-                <span className="material-symbols-outlined text-xs">arrow_forward</span>
-              </button>
+          <p className="mt-6 text-lg sm:text-xl lg:text-2xl text-zinc-600 leading-relaxed max-w-3xl font-normal">
+            Reemplaza consultorías legales tradicionales de 4 meses por una 
+            <strong className="text-zinc-950 font-bold"> entrevista inteligente de 3 minutos con IA</strong>. 
+            Construye y descarga de inmediato tu <strong className="text-orange-600 font-bold font-mono">Registro de Actividades de Tratamiento (RAT - Art. 14 ter)</strong>, 
+            el inventario legal obligatorio exigido por la nueva Agencia de Protección de Datos Personales (APDP).
+          </p>
 
-              <button
-                onClick={onOpenCalculator}
-                className="inline-flex items-center gap-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-300 text-slate-800 font-semibold px-4 py-2.5 rounded-lg text-xs sm:text-sm transition-all"
-              >
-                <span className="material-symbols-outlined text-slate-600 text-base">calculate</span>
-                <span>Simulador Multas UTM</span>
-              </button>
-
-              <button
-                onClick={onOpenAiChat}
-                className="inline-flex items-center gap-1.5 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-medium px-4 py-2.5 rounded-lg text-xs sm:text-sm transition-all"
-              >
-                <span className="material-symbols-outlined text-amber-500 text-base">chat</span>
-                <span>Hacer consulta al Asistente</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Right Column: Quick Status Scorecard */}
-          <div className="lg:col-span-4 bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-              <span className="font-bold text-xs text-slate-900 flex items-center gap-1">
-                <span className="material-symbols-outlined text-sm text-blue-900">verified_user</span>
-                Checklist de Fiscalización APDP
+          {/* Action CTAs */}
+          <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+            <button
+              onClick={onStartRat}
+              className="inline-flex items-center justify-center gap-3 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold text-base px-8 py-4 rounded-xl shadow-xl shadow-orange-500/25 transition-all hover:shadow-orange-500/40 group"
+            >
+              <span className="material-symbols-outlined text-xl group-hover:rotate-12 transition-transform">
+                psychology
               </span>
-              <span className="text-[10px] font-mono text-slate-500">Ley 21.719</span>
-            </div>
+              <span>Construir mi RAT con IA (3 min)</span>
+              <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">
+                arrow_forward
+              </span>
+            </button>
 
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200">
-                <div>
-                  <strong className="text-slate-900 block text-[11px]">Tramo 1: RAT (Art. 14 ter)</strong>
-                  <span className="text-[10px] text-slate-500">Inventario y base de licitud</span>
-                </div>
-                <span className="bg-red-50 text-red-700 font-mono text-[10px] font-bold px-2 py-0.5 rounded border border-red-200">
-                  CRÍTICO
-                </span>
-              </div>
+            <button
+              onClick={onOpenCalculator}
+              className="inline-flex items-center justify-center gap-2 bg-white hover:bg-zinc-50 border-2 border-zinc-300 hover:border-zinc-400 text-zinc-900 font-bold text-sm px-6 py-4 rounded-xl transition-all"
+            >
+              <span className="material-symbols-outlined text-orange-500 text-xl">calculate</span>
+              <span>Simulador Multas UTM</span>
+            </button>
 
-              <div className="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200">
-                <div>
-                  <strong className="text-slate-900 block text-[11px]">Tramo 2: Bloqueo ARCO+</strong>
-                  <span className="text-[10px] text-slate-500">SLA: 2 días hábiles</span>
-                </div>
-                <span className="bg-amber-50 text-amber-800 font-mono text-[10px] font-bold px-2 py-0.5 rounded border border-amber-200">
-                  URGENTE
-                </span>
-              </div>
-
-              <div className="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200">
-                <div>
-                  <strong className="text-slate-900 block text-[11px]">Tramo 3: Estatuto Pyme</strong>
-                  <span className="text-[10px] text-slate-500">Amonestación con RAT al día</span>
-                </div>
-                <span className="bg-emerald-50 text-emerald-800 font-mono text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-200">
-                  BENEFICIO
-                </span>
-              </div>
-            </div>
-
-            <p className="text-[10px] text-slate-500 italic pt-1">
-              "Ninguna empresa puede defenderse si no sabe qué datos trata ni con qué base legal opera."
-            </p>
+            <button
+              onClick={onOpenAiChat}
+              className="inline-flex items-center justify-center gap-2 bg-zinc-950 hover:bg-zinc-800 text-white font-mono text-xs font-semibold px-5 py-4 rounded-xl transition-all"
+            >
+              <span className="material-symbols-outlined text-amber-400 text-base">smart_toy</span>
+              <span>Preguntar al Asistente</span>
+            </button>
           </div>
 
+          {/* Micro trust indicators */}
+          <div className="mt-5 flex flex-wrap items-center gap-4 text-xs font-mono text-zinc-500">
+            <span className="flex items-center gap-1.5 text-zinc-700">
+              <span className="material-symbols-outlined text-emerald-600 text-base">verified</span>
+              Exporta JSON y PDF Oficial APDP
+            </span>
+            <span>•</span>
+            <span className="flex items-center gap-1.5 text-zinc-700">
+              <span className="material-symbols-outlined text-orange-600 text-base">lock</span>
+              Tus datos son privados y no se comparten
+            </span>
+            <span>•</span>
+            <span className="text-zinc-500">
+              Aplica Estatuto Pyme (Ley 20.416)
+            </span>
+          </div>
         </div>
 
-        {/* High Information Density Grid: 4 Core Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-slate-200">
+        {/* 4 High-Impact Stat Boxes */}
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           
-          {/* Box 1 */}
-          <div className="bg-white p-4 rounded-xl border border-slate-200 hover:border-slate-300 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-mono font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-                  TRAMO 1 OBLIGATORIO
-                </span>
-                <span className="material-symbols-outlined text-slate-400 text-lg">description</span>
-              </div>
-              <h3 className="font-bold text-sm text-slate-900 mb-1">
-                RAT: Art. 14 ter
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Inventario maestro obligatorio ante la APDP: finalidades, datos sensibles (RUT, huella, salud) y bases de licitud (Art. 12 y 13).
-              </p>
+          <div 
+            onClick={onOpenCalculator}
+            className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200 hover:border-orange-500 transition-all cursor-pointer group"
+          >
+            <div className="flex items-center justify-between text-xs font-mono mb-2">
+              <span className="text-zinc-500 font-bold uppercase">Sanción Máxima</span>
+              <span className="text-orange-500 font-bold">APDP CHILE</span>
             </div>
-            <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
-              <span className="text-slate-500">Generación: <strong>3 min</strong></span>
-              <button onClick={onStartRat} className="text-blue-900 font-bold hover:underline">
-                Comenzar →
-              </button>
-            </div>
-          </div>
-
-          {/* Box 2 */}
-          <div className="bg-white p-4 rounded-xl border border-slate-200 hover:border-slate-300 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-mono font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded border border-red-200">
-                  MULTAS APDP
-                </span>
-                <span className="material-symbols-outlined text-slate-400 text-lg">gavel</span>
-              </div>
-              <h3 className="font-bold text-sm text-slate-900 mb-1">
-                Régimen Sancionatorio
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Leves hasta <strong>5.000 UTM</strong> (~$330M), Graves hasta <strong>10.000 UTM</strong> (~$660M) y Gravísimas hasta <strong>20.000 UTM</strong> o 4% de ventas.
-              </p>
-            </div>
-            <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
-              <span className="text-slate-500">UTM: <strong>~$66.362 CLP</strong></span>
-              <button onClick={onOpenCalculator} className="text-blue-900 font-bold hover:underline">
-                Simular →
-              </button>
-            </div>
-          </div>
-
-          {/* Box 3 */}
-          <div className="bg-white p-4 rounded-xl border border-slate-200 hover:border-slate-300 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-mono font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-                  PLAZOS LEGALES
-                </span>
-                <span className="material-symbols-outlined text-slate-400 text-lg">timer</span>
-              </div>
-              <h3 className="font-bold text-sm text-slate-900 mb-1">
-                Derechos ARCO+
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Acceso, Rectificación, Supresión, Oposición y Portabilidad (<strong>30 días corridos</strong>). Bloqueo Temporal (<strong>2 días hábiles</strong>).
-              </p>
-            </div>
-            <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
-              <span className="text-slate-500">Canal: <strong>SLA estricto</strong></span>
-              <span className="text-slate-400 font-mono text-[10px]">Art. 5 al 11</span>
-            </div>
-          </div>
-
-          {/* Box 4 */}
-          <div className="bg-white p-4 rounded-xl border border-slate-200 hover:border-slate-300 transition-all flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                  LEY 20.416
-                </span>
-                <span className="material-symbols-outlined text-slate-400 text-lg">storefront</span>
-              </div>
-              <h3 className="font-bold text-sm text-slate-900 mb-1">
-                Estatuto Pyme Chile
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Amonestación escrita en la 1ra infracción para micro y pequeñas empresas. <strong>Condición:</strong> acreditar regularización inmediata con el RAT.
-              </p>
-            </div>
-            <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
-              <span className="text-slate-500">Exige: <strong>RAT formal</strong></span>
-              <span className="text-emerald-700 font-semibold font-mono text-[10px]">Atenuante</span>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Data Comparison Matrix (Tradicional vs Agente IA) */}
-        <div className="mt-6 bg-slate-50 rounded-xl border border-slate-200 p-4 sm:p-5">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3 mb-4">
-            <div>
-              <h2 className="font-extrabold text-sm text-slate-900">
-                Cuadro Comparativo: Consultoría Tradicional vs. Agente IA RAT (leydedatospersonaleschile.cl)
-              </h2>
-              <p className="text-xs text-slate-500">
-                Eficacia operativa para micro, pequeñas y medianas empresas frente al Art. 14 ter.
-              </p>
-            </div>
-            <span className="text-[11px] font-mono text-blue-900 font-semibold self-start sm:self-auto bg-white px-2 py-0.5 rounded border border-slate-200">
-              Método Ágil: "Cumplir sin frenar"
+            <p className="text-3xl sm:text-4xl font-black font-display text-zinc-950 tracking-tight">
+              20.000 <span className="text-lg text-orange-600">UTM</span>
+            </p>
+            <p className="text-xs text-zinc-600 mt-1 leading-relaxed">
+              Hasta ~$1.320.000.000 CLP o entre 2% y 4% de las ventas anuales en reincidencia.
+            </p>
+            <span className="mt-3 text-xs font-mono font-bold text-orange-600 group-hover:underline inline-block">
+              Calcular riesgo exacto →
             </span>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse">
-              <thead>
-                <tr className="border-b border-slate-200 text-slate-500 font-mono text-[11px]">
-                  <th className="py-2 px-3 font-semibold">Criterio de Evaluación</th>
-                  <th className="py-2 px-3 font-semibold text-slate-700">Consultoría Legal Tradicional</th>
-                  <th className="py-2 px-3 font-semibold text-blue-900 bg-blue-100/50 rounded-t">Agente IA de leydedatospersonaleschile.cl</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200">
-                <tr>
-                  <td className="py-2.5 px-3 font-medium text-slate-800">Tiempo de Implementación</td>
-                  <td className="py-2.5 px-3 text-slate-600">2 a 4 meses de reuniones y levantamiento</td>
-                  <td className="py-2.5 px-3 font-bold text-blue-900 bg-blue-50/50">3 minutos (Entrevista interactiva de negocio)</td>
-                </tr>
-                <tr>
-                  <td className="py-2.5 px-3 font-medium text-slate-800">Costo Estimado para la Pyme</td>
-                  <td className="py-2.5 px-3 text-slate-600">$3.000.000 a $12.000.000 CLP + IVA</td>
-                  <td className="py-2.5 px-3 font-bold text-emerald-800 bg-blue-50/50">Acceso digital accesible y generación inmediata</td>
-                </tr>
-                <tr>
-                  <td className="py-2.5 px-3 font-medium text-slate-800">Clasificación de Datos Sensibles</td>
-                  <td className="py-2.5 px-3 text-slate-600">Manual, sujeta a criterio disperso de pasantes</td>
-                  <td className="py-2.5 px-3 font-bold text-blue-900 bg-blue-50/50">Algoritmo con reglas Art. 2, 12, 13 y 16 Ley 21.719</td>
-                </tr>
-                <tr>
-                  <td className="py-2.5 px-3 font-medium text-slate-800">Formato del Entregable</td>
-                  <td className="py-2.5 px-3 text-slate-600">Informes en Word de 150 páginas difíciles de auditar</td>
-                  <td className="py-2.5 px-3 font-bold text-blue-900 bg-blue-50/50">Ficha Oficial RAT (JSON estructurado + PDF APDP)</td>
-                </tr>
-              </tbody>
-            </table>
+          <div 
+            onClick={onStartRat}
+            className="p-6 rounded-2xl bg-orange-50 border-2 border-orange-500 shadow-sm transition-all cursor-pointer group hover:bg-orange-100/50"
+          >
+            <div className="flex items-center justify-between text-xs font-mono mb-2">
+              <span className="text-orange-800 font-bold uppercase">Agente IA Tramo 1</span>
+              <span className="material-symbols-outlined text-orange-600 text-lg">bolt</span>
+            </div>
+            <p className="text-3xl sm:text-4xl font-black font-display text-zinc-950 tracking-tight">
+              3 <span className="text-lg text-orange-600">Minutos</span>
+            </p>
+            <p className="text-xs text-zinc-800 mt-1 leading-relaxed">
+              Para clasificar datos sensibles, asignar bases legales (Art. 12 y 13) y generar tu RAT.
+            </p>
+            <span className="mt-3 text-xs font-mono font-bold text-orange-700 group-hover:underline inline-block">
+              Iniciar prueba gratuita →
+            </span>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200 transition-all">
+            <div className="flex items-center justify-between text-xs font-mono mb-2">
+              <span className="text-zinc-500 font-bold uppercase">SLA Más Exigente</span>
+              <span className="text-zinc-500">ART. 10 BIS</span>
+            </div>
+            <p className="text-3xl sm:text-4xl font-black font-display text-zinc-950 tracking-tight">
+              2 <span className="text-lg text-zinc-600">Días</span>
+            </p>
+            <p className="text-xs text-zinc-600 mt-1 leading-relaxed">
+              Plazo perentorio improrrogable para ejecutar el Bloqueo Temporal de datos ante reclamos.
+            </p>
+            <span className="mt-3 text-[11px] font-mono text-zinc-500 block">
+              30 días para resto de ARCO+
+            </span>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200 transition-all">
+            <div className="flex items-center justify-between text-xs font-mono mb-2">
+              <span className="text-zinc-500 font-bold uppercase">Estatuto Pyme</span>
+              <span className="text-emerald-700 font-bold">LEY 20.416</span>
+            </div>
+            <p className="text-2xl sm:text-3xl font-black font-display text-zinc-950 tracking-tight">
+              Amonestación
+            </p>
+            <p className="text-xs text-zinc-600 mt-1 leading-relaxed">
+              En la 1ra falta para Pymes, pero la APDP exige presentar el RAT de inmediato para no cursar multa.
+            </p>
+            <span className="mt-3 text-[11px] font-mono text-emerald-800 font-bold block">
+              Requiere acreditar el RAT
+            </span>
+          </div>
+
+        </div>
+
+        {/* High-Impact Visual Comparison Table */}
+        <div className="mt-14 bg-white rounded-3xl border-2 border-zinc-900 p-6 sm:p-10 shadow-2xl overflow-hidden">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-zinc-200 pb-6 mb-8">
+            <div>
+              <span className="text-xs font-mono font-bold text-orange-600 uppercase tracking-wider">
+                EFICIENCIA OPERATIVA & COSTO-BENEFICIO
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-display font-black text-zinc-950 mt-1">
+                ¿Por qué una Pyme no debe hacer esto a la antigua?
+              </h2>
+            </div>
+            <div className="bg-orange-50 border border-orange-200 px-4 py-2 rounded-xl text-xs font-mono text-orange-900 font-semibold self-start md:self-auto">
+              Concepto: "Cumplir sin frenar"
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            {/* Tradicional */}
+            <div className="bg-zinc-50 p-6 sm:p-8 rounded-2xl border border-zinc-200">
+              <div className="flex items-center justify-between mb-4">
+                <span className="font-display font-black text-lg text-zinc-600 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-zinc-400">hourglass_disabled</span>
+                  Consultoría Tradicional
+                </span>
+                <span className="text-xs font-mono font-bold bg-zinc-200 text-zinc-700 px-2.5 py-1 rounded">
+                  Lento & Costoso
+                </span>
+              </div>
+
+              <ul className="space-y-3.5 text-xs sm:text-sm text-zinc-600">
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 font-bold text-base shrink-0">✕</span>
+                  <span><strong>2 a 4 meses de reuniones:</strong> Desconcentra a tus gerentes, jefaturas y equipos operativos.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 font-bold text-base shrink-0">✕</span>
+                  <span><strong>Costos de $3M a $12M CLP:</strong> Presupuestos fuera del alcance real de una Pyme en crecimiento.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-red-500 font-bold text-base shrink-0">✕</span>
+                  <span><strong>Informes teóricos de 150 páginas:</strong> Archivos estáticos en Word que nadie sabe cómo auditar ni presentar a la APDP.</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Agente IA RAT */}
+            <div className="bg-orange-50/60 p-6 sm:p-8 rounded-2xl border-2 border-orange-500 shadow-lg shadow-orange-500/10">
+              <div className="flex items-center justify-between mb-4">
+                <span className="font-display font-black text-lg text-zinc-950 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-orange-600">bolt</span>
+                  Agente IA de leydedatospersonaleschile.cl
+                </span>
+                <span className="text-xs font-mono font-bold bg-orange-500 text-white px-2.5 py-1 rounded shadow-sm">
+                  Inmediato (3 min)
+                </span>
+              </div>
+
+              <ul className="space-y-3.5 text-xs sm:text-sm text-zinc-900 font-medium">
+                <li className="flex items-start gap-3">
+                  <span className="text-orange-600 font-bold text-base shrink-0">✓</span>
+                  <span><strong>Entrevista conversacional de 3 minutos:</strong> Preguntas de negocio cotidianas (sueldos, CRM, web, CCTV).</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-orange-600 font-bold text-base shrink-0">✓</span>
+                  <span><strong>Clasificación automática legal:</strong> Identifica categorías sensibles (RUT, huella, salud) y asigna Art. 12 y 13.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-orange-600 font-bold text-base shrink-0">✓</span>
+                  <span><strong>Ficha Oficial RAT en JSON y PDF:</strong> Estructura técnica oficial para exhibir ante cualquier requerimiento de la APDP.</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          <div className="mt-8 text-center">
+            <button
+              onClick={onStartRat}
+              className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold px-8 py-3.5 rounded-xl text-sm sm:text-base shadow-lg shadow-orange-500/30 transition-all"
+            >
+              <span>Generar el RAT de mi empresa ahora</span>
+              <span className="material-symbols-outlined text-sm">arrow_forward</span>
+            </button>
           </div>
         </div>
 

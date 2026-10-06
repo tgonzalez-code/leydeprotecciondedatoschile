@@ -2,110 +2,113 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Features from './components/Features';
-import Stats from './components/Stats';
-import LabSection from './components/LabSection';
 import RatAgentWizard from './components/RatAgentWizard';
 import UTMCalculator from './components/UTMCalculator';
 import ArcoManager from './components/ArcoManager';
+import LabSection from './components/LabSection';
 import LegalArticlesGuide from './components/LegalArticlesGuide';
 import FloatingNav from './components/FloatingNav';
 import AIAssistantModal from './components/AIAssistantModal';
 import Footer from './components/Footer';
 
 const App: React.FC = () => {
-  const [currentTab, setCurrentTab] = useState<string>('inicio');
   const [isAiOpen, setIsAiOpen] = useState(false);
 
-  const handleSelectTab = (tab: string) => {
-    setCurrentTab(tab);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleScrollTo = (id: string) => {
+    if (id === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
-    <div className="relative min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
+    <div className="relative min-h-screen bg-white text-zinc-950 flex flex-col font-sans selection:bg-orange-500 selection:text-white">
       
-      {/* Top Main Navigation */}
+      {/* Navigation Header */}
       <Navbar
-        currentTab={currentTab}
-        onSelectTab={handleSelectTab}
         onOpenAiChat={() => setIsAiOpen(true)}
+        onScrollTo={handleScrollTo}
       />
 
-      {/* Main Views Container */}
+      {/* Landing Page Content Flow */}
       <main className="flex-1">
-        {currentTab === 'inicio' && (
-          <>
-            <Hero
-              onStartRat={() => handleSelectTab('agente-rat')}
-              onOpenCalculator={() => handleSelectTab('calculadora-utm')}
-              onOpenAiChat={() => setIsAiOpen(true)}
-            />
-            <Features onStartRat={() => handleSelectTab('agente-rat')} />
-            <Stats
-              onGoToRat={() => handleSelectTab('agente-rat')}
-              onGoToCalculator={() => handleSelectTab('calculadora-utm')}
-            />
-            <LabSection
-              onGoToRat={() => handleSelectTab('agente-rat')}
-              onOpenAiChat={() => setIsAiOpen(true)}
-            />
+        
+        {/* 1. Hero & Value Proposition */}
+        <Hero
+          onStartRat={() => handleScrollTo('agente-rat')}
+          onOpenCalculator={() => handleScrollTo('multas-utm')}
+          onOpenAiChat={() => setIsAiOpen(true)}
+        />
 
-            {/* Bottom Callout Banner on Home */}
-            <section className="py-12 px-4 sm:px-6 lg:px-8 bg-slate-50 border-t border-slate-200">
-              <div className="max-w-4xl mx-auto text-center">
-                <span className="text-blue-900 font-mono text-[10px] font-bold uppercase tracking-wider bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-                  TRAMO 1: ARTÍCULO 14 TER OBLIGATORIO
-                </span>
-                <h2 className="text-xl sm:text-3xl font-black text-slate-900 mt-2">
-                  Protege tu Pyme antes de una fiscalización de la APDP
-                </h2>
-                <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl mx-auto leading-relaxed">
-                  En solo 3 minutos tendrás tu Registro de Actividades de Tratamiento (RAT) listo para acreditar 
-                  cumplimiento y resguardar el patrimonio de tu empresa.
-                </p>
-                <div className="mt-5 flex flex-wrap justify-center gap-3">
-                  <button
-                    onClick={() => handleSelectTab('agente-rat')}
-                    className="bg-blue-900 hover:bg-blue-800 text-white font-bold px-6 py-2.5 rounded-lg text-xs shadow-sm transition-all"
-                  >
-                    Construir RAT con IA ahora (Gratis)
-                  </button>
-                  <button
-                    onClick={() => setIsAiOpen(true)}
-                    className="bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-semibold px-4 py-2.5 rounded-lg text-xs transition-all"
-                  >
-                    Consultar con el Asistente Legal
-                  </button>
-                </div>
-              </div>
-            </section>
-          </>
-        )}
+        {/* 2. 4-Step Methodology */}
+        <Features
+          onStartRat={() => handleScrollTo('agente-rat')}
+        />
 
-        {currentTab === 'agente-rat' && (
-          <RatAgentWizard />
-        )}
+        {/* 3. Interactive RAT Builder (Art. 14 ter) */}
+        <RatAgentWizard />
 
-        {currentTab === 'calculadora-utm' && (
-          <UTMCalculator onGoToRat={() => handleSelectTab('agente-rat')} />
-        )}
+        {/* 4. UTM Fines Simulator */}
+        <UTMCalculator
+          onGoToRat={() => handleScrollTo('agente-rat')}
+        />
 
-        {currentTab === 'gestion-arco' && (
-          <ArcoManager onGoToRat={() => handleSelectTab('agente-rat')} />
-        )}
+        {/* 5. ARCO+ SLAs Manager */}
+        <ArcoManager
+          onGoToRat={() => handleScrollTo('agente-rat')}
+        />
 
-        {currentTab === 'guia-ley' && (
-          <LegalArticlesGuide onGoToRat={() => handleSelectTab('agente-rat')} />
-        )}
+        {/* 6. Case Studies */}
+        <LabSection
+          onGoToRat={() => handleScrollTo('agente-rat')}
+          onOpenAiChat={() => setIsAiOpen(true)}
+        />
+
+        {/* 7. Legal Articles Compendium */}
+        <LegalArticlesGuide
+          onGoToRat={() => handleScrollTo('agente-rat')}
+        />
+
+        {/* 8. High-Impact Orange Conversion Banner */}
+        <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-orange-500 text-white relative overflow-hidden">
+          <div className="max-w-5xl mx-auto text-center relative z-10">
+            <span className="inline-block bg-zinc-950 text-white font-mono text-xs font-bold px-3 py-1 rounded-full mb-4">
+              TRAMO 1: ARTÍCULO 14 TER OBLIGATORIO
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-display font-black tracking-tight leading-tight">
+              Protege tu empresa antes de una fiscalización de la APDP
+            </h2>
+            <p className="mt-4 text-base sm:text-xl text-orange-100 max-w-2xl mx-auto font-normal leading-relaxed">
+              En solo 3 minutos tendrás tu Registro de Actividades de Tratamiento (RAT) listo para acreditar 
+              cumplimiento, acceder al beneficio Pyme y resguardar el patrimonio de tu negocio.
+            </p>
+
+            <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
+              <button
+                onClick={() => handleScrollTo('agente-rat')}
+                className="w-full sm:w-auto bg-zinc-950 hover:bg-zinc-800 text-white font-bold px-8 py-4 rounded-xl text-base shadow-2xl transition-all hover:scale-105 active:scale-95"
+              >
+                Construir RAT con IA ahora (Gratis)
+              </button>
+              <button
+                onClick={() => setIsAiOpen(true)}
+                className="w-full sm:w-auto bg-white/20 hover:bg-white/30 text-white border-2 border-white/60 font-mono font-bold px-6 py-4 rounded-xl text-sm transition-all"
+              >
+                Consultar al Asistente Legal
+              </button>
+            </div>
+          </div>
+        </section>
+
       </main>
-
-      {/* Spacer for bottom floating nav */}
-      <div className="h-16"></div>
 
       {/* Floating Bottom Navigator */}
       <FloatingNav
-        currentTab={currentTab}
-        onSelectTab={handleSelectTab}
+        onScrollTo={handleScrollTo}
         onAiClick={() => setIsAiOpen(true)}
       />
 
@@ -113,12 +116,12 @@ const App: React.FC = () => {
       <AIAssistantModal
         isOpen={isAiOpen}
         onClose={() => setIsAiOpen(false)}
-        onGoToRat={() => handleSelectTab('agente-rat')}
+        onGoToRat={() => handleScrollTo('agente-rat')}
       />
 
       {/* Footer */}
       <Footer
-        onSelectTab={handleSelectTab}
+        onScrollTo={handleScrollTo}
         onOpenAiChat={() => setIsAiOpen(true)}
       />
 

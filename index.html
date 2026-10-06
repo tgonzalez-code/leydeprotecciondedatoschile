@@ -4,41 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ley de Datos Personales Chile - Agente RAT | Ley 21.719</title>
-    <meta name="description" content="Plataforma de cumplimiento Ley 21.719 en Chile. Genera tu Registro de Actividades de Tratamiento (RAT - Art. 14 ter) con nuestro Agente de IA en 3 minutos. Cumplir sin frenar el negocio.">
-    <meta property="og:title" content="Ley de Datos Personales Chile - Agente RAT | Ley 21.719">
-    <meta property="og:description" content="Genera tu Registro de Actividades de Tratamiento (RAT) obligatorio para la APDP en 3 minutos con IA. Protege tu Pyme de multas de hasta 20.000 UTM.">
+    <title>leydedatospersonaleschile.cl • Agente RAT | Ley 21.719</title>
+    <meta name="description" content="Cumplir la Ley de Datos Personales en Chile sin frenar el negocio. Genera tu Registro de Actividades de Tratamiento (RAT - Art. 14 ter) con nuestro Agente de IA en 3 minutos.">
+    <meta property="og:title" content="leydedatospersonaleschile.cl • Agente RAT | Ley 21.719">
+    <meta property="og:description" content="Cumplir sin frenar el negocio. Genera tu Registro RAT obligatorio para la APDP en 3 minutos con IA.">
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        "cl-blue": {
-                            50: "#f0f6ff",
-                            100: "#e0edfe",
-                            500: "#2563eb",
-                            600: "#1d4ed8",
-                            700: "#1e40af",
-                            800: "#1e3a8a",
-                            900: "#0039a6", // Chilean national blue
-                            950: "#0b1938"
+                        orange: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                            950: '#431407',
+                            DEFAULT: '#ff5500',
+                            brand: '#ff5500',
+                            vibrant: '#ff4d00'
                         },
-                        "cl-red": {
-                            50: "#fef2f2",
-                            100: "#fee2e2",
-                            500: "#ef4444",
-                            600: "#d52b1e", // Chilean national red
-                            700: "#b91c1c"
-                        },
+                        zinc: {
+                            850: '#1e1e24',
+                            950: '#09090b',
+                        }
                     },
                     fontFamily: {
-                        "sans": ["'Plus Jakarta Sans'", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+                        "sans": ["'Plus Jakarta Sans'", "-apple-system", "sans-serif"],
+                        "display": ["'Space Grotesk'", "'Plus Jakarta Sans'", "sans-serif"],
                         "mono": ["'JetBrains Mono'", "monospace"]
                     }
                 }
@@ -47,17 +50,20 @@
     </script>
     <style>
         body {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #ffffff;
-            color: #0f172a;
+            color: #09090b;
         }
-        .chile-flag-strip {
-            background: linear-gradient(90deg, #0039a6 0%, #0039a6 48%, #ffffff 48%, #ffffff 52%, #d52b1e 52%, #d52b1e 100%);
+        .orange-glow {
+            box-shadow: 0 0 35px -5px rgba(255, 85, 0, 0.25);
+        }
+        .orange-border-glow {
+            box-shadow: 0 0 0 1px #ff5500, 0 10px 30px -10px rgba(255, 85, 0, 0.2);
         }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        ::-webkit-scrollbar-track { background: #fafafa; }
+        ::-webkit-scrollbar-thumb { background: #e4e4e7; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff5500; }
     </style>
 <script type="importmap">
 {
@@ -70,7 +76,7 @@
 }
 </script>
 </head>
-<body class="bg-white text-slate-900 min-h-screen antialiased selection:bg-blue-600 selection:text-white">
+<body class="bg-white text-zinc-950 min-h-screen antialiased selection:bg-orange-500 selection:text-white">
     <div id="root"></div>
 <script type="module" src="/index.tsx"></script>
 </body>

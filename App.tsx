@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import TrustBar from './components/TrustBar';
+import ProblemSection from './components/ProblemSection';
+import SolutionProcess from './components/SolutionProcess';
+import SmartDiagnosisSection from './components/SmartDiagnosisSection';
+import ServicesSection from './components/ServicesSection';
+import RatExplainerSection from './components/RatExplainerSection';
+import LeyExplainerSection from './components/LeyExplainerSection';
+import WhyUsSection from './components/WhyUsSection';
+import FaqSection from './components/FaqSection';
+import FinalCtaSection from './components/FinalCtaSection';
 import TimelineVigencia from './components/TimelineVigencia';
 import ComplianceChecklist from './components/ComplianceChecklist';
 import Features from './components/Features';
@@ -148,12 +158,47 @@ const App: React.FC = () => {
       {/* Dedicated Section Page Routing */}
       <main className="flex-1">
         
-        {/* VIEW 1: INICIO (Ultra-fast summary hub & executive dashboard) */}
+        {/* VIEW 1: INICIO (Modern LegalTech Data Privacy SaaS Landing) */}
         {currentPage === 'inicio' && (
-          <Hero
-            onNavigate={handleNavigate}
-            onOpenAiChat={() => setIsAiOpen(true)}
-          />
+          <div>
+            <Hero
+              onNavigate={handleNavigate}
+              onOpenAiChat={() => setIsAiOpen(true)}
+            />
+            <TrustBar />
+            <ProblemSection
+              onStartDiagnosis={() => {
+                const el = document.getElementById('diagnostico');
+                el?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            />
+            <SolutionProcess
+              onStartDiagnosis={() => {
+                const el = document.getElementById('diagnostico');
+                el?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            />
+            <SmartDiagnosisSection
+              onNavigate={handleNavigate}
+              onOpenAiChat={() => setIsAiOpen(true)}
+            />
+            <ServicesSection
+              onNavigate={handleNavigate}
+              onOpenAiChat={() => setIsAiOpen(true)}
+            />
+            <RatExplainerSection
+              onNavigate={handleNavigate}
+            />
+            <LeyExplainerSection
+              onNavigate={handleNavigate}
+            />
+            <WhyUsSection />
+            <FaqSection />
+            <FinalCtaSection
+              onNavigate={handleNavigate}
+              onOpenAiChat={() => setIsAiOpen(true)}
+            />
+          </div>
         )}
 
         {/* VIEW 2: LA LEY 21.719 (Timeline + Compendio) */}

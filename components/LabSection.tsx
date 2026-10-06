@@ -1,36 +1,14 @@
 import React, { useState } from 'react';
+import { CASOS_PRACTICOS_PYMES } from '../content/cases';
 
 interface LabSectionProps {
   onGoToRat: () => void;
   onOpenAiChat: () => void;
 }
 
-const CASOS_PRACTICOS = [
-  {
-    titulo: 'Caso 1: Empresa de Servicios y Reloj Control Biométrico',
-    rubro: 'Servicios de Aseo y Seguridad (35 trabajadores)',
-    situacion: 'Implementaron reloj de asistencia por huella dactilar sin cláusula en contrato laboral ni registro formal en el RAT.',
-    riesgo: 'La huella dactilar es un dato biométrico (categoría especial/sensible según Art. 2 y 16). Exige consentimiento específico o justificación estricta de proporcionalidad y medidas reforzadas de seguridad.',
-    solucionRAT: 'En nuestro Agente RAT se clasifica automáticamente como dato biométrico laboral (Art. 13 letra a), documentando el fin legítimo y las medidas de cifrado para la APDP.',
-  },
-  {
-    titulo: 'Caso 2: Tienda Online y Carrito Abandonado por WhatsApp',
-    rubro: 'Ecommerce de Calzado y Accesorios',
-    situacion: 'Enviaban mensajes promocionales y recordatorios por WhatsApp a números de clientes que no habían finalizado la compra.',
-    riesgo: 'Si el cliente no dio consentimiento previo e informado (Art. 12) para prospección comercial por mensajería, puede formular una denuncia por spam ante la APDP.',
-    solucionRAT: 'El Agente segrega la base de datos de marketing con base en Consentimiento (Art. 12) y establece el mecanismo de desuscripción obligatoria.',
-  },
-  {
-    titulo: 'Caso 3: Ex-colaborador exige Bloqueo Temporal de sus Datos',
-    rubro: 'Consultora de Ingeniería (12 personas)',
-    situacion: 'Un ex-empleado en litigio laboral exigió por correo formal el Bloqueo Temporal de sus antecedentes personales.',
-    riesgo: 'La empresa tardó 10 días hábiles en contestar. El SLA perentorio de la Ley 21.719 para Bloqueo Temporal es de sólo 2 DÍAS HÁBILES.',
-    solucionRAT: 'Al tener el RAT al día, la empresa sabe de inmediato en qué carpetas y sistemas están los datos y ejecuta el bloqueo sin superar las 48 horas hábiles.',
-  },
-];
-
 const LabSection: React.FC<LabSectionProps> = ({ onGoToRat, onOpenAiChat }) => {
   const [casoActivo, setCasoActivo] = useState(0);
+  const casos = CASOS_PRACTICOS_PYMES;
 
   return (
     <section id="casos" className="py-14 bg-zinc-50 border-b border-zinc-200">
@@ -62,9 +40,10 @@ const LabSection: React.FC<LabSectionProps> = ({ onGoToRat, onOpenAiChat }) => {
           
           {/* Left Buttons */}
           <div className="lg:col-span-5 space-y-3">
-            {CASOS_PRACTICOS.map((c, i) => (
+            {casos.map((c, i) => (
               <button
                 key={i}
+                type="button"
                 onClick={() => setCasoActivo(i)}
                 className={`w-full p-5 rounded-2xl text-left border-2 transition-all ${
                   casoActivo === i
@@ -87,16 +66,16 @@ const LabSection: React.FC<LabSectionProps> = ({ onGoToRat, onOpenAiChat }) => {
           <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border-2 border-zinc-900 shadow-xl space-y-4">
             <div className="flex items-center justify-between border-b border-zinc-200 pb-3">
               <h3 className="font-display font-black text-lg text-zinc-950">
-                {CASOS_PRACTICOS[casoActivo].titulo}
+                {casos[casoActivo].titulo}
               </h3>
               <span className="text-xs font-mono font-bold text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full border border-orange-200">
-                {CASOS_PRACTICOS[casoActivo].rubro}
+                {casos[casoActivo].rubro}
               </span>
             </div>
 
             <div className="bg-zinc-50 p-4 rounded-xl border border-zinc-200 text-xs">
               <span className="font-bold text-zinc-900 block mb-1 font-mono uppercase text-[10px]">1. Situación Operativa:</span>
-              <p className="text-zinc-700 leading-relaxed font-normal">{CASOS_PRACTICOS[casoActivo].situacion}</p>
+              <p className="text-zinc-700 leading-relaxed font-normal">{casos[casoActivo].situacion}</p>
             </div>
 
             <div className="bg-red-50 p-4 rounded-xl border border-red-200 text-xs">
@@ -104,7 +83,7 @@ const LabSection: React.FC<LabSectionProps> = ({ onGoToRat, onOpenAiChat }) => {
                 <span className="material-symbols-outlined text-sm">warning</span>
                 2. Riesgo ante la APDP (Ley 21.719):
               </span>
-              <p className="text-red-800 leading-relaxed font-medium">{CASOS_PRACTICOS[casoActivo].riesgo}</p>
+              <p className="text-red-800 leading-relaxed font-medium">{casos[casoActivo].riesgo}</p>
             </div>
 
             <div className="bg-orange-50 p-4 rounded-xl border border-orange-200 text-xs">
@@ -112,11 +91,12 @@ const LabSection: React.FC<LabSectionProps> = ({ onGoToRat, onOpenAiChat }) => {
                 <span className="material-symbols-outlined text-sm text-orange-600">verified</span>
                 3. Solución con el Agente RAT:
               </span>
-              <p className="text-zinc-900 leading-relaxed font-medium">{CASOS_PRACTICOS[casoActivo].solucionRAT}</p>
+              <p className="text-zinc-900 leading-relaxed font-medium">{casos[casoActivo].solucionRAT}</p>
             </div>
 
             <div className="pt-2 flex justify-end">
               <button
+                type="button"
                 onClick={onGoToRat}
                 className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-xl text-xs sm:text-sm shadow-md shadow-orange-500/25 transition-all"
               >

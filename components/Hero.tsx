@@ -1,48 +1,14 @@
 import React, { useState } from 'react';
-import { PageId } from '../types';
+import { HERO_CONTENT, RUBROS_EXPOSICION } from '../content/home';
+import { PageId, RubroExposicion } from '../types';
 
 interface HeroProps {
   onNavigate: (page: PageId) => void;
   onOpenAiChat: () => void;
 }
 
-const RUBROS_DEMO = [
-  {
-    id: 'retail',
-    name: 'E-commerce & Retail',
-    riesgo: 'Alto',
-    datosTipicos: 'Datos de compras, direcciones, pasarelas de pago y cookies.',
-    urgencia: 'Consentimiento para marketing y contratos con couriers.',
-    beneficioPyme: 'Amonestación si cuenta con RAT regularizado.',
-  },
-  {
-    id: 'servicios',
-    name: 'Servicios Profesionales',
-    riesgo: 'Medio',
-    datosTipicos: 'Contratos B2B, datos de nómina, RUTs y correos de contacto.',
-    urgencia: 'Cláusulas de encargado de tratamiento con clientes y proveedores.',
-    beneficioPyme: 'Aplica beneficio Pyme Ley 20.416.',
-  },
-  {
-    id: 'saas',
-    name: 'Software & Tecnología',
-    riesgo: 'Alto',
-    datosTipicos: 'Bases de datos de usuarios, telemetría y hosting internacional.',
-    urgencia: 'Transferencia internacional y SLAs de bloqueo en 48 horas.',
-    beneficioPyme: 'Aplica beneficio Pyme con Ficha Técnica RAT.',
-  },
-  {
-    id: 'rrhh',
-    name: 'Empresas con +15 Trabajadores',
-    riesgo: 'Crítico',
-    datosTipicos: 'Huellas biométricas de reloj control, licencias médicas y remuneraciones.',
-    urgencia: 'Datos sensibles requieren salvaguardas técnicas reforzadas.',
-    beneficioPyme: 'Riesgo de multas graves sin consentimiento reforzado.',
-  },
-];
-
-const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenAiChat }) => {
-  const [rubroSeleccionado, setRubroSeleccionado] = useState(RUBROS_DEMO[0]);
+const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
+  const [rubroSeleccionado, setRubroSeleccionado] = useState<RubroExposicion>(RUBROS_EXPOSICION[0]);
 
   const goToDiagnosis = () => {
     onNavigate('test-cumplimiento');
@@ -66,9 +32,9 @@ const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenAiChat }) => {
             {/* Trust Pill */}
             <div className="inline-flex items-center gap-2 bg-orange-50/80 border border-orange-200 text-orange-950 px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold">
               <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" aria-hidden="true" />
-              <span>LEGALTECH & PRIVACIDAD DE DATOS</span>
+              <span>{HERO_CONTENT.badge.category}</span>
               <span className="text-orange-300" aria-hidden="true">•</span>
-              <span className="text-zinc-600">LEY Nº 21.719 CHILE</span>
+              <span className="text-zinc-600">{HERO_CONTENT.badge.law}</span>
             </div>
 
             {/* Single High-Impact H1 */}
@@ -92,7 +58,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenAiChat }) => {
                 onClick={goToDiagnosis}
                 className="inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold text-sm sm:text-base px-8 py-4 rounded-xl shadow-lg shadow-orange-500/25 transition-all"
               >
-                <span>Evaluar mi empresa (3 min)</span>
+                <span>{HERO_CONTENT.primaryCta}</span>
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </button>
 
@@ -102,7 +68,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenAiChat }) => {
                 className="inline-flex items-center justify-center gap-2 bg-zinc-950 hover:bg-zinc-800 active:scale-95 text-white font-bold text-sm sm:text-base px-6 py-4 rounded-xl transition-all shadow-md"
               >
                 <span className="material-symbols-outlined text-base text-orange-400">psychology</span>
-                <span>Generar RAT con IA</span>
+                <span>{HERO_CONTENT.secondaryCta}</span>
               </button>
             </div>
 
@@ -129,20 +95,15 @@ const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenAiChat }) => {
 
             {/* Trust Badges */}
             <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-mono text-zinc-500">
-              <span className="flex items-center gap-1.5 text-zinc-700 font-semibold">
-                <span className="material-symbols-outlined text-sm text-emerald-600">verified</span>
-                <span>Diagnóstico gratis en 3 min</span>
-              </span>
-              <span className="text-zinc-300">•</span>
-              <span className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-sm text-orange-500">lock</span>
-                <span>100% Confidencial</span>
-              </span>
-              <span className="text-zinc-300">•</span>
-              <span className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-sm text-zinc-500">business</span>
-                <span>PYMEs y empresas chilenas</span>
-              </span>
+              {HERO_CONTENT.trustBadges.map((badge, idx) => (
+                <React.Fragment key={idx}>
+                  {idx > 0 && <span className="text-zinc-300">•</span>}
+                  <span className="flex items-center gap-1.5 text-zinc-700 font-semibold">
+                    <span className="material-symbols-outlined text-sm text-emerald-600">{badge.icon}</span>
+                    <span>{badge.label}</span>
+                  </span>
+                </React.Fragment>
+              ))}
             </div>
 
           </div>
@@ -169,7 +130,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate, onOpenAiChat }) => {
                   Selecciona la actividad de tu empresa:
                 </span>
                 <div className="grid grid-cols-2 gap-1.5">
-                  {RUBROS_DEMO.map((item) => {
+                  {RUBROS_EXPOSICION.map((item) => {
                     const isSelected = rubroSeleccionado.id === item.id;
                     return (
                       <button

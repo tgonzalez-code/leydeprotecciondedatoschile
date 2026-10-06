@@ -1,4 +1,5 @@
 import React from 'react';
+import { SITE_CONFIG } from '../config/site.config';
 import { PageId } from '../types';
 
 interface FooterProps {
@@ -25,10 +26,10 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
             </div>
             <p className="text-zinc-600 max-w-md text-xs leading-relaxed font-normal">
               Plataforma tecnológica diseñada para que micro, pequeñas y medianas empresas en Chile cumplan con la 
-              <strong> Ley Nº 21.719</strong> y los requerimientos de la <strong>Agencia de Protección de Datos Personales (APDP)</strong>.
+              <strong> {SITE_CONFIG.primaryLaw}</strong> y los requerimientos de la <strong>{SITE_CONFIG.regulatorName}</strong>.
             </p>
             <div className="inline-block bg-orange-100 text-orange-950 border border-orange-200 font-mono text-[11px] font-bold px-2.5 py-1 rounded">
-              Propuesta de valor: "Cumplir sin frenar el negocio"
+              Propuesta de valor: "{SITE_CONFIG.tagline}"
             </div>
           </div>
 
@@ -40,6 +41,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
             <ul className="space-y-2 text-xs font-mono">
               <li>
                 <button 
+                  type="button"
                   onClick={() => onNavigate('inicio')}
                   className="hover:text-orange-600 transition-colors"
                 >
@@ -48,6 +50,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
               </li>
               <li>
                 <button 
+                  type="button"
                   onClick={() => onNavigate('ley-21719')}
                   className="hover:text-orange-600 transition-colors"
                 >
@@ -56,6 +59,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
               </li>
               <li>
                 <button 
+                  type="button"
                   onClick={() => onNavigate('agente-rat')}
                   className="hover:text-orange-600 transition-colors font-bold text-orange-600 flex items-center gap-1.5"
                 >
@@ -65,6 +69,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
               </li>
               <li>
                 <button 
+                  type="button"
                   onClick={() => onNavigate('derechos-arcop')}
                   className="hover:text-orange-600 transition-colors"
                 >
@@ -73,6 +78,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
               </li>
               <li>
                 <button 
+                  type="button"
                   onClick={() => onNavigate('multas-utm')}
                   className="hover:text-orange-600 transition-colors"
                 >
@@ -81,6 +87,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
               </li>
               <li>
                 <button 
+                  type="button"
                   onClick={() => onNavigate('test-cumplimiento')}
                   className="hover:text-orange-600 transition-colors"
                 >
@@ -89,6 +96,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
               </li>
               <li>
                 <button 
+                  type="button"
                   onClick={() => onNavigate('casos-pymes')}
                   className="hover:text-orange-600 transition-colors"
                 >
@@ -97,6 +105,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
               </li>
               <li>
                 <button 
+                  type="button"
                   onClick={() => onNavigate('guias-recursos')}
                   className="hover:text-orange-600 transition-colors"
                 >
@@ -112,56 +121,23 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
               Marco Regulatorio Oficial
             </h4>
             <ul className="space-y-2 text-xs font-mono">
-              <li>
-                <a
-                  href="https://www.bcn.cl/leychile/navegar?idNorma=1208920"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-orange-600 transition-colors flex items-center justify-between group"
-                  title="Ver texto oficial de la Ley 21.719 en Biblioteca del Congreso Nacional de Chile"
-                >
-                  <span className="group-hover:underline">Ley Nº 21.719 (Datos Personales)</span>
-                  <span className="material-symbols-outlined text-xs text-zinc-400 group-hover:text-orange-600">open_in_new</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.bcn.cl/leychile/navegar?idNorma=141599"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-orange-600 transition-colors flex items-center justify-between group"
-                  title="Ver texto oficial de la Ley 19.628 en BCN"
-                >
-                  <span className="group-hover:underline">Ley Nº 19.628 (Vida Privada)</span>
-                  <span className="material-symbols-outlined text-xs text-zinc-400 group-hover:text-orange-600">open_in_new</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.bcn.cl/leychile/navegar?idNorma=1010344"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-orange-600 transition-colors flex items-center justify-between group"
-                  title="Ver texto oficial de la Ley 20.416 Estatuto Pyme en BCN"
-                >
-                  <span className="group-hover:underline">Ley Nº 20.416 (Estatuto Pyme)</span>
-                  <span className="material-symbols-outlined text-xs text-zinc-400 group-hover:text-orange-600">open_in_new</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.bcn.cl/leychile/navegar?idNorma=1202867"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-orange-600 transition-colors flex items-center justify-between group"
-                  title="Ver texto oficial de la Ley 21.663 Marco de Ciberseguridad en BCN"
-                >
-                  <span className="group-hover:underline">Ley Nº 21.663 (Ciberseguridad)</span>
-                  <span className="material-symbols-outlined text-xs text-zinc-400 group-hover:text-orange-600">open_in_new</span>
-                </a>
-              </li>
+              {SITE_CONFIG.frameworkLaws.map((law, idx) => (
+                <li key={idx}>
+                  <a
+                    href={law.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-orange-600 transition-colors flex items-center justify-between group"
+                    title={`Ver texto oficial de ${law.name} en Biblioteca del Congreso Nacional de Chile`}
+                  >
+                    <span className="group-hover:underline">{law.name}</span>
+                    <span className="material-symbols-outlined text-xs text-zinc-400 group-hover:text-orange-600">open_in_new</span>
+                  </a>
+                </li>
+              ))}
               <li>
                 <button
+                  type="button"
                   onClick={() => onNavigate('compendio-legal')}
                   className="text-orange-600 font-bold hover:underline transition-colors flex items-center gap-1 mt-1"
                 >
@@ -170,6 +146,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
               </li>
               <li className="pt-2">
                 <button
+                  type="button"
                   onClick={onOpenAiChat}
                   className="inline-flex items-center gap-1.5 bg-zinc-950 hover:bg-zinc-800 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm"
                 >
@@ -182,19 +159,15 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenAiChat }) => {
 
         </div>
 
-        {/* Mandatory Legal Disclaimer */}
-        <div className="pt-6 border-t border-zinc-200 text-center space-y-2">
-          <p className="text-[11px] text-zinc-500 max-w-4xl mx-auto leading-relaxed">
-            <strong>Descargo de Responsabilidad:</strong> Esta plataforma brinda orientación técnica y operativa sobre la Ley 21.719 
-            y facilita la estructuración del Registro de Actividades de Tratamiento (RAT - Art. 14 ter) para entidades en Chile. 
-            Para asuntos contenciosos específicos, reclamaciones formales o litigios complejos, siempre se recomienda validación jurídica profesional.
-          </p>
-          <div className="flex items-center justify-center gap-3 text-[10px] text-zinc-400 font-mono">
-            <span>© 2026 leydedatospersonaleschile.cl</span>
+        {/* Bottom copyright & disclaimer */}
+        <div className="pt-8 border-t border-zinc-200 flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-[11px] text-zinc-500">
+          <div>
+            © {SITE_CONFIG.year} {SITE_CONFIG.name}. Todos los derechos reservados.
+          </div>
+          <div className="flex items-center gap-4">
+            <span>Orientación técnica y operativa para empresas chilenas.</span>
             <span>•</span>
-            <span>Santiago de Chile</span>
-            <span>•</span>
-            <span>República de Chile</span>
+            <span className="text-zinc-600 font-bold">Ley Nº 21.719</span>
           </div>
         </div>
 

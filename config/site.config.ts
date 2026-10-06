@@ -1,0 +1,41 @@
+export const SITE_CONFIG = {
+  name: 'leydedatospersonaleschile.cl',
+  brandName: 'Ley de Datos Personales Chile',
+  tagline: 'Cumplir con la Ley 21.719 sin frenar el negocio',
+  description: 'Plataforma moderna de Data Privacy Compliance para la Ley 21.719 en Chile. Evalúa tu empresa en 3 minutos, genera tu Registro RAT (Art. 14 ter) con IA y cumple sin frenar el negocio.',
+  url: 'https://leydedatospersonaleschile.cl',
+  domain: 'leydedatospersonaleschile.cl',
+  contactEmail: 'contacto@leydedatospersonaleschile.cl',
+  author: 'leydedatospersonaleschile.cl',
+  locale: 'es_CL',
+  year: 2026,
+  country: 'Chile',
+  regulatorName: 'Agencia de Protección de Datos Personales (APDP)',
+  primaryLaw: 'Ley Nº 21.719',
+  frameworkLaws: [
+    {
+      name: 'Ley Nº 21.719',
+      fullName: 'Nueva Ley sobre Protección de Datos Personales',
+      url: 'https://www.bcn.cl/leychile/navegar?idNorma=1208940',
+      description: 'Crea la APDP, consagra derechos ARCOP+ y multas de hasta 20.000 UTM.',
+    },
+    {
+      name: 'Ley Nº 19.628',
+      fullName: 'Sobre Protección de la Vida Privada',
+      url: 'https://www.bcn.cl/leychile/navegar?idNorma=141599',
+      description: 'Marco normativo originario modificado y modernizado sustancialmente.',
+    },
+    {
+      name: 'Ley Nº 20.416',
+      fullName: 'Estatuto de Acceso al Crédito y Competitividad de las MiPymes',
+      url: 'https://www.bcn.cl/leychile/navegar?idNorma=1010376',
+      description: 'Establece el beneficio de amonestación escrita en primera falta para Pymes.',
+    },
+    {
+      name: 'Ley Nº 21.663',
+      fullName: 'Marco de Ciberseguridad e Infraestructura Crítica',
+      url: 'https://www.bcn.cl/leychile/navegar?idNorma=1202868',
+      description: 'Exigencias de reporte de incidentes y seguridad digital institucional.',
+    },
+  ],
+} as const;

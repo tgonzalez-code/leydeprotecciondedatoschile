@@ -1,63 +1,34 @@
 import React, { useState } from 'react';
+import { BUSINESS_CONFIG } from '../config/business.config';
+import { CALCULATOR_OPTIONS, INFRACCIONES_CONFIG } from '../config/calculator.config';
+import { calcularMultaAPDP, formatearCLP, formatearUTM } from '../lib/calculations/utmCalculator';
+import { TipoInfraccion } from '../types';
 
 interface UTMCalculatorProps {
   onGoToRat: () => void;
 }
 
-// Valor oficial fijado por la plataforma según publicación SII / Banco Central
-const VALOR_UTM_OFICIAL = 67294;
-
 const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
-  const utmValue = VALOR_UTM_OFICIAL;
-  const [tipoInfraccion, setTipoInfraccion] = useState<'leve' | 'grave' | 'gravisima'>('grave');
+  const [tipoInfraccion, setTipoInfraccion] = useState<TipoInfraccion>('grave');
   const [esPyme, setEsPyme] = useState<boolean>(true);
   const [esReincidente, setEsReincidente] = useState<boolean>(false);
 
-  // Checklist de cumplimiento
+  // Factores operativos del termómetro de riesgo
   const [tieneRAT, setTieneRAT] = useState<boolean>(false);
   const [respondeBloqueo2Dias, setRespondeBloqueo2Dias] = useState<boolean>(false);
   const [manejaDatosSensibles, setManejaDatosSensibles] = useState<boolean>(true);
 
-  const getDetallesInfraccion = () => {
-    switch (tipoInfraccion) {
-      case 'leve':
-        return {
-          nombre: 'Infracción Leve',
-          maxUtm: 5000,
-          ejemplos: [
-            'No mantener debidamente actualizado el Registro de Actividades de Tratamiento (RAT).',
-            'Demoras no graves en la entrega de información ante solicitudes de acceso.',
-            'No comunicar modificaciones menores en los avisos de privacidad.',
-          ],
-        };
-      case 'grave':
-        return {
-          nombre: 'Infracción Grave',
-          maxUtm: 10000,
-          ejemplos: [
-            'Tratar datos personales sin base de licitud (sin consentimiento expreso ni contrato).',
-            'No contar con el Registro de Actividades de Tratamiento (RAT - Art. 14 ter).',
-            'Incumplir el plazo perentorio de 2 días hábiles para el Bloqueo Temporal.',
-            'Traspasar bases de datos a proveedores sin cláusula de encargado de tratamiento.',
-          ],
-        };
-      case 'gravisima':
-        return {
-          nombre: 'Infracción Gravísima',
-          maxUtm: 20000,
-          ejemplos: [
-            'Fuga masiva de datos sensibles (salud, biometría, RUT) por negligencia grave.',
-            'Venta o comercialización ilícita de datos personales de clientes o trabajadores.',
-            'Desacato reiterado de instrucciones o medidas cautelares de la APDP.',
-          ],
-        };
-    }
-  };
+  // Ejecución del cálculo a través del módulo de dominio
+  const resultado = calcularMultaAPDP({
+    tipoInfraccion,
+    esPyme,
+    esReincidente,
+    tieneRAT,
+    respondeBloqueo2Dias,
+    manejaDatosSensibles,
+  });
 
-  const detalle = getDetallesInfraccion();
-  const montoMaximoCLP = detalle.maxUtm * utmValue;
-  const puntosRiesgo = (!tieneRAT ? 40 : 0) + (!respondeBloqueo2Dias ? 30 : 0) + (manejaDatosSensibles ? 20 : 0);
-  const nivelRiesgo = puntosRiesgo >= 60 ? 'Crítico' : puntosRiesgo >= 30 ? 'Medio' : 'Controlado';
+  const detalleInfraccion = INFRACCIONES_CONFIG[tipoInfraccion];
 
   return (
     <div id="multas-utm" className="py-14 bg-zinc-50 border-b border-zinc-200">
@@ -84,8 +55,10 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
             </div>
             <div>
               <span className="text-zinc-500 block text-[10px] uppercase font-bold">VALOR OFICIAL UTM FIJADO:</span>
-              <strong className="text-zinc-950 text-sm font-black">${utmValue.toLocaleString('es-CL')} CLP</strong>
-              <span className="text-[10px] text-orange-600 ml-1.5 font-bold">(SII Chile)</span>
+              <strong className="text-zinc-950 text-sm font-black">
+                {formatearCLP(BUSINESS_CONFIG.utm.valorOficialCLP)}
+              </strong>
+              <span className="text-[10px] text-orange-600 ml-1.5 font-bold">({BUSINESS_CONFIG.utm.fuente})</span>
             </div>
           </div>
         </div>
@@ -102,14 +75,11 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
                 1. Selecciona la Gravedad de la Infracción
               </label>
               <div className="grid grid-cols-3 gap-3">
-                {[
-                  { key: 'leve', label: 'Leve', utm: 'Hasta 5.000 UTM' },
-                  { key: 'grave', label: 'Grave', utm: 'Hasta 10.000 UTM' },
-                  { key: 'gravisima', label: 'Gravísima', utm: 'Hasta 20.000 UTM' },
-                ].map((g) => (
+                {CALCULATOR_OPTIONS.map((g) => (
                   <button
                     key={g.key}
-                    onClick={() => setTipoInfraccion(g.key as any)}
+                    type="button"
+                    onClick={() => setTipoInfraccion(g.key)}
                     className={`p-3.5 rounded-xl border-2 text-left transition-all ${
                       tipoInfraccion === g.key
                         ? 'border-orange-500 bg-orange-50/60 shadow-sm'
@@ -138,7 +108,7 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
               </div>
               <div className="text-right shrink-0">
                 <span className="text-sm sm:text-base font-mono font-black text-orange-600">
-                  ${utmValue.toLocaleString('es-CL')} CLP
+                  {formatearCLP(BUSINESS_CONFIG.utm.valorOficialCLP)}
                 </span>
                 <span className="text-[10px] font-mono text-zinc-400 block">1 UTM</span>
               </div>
@@ -149,7 +119,7 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
               <div>
                 <div className="flex items-center gap-1.5 font-display font-bold text-sm text-zinc-950">
                   <span className="material-symbols-outlined text-orange-500 text-lg">verified</span>
-                  Beneficio Pyme: Amonestación Escrita (Ley 20.416)
+                  Beneficio Pyme: Amonestación Escrita ({BUSINESS_CONFIG.beneficioPyme.leyNumero})
                 </div>
                 <p className="text-xs text-zinc-600 mt-1 leading-relaxed">
                   Para Micro y Pequeñas empresas sin reincidencia, la APDP sustituye la multa por amonestación escrita, 
@@ -185,10 +155,10 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
             {/* Infracciones tipificadas */}
             <div className="p-4 rounded-xl bg-orange-50/50 border border-orange-200">
               <span className="text-[11px] font-mono font-bold text-orange-900 uppercase block mb-1.5">
-                Hechos que constituyen {detalle.nombre}:
+                Hechos que constituyen {detalleInfraccion.nombre} ({detalleInfraccion.articulos}):
               </span>
               <ul className="space-y-1.5 text-xs text-zinc-700">
-                {detalle.ejemplos.map((ej, i) => (
+                {detalleInfraccion.ejemplos.map((ej, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <span className="text-orange-500 font-bold">•</span>
                     <span>{ej}</span>
@@ -208,13 +178,13 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
                   Sanción Máxima Proyectada
                 </span>
                 <span className="text-xs font-mono font-bold bg-orange-100 text-orange-900 px-2.5 py-1 rounded-full border border-orange-300">
-                  {detalle.maxUtm.toLocaleString('es-CL')} UTM
+                  {formatearUTM(resultado.maxUtm)}
                 </span>
               </div>
 
               <div>
                 <p className="text-3xl sm:text-4xl font-display font-black text-zinc-950 tracking-tight">
-                  ${montoMaximoCLP.toLocaleString('es-CL')} <span className="text-sm font-sans text-zinc-500">CLP</span>
+                  {formatearCLP(resultado.montoMaximoCLP)}
                 </p>
                 <span className="text-xs font-mono text-orange-600 font-bold block mt-1">
                   Potestad sancionatoria de la APDP
@@ -222,14 +192,14 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
               </div>
 
               {/* Status Outcome */}
-              {esPyme && !esReincidente ? (
+              {resultado.aplicaBeneficioPyme ? (
                 <div className="mt-6 p-4 rounded-2xl bg-orange-50 border-2 border-orange-500 text-xs text-zinc-900">
                   <div className="flex items-center gap-1.5 font-bold font-display text-sm text-zinc-950 mb-1">
                     <span className="material-symbols-outlined text-orange-600 text-base">verified</span>
                     Atenuante Activa: Amonestación Escrita
                   </div>
                   <p className="leading-relaxed text-zinc-700">
-                    Bajo el Estatuto Pyme (Ley 20.416), la APDP no cobra la multa si 
+                    Bajo el Estatuto Pyme ({BUSINESS_CONFIG.beneficioPyme.leyNumero}), la APDP no cobra la multa si 
                     <strong> acreditas de inmediato el RAT (Art. 14 ter)</strong>. Si no tienes el RAT, la multa se aplica en su totalidad.
                   </p>
                 </div>
@@ -243,6 +213,7 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
               )}
 
               <button
+                type="button"
                 onClick={onGoToRat}
                 className="mt-6 w-full inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold py-4 px-6 rounded-xl text-sm shadow-xl shadow-orange-500/25 transition-all"
               >
@@ -256,11 +227,11 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold font-mono text-zinc-900 uppercase">Termómetro de Riesgo Pyme</span>
                 <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full ${
-                  nivelRiesgo === 'Crítico' ? 'bg-red-100 text-red-800 border border-red-300' :
-                  nivelRiesgo === 'Medio' ? 'bg-orange-100 text-orange-800 border border-orange-300' :
+                  resultado.nivelRiesgo === 'Crítico' ? 'bg-red-100 text-red-800 border border-red-300' :
+                  resultado.nivelRiesgo === 'Medio' ? 'bg-orange-100 text-orange-800 border border-orange-300' :
                   'bg-emerald-100 text-emerald-800 border border-emerald-300'
                 }`}>
-                  Riesgo {nivelRiesgo}
+                  Riesgo {resultado.nivelRiesgo}
                 </span>
               </div>
 

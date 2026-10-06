@@ -83,3 +83,104 @@ export interface MensajeChat {
   timestamp: string;
   sugerencias?: string[];
 }
+
+// ----------------- DOMAIN & ASSESSMENT MODELS -----------------
+
+export interface ChecklistItem {
+  id: string;
+  pregunta: string;
+  articulos: string;
+  ponderacion: number;
+  consejo: string;
+}
+
+export type NivelRiesgoCumplimiento = 'Avanzado' | 'Moderado' | 'Crítico';
+
+export interface DiagnosticoCumplimiento {
+  nivel: string;
+  categoria: NivelRiesgoCumplimiento;
+  color: string;
+  mensaje: string;
+  puntaje: number;
+  recomendaciones: string[];
+}
+
+// ----------------- CALCULATOR & SANCTIONS MODELS -----------------
+
+export type TipoInfraccion = 'leve' | 'grave' | 'gravisima';
+
+export interface InfraccionDetalle {
+  tipo: TipoInfraccion;
+  nombre: string;
+  maxUtm: number;
+  ejemplos: string[];
+  articulos: string;
+}
+
+export interface CalculoMultaResultado {
+  utmOficial: number;
+  tipoInfraccion: TipoInfraccion;
+  maxUtm: number;
+  montoMaximoCLP: number;
+  aplicaBeneficioPyme: boolean;
+  esReincidente: boolean;
+  puntosRiesgo: number;
+  nivelRiesgo: 'Controlado' | 'Medio' | 'Crítico';
+  tieneRAT: boolean;
+  respondeBloqueo2Dias: boolean;
+  manejaDatosSensibles: boolean;
+  sancionEstimadaTexto: string;
+}
+
+// ----------------- ARCOP RIGHTS MODELS -----------------
+
+export interface DerechoARCOPDetalle {
+  tipo: TipoSolicitudARCO;
+  articulo: string;
+  sla: string;
+  esCritico?: boolean;
+  resumen: string;
+  descripcionCompleta: string;
+  requisitosTitular: string;
+  obligacionEmpresa: string;
+  excepcionesLegales: string;
+  reclamacionAPDP: string;
+}
+
+// ----------------- LAW & TIMELINE MODELS -----------------
+
+export interface TimelineHito {
+  fase: string;
+  fecha: string;
+  titulo: string;
+  descripcion: string;
+  estado: 'Completado' | 'En curso' | 'Próximo hito' | 'Plena vigencia';
+  articulosClave: string[];
+  impactoEmpresa: string;
+}
+
+export interface ArticuloLeyCompendio {
+  numero: string;
+  titulo: string;
+  resumen: string;
+  contenido: string;
+  obligatorio: boolean;
+  tag: string;
+}
+
+export interface CasoPractico {
+  titulo: string;
+  rubro: string;
+  situacion: string;
+  riesgo: string;
+  solucionRAT: string;
+}
+
+export interface RubroExposicion {
+  id: string;
+  name: string;
+  riesgo: 'Alto' | 'Medio' | 'Crítico' | 'Bajo';
+  datosTipicos: string;
+  urgencia: string;
+  beneficioPyme: string;
+}

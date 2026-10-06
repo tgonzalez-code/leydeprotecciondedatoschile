@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import TrustBar from './components/TrustBar';
 import InformativeCarousel from './components/InformativeCarousel';
+import { HOME_METRICS } from './content/home';
 import TimelineVigencia from './components/TimelineVigencia';
 import ComplianceChecklist from './components/ComplianceChecklist';
 import Features from './components/Features';
@@ -258,26 +259,15 @@ const App: React.FC = () => {
             {/* Franja de 4 Métricas Clave de la Ley 21.719 */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="bg-zinc-950 text-white rounded-3xl p-6 sm:p-8 border-2 border-zinc-900 grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                <div className="space-y-1">
-                  <span className="text-2xl sm:text-3xl font-display font-black text-orange-400">24 Meses</span>
-                  <p className="text-xs font-mono text-zinc-300">Vacancia Legal</p>
-                  <p className="text-[11px] text-zinc-400">Plazo para adecuar contratos y procesos</p>
-                </div>
-                <div className="space-y-1">
-                  <span className="text-2xl sm:text-3xl font-display font-black text-white">2 Días</span>
-                  <p className="text-xs font-mono text-zinc-300">SLA Crítico (Art. 10 bis)</p>
-                  <p className="text-[11px] text-zinc-400">Plazo para responder Bloqueo Temporal</p>
-                </div>
-                <div className="space-y-1">
-                  <span className="text-2xl sm:text-3xl font-display font-black text-orange-400">20.000 UTM</span>
-                  <p className="text-xs font-mono text-zinc-300">Multa Máxima</p>
-                  <p className="text-[11px] text-zinc-400">O hasta el 4% de ventas anuales</p>
-                </div>
-                <div className="space-y-1">
-                  <span className="text-2xl sm:text-3xl font-display font-black text-emerald-400">Ley 20.416</span>
-                  <p className="text-xs font-mono text-zinc-300">Estatuto Pyme</p>
-                  <p className="text-[11px] text-zinc-400">Sustituye multas por amonestación</p>
-                </div>
+                {HOME_METRICS.map((metrica, idx) => (
+                  <div key={idx} className="space-y-1">
+                    <span className={`text-2xl sm:text-3xl font-display font-black ${metrica.color}`}>
+                      {metrica.valor}
+                    </span>
+                    <p className="text-xs font-mono text-zinc-300">{metrica.titulo}</p>
+                    <p className="text-[11px] text-zinc-400">{metrica.descripcion}</p>
+                  </div>
+                ))}
               </div>
             </section>
 

@@ -1,57 +1,6 @@
 import React, { useState } from 'react';
-
-interface ChecklistItem {
-  id: string;
-  pregunta: string;
-  articulos: string;
-  ponderacion: number;
-  consejo: string;
-}
-
-const PREGUNTAS_CHECKLIST: ChecklistItem[] = [
-  {
-    id: 'rat',
-    pregunta: '¿Cuenta tu empresa con un Registro de Actividades de Tratamiento (RAT) documentado y al día?',
-    articulos: 'Art. 14 ter',
-    ponderacion: 25,
-    consejo: 'Es el Tramo 1 obligatorio exigido de entrada por la APDP. Sin él, no hay defensa posible ante una fiscalización.',
-  },
-  {
-    id: 'base_licitud',
-    pregunta: '¿Cada tratamiento de datos (nóminas, clientes, CRM, marketing) tiene asignada y respaldada su base de licitud legal?',
-    articulos: 'Art. 12 y 13',
-    ponderacion: 20,
-    consejo: 'Tratar datos sin consentimiento o sin ejecución contractual válida tipifica como infracción grave (hasta 10.000 UTM).',
-  },
-  {
-    id: 'bloqueo_2dias',
-    pregunta: '¿Posees un protocolo interno para ejecutar el Bloqueo Temporal de datos en un plazo máximo de 2 días hábiles?',
-    articulos: 'Art. 10 bis',
-    ponderacion: 15,
-    consejo: 'Es el SLA legal más exigente de la Ley 21.719. Si un titular reclama, debes suspender el uso del dato en 48 horas hábiles.',
-  },
-  {
-    id: 'derechos_arcop',
-    pregunta: '¿Tienes un canal oficial habilitado (ej. email) para responder solicitudes ARCOP en un plazo máximo de 30 días corridos?',
-    articulos: 'Art. 5 al 11',
-    ponderacion: 15,
-    consejo: 'Debes certificar fecha de ingreso y emitir respuesta motivada en plazo para evitar denuncias ante la Agencia.',
-  },
-  {
-    id: 'seguridad_tecnica',
-    pregunta: '¿Implementas medidas de seguridad técnicas (doble factor MFA, cifrado, accesos por rol y copias de respaldo)?',
-    articulos: 'Art. 4 letra e)',
-    ponderacion: 15,
-    consejo: 'El principio de seguridad exige salvaguardas proporcionales para evitar filtraciones y accesos no autorizados.',
-  },
-  {
-    id: 'contratos_encargados',
-    pregunta: '¿Tus contratos con proveedores que acceden a datos (software en la nube, contadores, agencias) incluyen cláusulas de encargado?',
-    articulos: 'Art. 15 y 16',
-    ponderacion: 10,
-    consejo: 'La empresa responsable responde solidariamente por las infracciones cometidas por sus proveedores encargados.',
-  },
-];
+import { COMPLIANCE_QUESTIONS } from '../config/assessment.config';
+import { calcularPuntajeCumplimiento, evaluarDiagnostico } from '../lib/calculations/complianceScoring';
 
 interface ComplianceChecklistProps {
   onGoToRat: () => void;
@@ -71,33 +20,9 @@ const ComplianceChecklist: React.FC<ComplianceChecklistProps> = ({ onGoToRat }) 
     setRespuestas(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const puntajeTotal = PREGUNTAS_CHECKLIST.reduce((acc, p) => {
-    return acc + (respuestas[p.id] ? p.ponderacion : 0);
-  }, 0);
-
-  const getDiagnostico = () => {
-    if (puntajeTotal >= 80) {
-      return {
-        nivel: 'Nivel Avanzado',
-        color: 'text-emerald-700 bg-emerald-50 border-emerald-300',
-        mensaje: 'Tu empresa cuenta con bases sólidas. Recuerda mantener actualizado el RAT ante cualquier cambio de proceso.',
-      };
-    }
-    if (puntajeTotal >= 45) {
-      return {
-        nivel: 'Riesgo Moderado',
-        color: 'text-orange-800 bg-orange-50 border-orange-300',
-        mensaje: 'Presentas brechas críticas. En caso de una denuncia en la APDP, la falta de RAT te expone a multas graves.',
-      };
-    }
-    return {
-      nivel: 'Riesgo Crítico de Sanción',
-      color: 'text-red-800 bg-red-50 border-red-300',
-      mensaje: 'Infracción inminente ante fiscalización. El Estatuto Pyme exige regularizar de inmediato con el RAT.',
-    };
-  };
-
-  const diag = getDiagnostico();
+  // Lógica de cálculo delegada al módulo de dominio
+  const puntajeTotal = calcularPuntajeCumplimiento(respuestas);
+  const diag = evaluarDiagnostico(puntajeTotal);
 
   return (
     <section id="test-cumplimiento" aria-labelledby="heading-checklist" className="py-14 bg-white border-b border-zinc-200">
@@ -143,7 +68,7 @@ const ComplianceChecklist: React.FC<ComplianceChecklistProps> = ({ onGoToRat }) 
           
           {/* Questions list */}
           <div className="lg:col-span-8 space-y-3">
-            {PREGUNTAS_CHECKLIST.map((item) => {
+            {COMPLIANCE_QUESTIONS.map((item) => {
               const checked = !!respuestas[item.id];
               return (
                 <div
@@ -201,6 +126,20 @@ const ComplianceChecklist: React.FC<ComplianceChecklistProps> = ({ onGoToRat }) 
                 {diag.mensaje}
               </p>
             </div>
+
+            {diag.recomendaciones && (
+              <div className="space-y-1.5 pt-3 border-t border-zinc-800">
+                <span className="text-[10px] font-mono uppercase font-bold text-zinc-400">Acciones prioritarias:</span>
+                <ul className="space-y-1 text-xs text-zinc-300">
+                  {diag.recomendaciones.map((rec, i) => (
+                    <li key={i} className="flex items-start gap-1.5">
+                      <span className="text-orange-400 font-bold">•</span>
+                      <span>{rec}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <div className="pt-4 border-t border-zinc-800 space-y-3 text-xs">
               <strong className="text-zinc-200 font-mono text-[11px] uppercase block font-bold">

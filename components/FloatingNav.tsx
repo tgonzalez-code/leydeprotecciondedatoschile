@@ -28,6 +28,20 @@ const FloatingNav: React.FC<FloatingNavProps> = ({ onScrollTo, onAiClick }) => {
         </button>
 
         <button
+          onClick={() => onScrollTo('test-cumplimiento')}
+          className="hidden lg:flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-mono font-bold text-orange-600 hover:bg-orange-50 transition-colors"
+        >
+          <span>Test</span>
+        </button>
+
+        <button
+          onClick={() => onScrollTo('timeline-ley')}
+          className="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 transition-colors"
+        >
+          <span>Vigencia</span>
+        </button>
+
+        <button
           onClick={() => onScrollTo('multas-utm')}
           className="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-mono font-bold text-zinc-800 hover:bg-zinc-100 transition-colors"
         >

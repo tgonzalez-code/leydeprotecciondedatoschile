@@ -1,0 +1,233 @@
+import React, { useState } from 'react';
+
+interface ChecklistItem {
+  id: string;
+  pregunta: string;
+  articulos: string;
+  ponderacion: number;
+  consejo: string;
+}
+
+const PREGUNTAS_CHECKLIST: ChecklistItem[] = [
+  {
+    id: 'rat',
+    pregunta: '¿Cuenta tu empresa con un Registro de Actividades de Tratamiento (RAT) documentado y al día?',
+    articulos: 'Art. 14 ter',
+    ponderacion: 25,
+    consejo: 'Es el Tramo 1 obligatorio exigido de entrada por la APDP. Sin él, no hay defensa posible ante una fiscalización.',
+  },
+  {
+    id: 'base_licitud',
+    pregunta: '¿Cada tratamiento de datos (nóminas, clientes, CRM, marketing) tiene asignada y respaldada su base de licitud legal?',
+    articulos: 'Art. 12 y 13',
+    ponderacion: 20,
+    consejo: 'Tratar datos sin consentimiento o sin ejecución contractual válida tipifica como infracción grave (hasta 10.000 UTM).',
+  },
+  {
+    id: 'bloqueo_2dias',
+    pregunta: '¿Posees un protocolo interno para ejecutar el Bloqueo Temporal de datos en un plazo máximo de 2 días hábiles?',
+    articulos: 'Art. 10 bis',
+    ponderacion: 15,
+    consejo: 'Es el SLA legal más exigente de la Ley 21.719. Si un titular reclama, debes suspender el uso del dato en 48 horas hábiles.',
+  },
+  {
+    id: 'derechos_arcop',
+    pregunta: '¿Tienes un canal oficial habilitado (ej. email) para responder solicitudes ARCOP en un plazo máximo de 30 días corridos?',
+    articulos: 'Art. 5 al 11',
+    ponderacion: 15,
+    consejo: 'Debes certificar fecha de ingreso y emitir respuesta motivada en plazo para evitar denuncias ante la Agencia.',
+  },
+  {
+    id: 'seguridad_tecnica',
+    pregunta: '¿Implementas medidas de seguridad técnicas (doble factor MFA, cifrado, accesos por rol y copias de respaldo)?',
+    articulos: 'Art. 4 letra e)',
+    ponderacion: 15,
+    consejo: 'El principio de seguridad exige salvaguardas proporcionales para evitar filtraciones y accesos no autorizados.',
+  },
+  {
+    id: 'contratos_encargados',
+    pregunta: '¿Tus contratos con proveedores que acceden a datos (software en la nube, contadores, agencias) incluyen cláusulas de encargado?',
+    articulos: 'Art. 15 y 16',
+    ponderacion: 10,
+    consejo: 'La empresa responsable responde solidariamente por las infracciones cometidas por sus proveedores encargados.',
+  },
+];
+
+interface ComplianceChecklistProps {
+  onGoToRat: () => void;
+}
+
+const ComplianceChecklist: React.FC<ComplianceChecklistProps> = ({ onGoToRat }) => {
+  const [respuestas, setRespuestas] = useState<Record<string, boolean>>({
+    rat: false,
+    base_licitud: false,
+    bloqueo_2dias: false,
+    derechos_arcop: true,
+    seguridad_tecnica: true,
+    contratos_encargados: false,
+  });
+
+  const toggleRespuesta = (id: string) => {
+    setRespuestas(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const puntajeTotal = PREGUNTAS_CHECKLIST.reduce((acc, p) => {
+    return acc + (respuestas[p.id] ? p.ponderacion : 0);
+  }, 0);
+
+  const getDiagnostico = () => {
+    if (puntajeTotal >= 80) {
+      return {
+        nivel: 'Nivel Avanzado',
+        color: 'text-emerald-700 bg-emerald-50 border-emerald-300',
+        mensaje: 'Tu empresa cuenta con bases sólidas. Recuerda mantener actualizado el RAT ante cualquier cambio de proceso.',
+      };
+    }
+    if (puntajeTotal >= 45) {
+      return {
+        nivel: 'Riesgo Moderado',
+        color: 'text-orange-800 bg-orange-50 border-orange-300',
+        mensaje: 'Presentas brechas críticas. En caso de una denuncia en la APDP, la falta de RAT te expone a multas graves.',
+      };
+    }
+    return {
+      nivel: 'Riesgo Crítico de Sanción',
+      color: 'text-red-800 bg-red-50 border-red-300',
+      mensaje: 'Infracción inminente ante fiscalización. El Estatuto Pyme exige regularizar de inmediato con el RAT.',
+    };
+  };
+
+  const diag = getDiagnostico();
+
+  return (
+    <section id="test-cumplimiento" aria-labelledby="heading-checklist" className="py-14 bg-white border-b border-zinc-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          <div>
+            <div className="inline-flex items-center gap-1.5 bg-orange-100 text-orange-900 border border-orange-200 text-xs font-mono font-bold px-3 py-1 rounded-full mb-2">
+              <span className="material-symbols-outlined text-sm text-orange-600" aria-hidden="true">fact_check</span>
+              <span>TEST INTERACTIVO DE DIAGNÓSTICO</span>
+            </div>
+            <h2 id="heading-checklist" className="text-2xl sm:text-4xl font-display font-black text-zinc-950 tracking-tight">
+              ¿Está tu empresa lista para la Ley 21.719?
+            </h2>
+            <p className="text-sm sm:text-base text-zinc-600 mt-1 max-w-2xl font-normal">
+              Evalúa en 60 segundos el nivel de preparación de tu negocio frente a las exigencias que fiscalizará la APDP.
+            </p>
+          </div>
+
+          {/* Real-time score indicator */}
+          <div className="bg-zinc-50 p-4 rounded-2xl border-2 border-zinc-900 flex items-center gap-4 self-start md:self-auto shadow-sm">
+            <div>
+              <span className="text-[10px] font-mono text-zinc-500 uppercase font-bold block">Puntaje Obtenido</span>
+              <span className="text-2xl font-display font-black text-zinc-950">{puntajeTotal} / 100</span>
+            </div>
+            <div className={`px-3 py-1 rounded-lg border font-mono text-xs font-bold ${diag.color}`}>
+              {diag.nivel}
+            </div>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="w-full bg-zinc-200 h-3 rounded-full overflow-hidden mb-8" role="progressbar" aria-valuenow={puntajeTotal} aria-valuemin={0} aria-valuemax={100}>
+          <div 
+            className="bg-orange-500 h-full transition-all duration-300"
+            style={{ width: `${puntajeTotal}%` }}
+          ></div>
+        </div>
+
+        {/* Questions Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* Questions list */}
+          <div className="lg:col-span-8 space-y-3">
+            {PREGUNTAS_CHECKLIST.map((item) => {
+              const checked = !!respuestas[item.id];
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => toggleRespuesta(item.id)}
+                  className={`p-4 sm:p-5 rounded-2xl border-2 transition-all cursor-pointer select-none flex items-start gap-4 ${
+                    checked
+                      ? 'bg-orange-50/50 border-orange-500 shadow-sm'
+                      : 'bg-zinc-50 border-zinc-200 hover:border-zinc-300'
+                  }`}
+                  role="checkbox"
+                  aria-checked={checked}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === ' ' || e.key === 'Enter') {
+                      e.preventDefault();
+                      toggleRespuesta(item.id);
+                    }
+                  }}
+                >
+                  <div className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${
+                    checked ? 'bg-orange-500 text-white' : 'border-2 border-zinc-400 bg-white'
+                  }`}>
+                    {checked ? '✓' : ''}
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <strong className="text-sm font-display font-bold text-zinc-950">
+                        {item.pregunta}
+                      </strong>
+                      <span className="text-[10px] font-mono font-bold bg-white text-zinc-700 px-2 py-0.5 rounded border border-zinc-300 shrink-0">
+                        {item.articulos}
+                      </span>
+                    </div>
+                    <p className="text-xs text-zinc-600 leading-relaxed font-normal">
+                      {item.consejo}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Action / Diagnosis Box */}
+          <div className="lg:col-span-4 bg-zinc-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl space-y-5">
+            <div>
+              <span className="text-xs font-mono font-bold text-orange-400 uppercase">
+                DIAGNÓSTICO REGULATORIO
+              </span>
+              <h3 className="text-xl font-display font-black text-white mt-1">
+                {diag.nivel}
+              </h3>
+              <p className="text-xs text-zinc-300 mt-2 leading-relaxed">
+                {diag.mensaje}
+              </p>
+            </div>
+
+            <div className="pt-4 border-t border-zinc-800 space-y-3 text-xs">
+              <strong className="text-zinc-200 font-mono text-[11px] uppercase block font-bold">
+                Paso 1 Obligatorio Recomendado:
+              </strong>
+              <div className="bg-zinc-900 p-3.5 rounded-xl border border-zinc-800 text-zinc-300">
+                <p>
+                  Si aún no marcas el <strong>Registro RAT (Art. 14 ter)</strong>, tu empresa no puede acreditar el beneficio de la Ley 20.416 ante la APDP.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={onGoToRat}
+                className="w-full inline-flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold py-3.5 px-4 rounded-xl text-xs sm:text-sm shadow-lg shadow-orange-500/30 transition-all"
+              >
+                <span>Generar el RAT con IA en 3 min</span>
+                <span className="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+export default ComplianceChecklist;

@@ -22,7 +22,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#070d1e] text-slate-100 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
+    <div className="relative min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
       
       {/* Top Main Navigation */}
       <Navbar
@@ -51,30 +51,30 @@ const App: React.FC = () => {
             />
 
             {/* Bottom Callout Banner on Home */}
-            <section className="py-14 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-950 via-[#0d2254] to-blue-950 border-t border-blue-900/50">
+            <section className="py-12 px-4 sm:px-6 lg:px-8 bg-slate-50 border-t border-slate-200">
               <div className="max-w-4xl mx-auto text-center">
-                <span className="text-emerald-400 font-mono text-xs uppercase tracking-wider font-semibold">
-                  TRAMO 1: ARTÍCULO 14 TER
+                <span className="text-blue-900 font-mono text-[10px] font-bold uppercase tracking-wider bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                  TRAMO 1: ARTÍCULO 14 TER OBLIGATORIO
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
+                <h2 className="text-xl sm:text-3xl font-black text-slate-900 mt-2">
                   Protege tu Pyme antes de una fiscalización de la APDP
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-300 mt-2 max-w-2xl mx-auto">
-                  En solo 3 minutos tendrás tu Registro de Actividades de Tratamiento listo para acreditar 
+                <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl mx-auto leading-relaxed">
+                  En solo 3 minutos tendrás tu Registro de Actividades de Tratamiento (RAT) listo para acreditar 
                   cumplimiento y resguardar el patrimonio de tu empresa.
                 </p>
-                <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <div className="mt-5 flex flex-wrap justify-center gap-3">
                   <button
                     onClick={() => handleSelectTab('agente-rat')}
-                    className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-7 py-3 rounded-xl text-sm shadow-xl shadow-blue-600/30 transition-all hover:scale-105"
+                    className="bg-blue-900 hover:bg-blue-800 text-white font-bold px-6 py-2.5 rounded-lg text-xs shadow-sm transition-all"
                   >
                     Construir RAT con IA ahora (Gratis)
                   </button>
                   <button
                     onClick={() => setIsAiOpen(true)}
-                    className="bg-[#091533] hover:bg-[#102352] text-blue-200 border border-blue-700/60 font-semibold px-5 py-3 rounded-xl text-sm transition-all"
+                    className="bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-semibold px-4 py-2.5 rounded-lg text-xs transition-all"
                   >
-                    Hacer una pregunta al Asistente
+                    Consultar con el Asistente Legal
                   </button>
                 </div>
               </div>
@@ -100,7 +100,7 @@ const App: React.FC = () => {
       </main>
 
       {/* Spacer for bottom floating nav */}
-      <div className="h-20"></div>
+      <div className="h-16"></div>
 
       {/* Floating Bottom Navigator */}
       <FloatingNav

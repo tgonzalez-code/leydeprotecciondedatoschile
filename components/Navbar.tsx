@@ -8,173 +8,174 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, onOpenAiChat }) => {
   return (
-    <header className="sticky top-0 z-50 bg-[#070d1e]/90 backdrop-blur-md border-b border-blue-900/40">
-      {/* Top micro ribbon */}
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
+      {/* Top Chile Flag Ribbon */}
       <div className="h-1 chile-flag-strip w-full"></div>
       
-      {/* Informative alert bar */}
-      <div className="bg-gradient-to-r from-blue-950 via-[#0a1b44] to-blue-950 px-4 py-1.5 border-b border-blue-900/30 text-xs text-blue-200/90 flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2 mx-auto sm:mx-0">
-          <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+      {/* Micro-bar with regulatory facts */}
+      <div className="bg-slate-50 border-b border-slate-200/80 px-4 py-1 text-[11px] text-slate-600 flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1 font-semibold text-slate-900">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            Ley 21.719 en Vigencia:
           </span>
-          <span className="font-semibold text-white">Ley 21.719 en vigencia:</span>
-          <span>Obligatorio para toda Pyme en Chile. Fiscalizado por la APDP.</span>
+          <span className="hidden sm:inline">Exigible a 100% de empresas en Chile. Fiscaliza la APDP.</span>
+          <span className="bg-emerald-50 text-emerald-700 font-mono px-1.5 py-0.2 rounded border border-emerald-200 text-[10px] font-medium">
+            Beneficio Pyme Ley 20.416
+          </span>
         </div>
-        <div className="hidden md:flex items-center gap-4 text-xs font-mono text-blue-300">
-          <span>Multas hasta 20.000 UTM</span>
-          <span className="text-blue-600">|</span>
-          <span className="text-emerald-400 font-semibold">Beneficio Pyme: Ley 20.416</span>
+        
+        <div className="flex items-center gap-3 font-mono text-[11px] text-slate-500">
+          <span>Multas: 5.000 a 20.000 UTM</span>
+          <span className="text-slate-300">|</span>
+          <span className="text-blue-700 font-semibold">Art. 14 ter: RAT Obligatorio</span>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+        <div className="flex items-center justify-between h-14 sm:h-16">
           
           {/* Logo Brand */}
           <div 
             onClick={() => onSelectTab('inicio')}
-            className="flex items-center gap-3 cursor-pointer group"
+            className="flex items-center gap-2.5 cursor-pointer group"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-blue-900 p-0.5 shadow-lg shadow-blue-900/30 flex items-center justify-center">
-              <div className="w-full h-full bg-[#091228] rounded-[10px] flex items-center justify-center">
-                <span className="material-symbols-outlined text-blue-400 text-2xl group-hover:scale-110 transition-transform">
-                  shield_with_heart
-                </span>
-              </div>
+            <div className="w-8 h-8 rounded-lg bg-blue-900 flex items-center justify-center text-white shadow-sm">
+              <span className="material-symbols-outlined text-lg">shield</span>
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-base sm:text-lg tracking-tight text-white group-hover:text-blue-300 transition-colors">
-                  leydedatospersonaleschile<span className="text-blue-400">.cl</span>
+                <span className="font-extrabold text-sm sm:text-base tracking-tight text-slate-900">
+                  leydedatospersonaleschile<span className="text-blue-700">.cl</span>
                 </span>
-                <span className="text-[10px] bg-blue-900/80 text-blue-200 border border-blue-700/50 px-1.5 py-0.5 rounded font-mono font-bold">
+                <span className="text-[9px] bg-slate-100 text-slate-700 border border-slate-300 px-1 py-0.2 rounded font-mono font-bold">
                   CL
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 tracking-wide">
-                Portal de Cumplimiento & Agente RAT (Art. 14 ter)
+              <p className="text-[10px] text-slate-500 font-mono tracking-tight leading-none">
+                Agente IA • Registro RAT (Art. 14 ter)
               </p>
             </div>
           </div>
 
           {/* Nav Tabs Desktop */}
-          <nav className="hidden lg:flex items-center gap-1 bg-[#0b1530] p-1.5 rounded-2xl border border-blue-900/50">
+          <nav className="hidden lg:flex items-center gap-1 bg-slate-100/80 p-1 rounded-xl border border-slate-200">
             <button
               onClick={() => onSelectTab('inicio')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 currentTab === 'inicio'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  ? 'bg-white text-slate-900 shadow-sm border border-slate-200/80'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
               }`}
             >
-              Inicio & Diagnóstico
+              Panel General
             </button>
             <button
               onClick={() => onSelectTab('agente-rat')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
                 currentTab === 'agente-rat'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  ? 'bg-white text-blue-900 shadow-sm border border-slate-200/80 font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
               }`}
             >
-              <span className="material-symbols-outlined text-sm text-emerald-400">psychology</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               Agente RAT (Tramo 1)
-              <span className="bg-emerald-500/20 text-emerald-300 text-[10px] px-1.5 py-0.5 rounded-full font-mono border border-emerald-500/30">
+              <span className="bg-emerald-100 text-emerald-800 text-[10px] px-1 py-0.2 rounded font-mono font-bold">
                 3 min
               </span>
             </button>
             <button
               onClick={() => onSelectTab('calculadora-utm')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 currentTab === 'calculadora-utm'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  ? 'bg-white text-slate-900 shadow-sm border border-slate-200/80'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
               }`}
             >
               Simulador Multas UTM
             </button>
             <button
               onClick={() => onSelectTab('gestion-arco')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 currentTab === 'gestion-arco'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  ? 'bg-white text-slate-900 shadow-sm border border-slate-200/80'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
               }`}
             >
               Gestor ARCO+ (SLAs)
             </button>
             <button
               onClick={() => onSelectTab('guia-ley')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 currentTab === 'guia-ley'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  ? 'bg-white text-slate-900 shadow-sm border border-slate-200/80'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
               }`}
             >
-              Guía Ley 21.719
+              Compendio Artículos
             </button>
           </nav>
 
           {/* Right Action: Asistente IA CTA */}
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
             <button
               onClick={onOpenAiChat}
-              className="relative inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="inline-flex items-center gap-1.5 bg-blue-900 hover:bg-blue-800 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold shadow-sm transition-all hover:shadow"
             >
-              <span className="material-symbols-outlined text-base animate-pulse text-amber-300">
+              <span className="material-symbols-outlined text-sm text-amber-300">
                 smart_toy
               </span>
-              <span>Asistente Legal IA</span>
-              <span className="hidden sm:inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span>Asistente IA</span>
+              <span className="bg-blue-800 text-[10px] font-mono px-1 py-0.2 rounded">
+                Ley 21.719
+              </span>
             </button>
           </div>
 
         </div>
 
         {/* Mobile Navigation bar */}
-        <div className="lg:hidden flex items-center justify-between gap-1 overflow-x-auto py-2 border-t border-blue-900/30 text-xs scrollbar-none">
+        <div className="lg:hidden flex items-center justify-between gap-1 overflow-x-auto py-2 border-t border-slate-200 text-xs scrollbar-none">
           <button
             onClick={() => onSelectTab('inicio')}
-            className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium ${
-              currentTab === 'inicio' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-blue-900/40'
+            className={`px-2.5 py-1 rounded-md whitespace-nowrap font-medium ${
+              currentTab === 'inicio' ? 'bg-blue-900 text-white' : 'text-slate-600 hover:bg-slate-100'
             }`}
           >
-            Inicio
+            General
           </button>
           <button
             onClick={() => onSelectTab('agente-rat')}
-            className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium flex items-center gap-1 ${
-              currentTab === 'agente-rat' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-blue-900/40'
+            className={`px-2.5 py-1 rounded-md whitespace-nowrap font-medium flex items-center gap-1 ${
+              currentTab === 'agente-rat' ? 'bg-blue-900 text-white' : 'text-slate-600 hover:bg-slate-100'
             }`}
           >
-            <span className="text-emerald-400 font-bold">●</span>
+            <span className="text-emerald-500 font-bold">●</span>
             Agente RAT
           </button>
           <button
             onClick={() => onSelectTab('calculadora-utm')}
-            className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium ${
-              currentTab === 'calculadora-utm' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-blue-900/40'
+            className={`px-2.5 py-1 rounded-md whitespace-nowrap font-medium ${
+              currentTab === 'calculadora-utm' ? 'bg-blue-900 text-white' : 'text-slate-600 hover:bg-slate-100'
             }`}
           >
             Multas UTM
           </button>
           <button
             onClick={() => onSelectTab('gestion-arco')}
-            className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium ${
-              currentTab === 'gestion-arco' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-blue-900/40'
+            className={`px-2.5 py-1 rounded-md whitespace-nowrap font-medium ${
+              currentTab === 'gestion-arco' ? 'bg-blue-900 text-white' : 'text-slate-600 hover:bg-slate-100'
             }`}
           >
             ARCO+
           </button>
           <button
             onClick={() => onSelectTab('guia-ley')}
-            className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium ${
-              currentTab === 'guia-ley' ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-blue-900/40'
+            className={`px-2.5 py-1 rounded-md whitespace-nowrap font-medium ${
+              currentTab === 'guia-ley' ? 'bg-blue-900 text-white' : 'text-slate-600 hover:bg-slate-100'
             }`}
           >
-            Ley 21.719
+            Artículos
           </button>
         </div>
 

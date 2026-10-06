@@ -8,67 +8,65 @@ interface FloatingNavProps {
 
 const FloatingNav: React.FC<FloatingNavProps> = ({ currentTab, onSelectTab, onAiClick }) => {
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-fit pointer-events-auto">
-      <nav className="flex items-center gap-1.5 p-1.5 rounded-full bg-[#08132e]/90 backdrop-blur-2xl border border-blue-600/40 shadow-2xl ring-1 ring-blue-500/20">
+    <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-fit pointer-events-auto">
+      <nav className="flex items-center gap-1 p-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-300 shadow-lg ring-1 ring-slate-900/5">
         
         <button
           onClick={() => onSelectTab('inicio')}
-          title="Inicio"
-          className={`flex items-center justify-center w-10 h-10 rounded-full transition-all ${
+          title="Panel General"
+          className={`flex items-center justify-center w-8 h-8 rounded-full transition-all ${
             currentTab === 'inicio'
-              ? 'bg-blue-600 text-white shadow-md shadow-blue-600/50'
-              : 'text-slate-300 hover:text-white hover:bg-white/10'
+              ? 'bg-blue-900 text-white shadow-sm'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
-          <span className="material-symbols-outlined text-lg">home</span>
+          <span className="material-symbols-outlined text-base">home</span>
         </button>
 
         <button
           onClick={() => onSelectTab('agente-rat')}
-          className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all ${
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
             currentTab === 'agente-rat'
-              ? 'bg-blue-600 text-white shadow-md shadow-blue-600/50'
-              : 'text-slate-200 hover:text-white hover:bg-white/10'
+              ? 'bg-blue-900 text-white shadow-sm'
+              : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
-          <span className="material-symbols-outlined text-sm text-emerald-400">psychology</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
           <span>Agente RAT</span>
-          <span className="bg-emerald-500/20 text-emerald-300 text-[9px] px-1 rounded-full border border-emerald-500/30">
+          <span className="bg-emerald-100 text-emerald-800 text-[9px] font-mono px-1 rounded-full font-bold">
             3 min
           </span>
         </button>
 
         <button
           onClick={() => onSelectTab('calculadora-utm')}
-          className={`hidden sm:flex items-center gap-1 px-3 py-2 rounded-full text-xs font-semibold transition-all ${
+          className={`hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
             currentTab === 'calculadora-utm'
-              ? 'bg-blue-600 text-white shadow-md shadow-blue-600/50'
-              : 'text-slate-300 hover:text-white hover:bg-white/10'
+              ? 'bg-blue-900 text-white shadow-sm'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
-          <span className="material-symbols-outlined text-sm text-amber-400">calculate</span>
           <span>Multas UTM</span>
         </button>
 
         <button
           onClick={() => onSelectTab('gestion-arco')}
-          className={`hidden md:flex items-center gap-1 px-3 py-2 rounded-full text-xs font-semibold transition-all ${
+          className={`hidden md:flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
             currentTab === 'gestion-arco'
-              ? 'bg-blue-600 text-white shadow-md shadow-blue-600/50'
-              : 'text-slate-300 hover:text-white hover:bg-white/10'
+              ? 'bg-blue-900 text-white shadow-sm'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
         >
-          <span className="material-symbols-outlined text-sm text-blue-400">timer</span>
           <span>ARCO+</span>
         </button>
 
-        <div className="h-6 w-[1px] bg-blue-900/60 mx-1"></div>
+        <div className="h-4 w-[1px] bg-slate-300 mx-0.5"></div>
 
         <button
           onClick={onAiClick}
-          className="flex items-center gap-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-4 py-2 rounded-full text-xs font-bold transition-all hover:scale-105 shadow-md shadow-blue-600/40"
+          className="flex items-center gap-1 bg-slate-900 hover:bg-slate-800 text-white px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm"
         >
-          <span className="material-symbols-outlined text-sm text-amber-300 animate-pulse">smart_toy</span>
+          <span className="material-symbols-outlined text-xs text-amber-300">smart_toy</span>
           <span>Asistente IA</span>
         </button>
 

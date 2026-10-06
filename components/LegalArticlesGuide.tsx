@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 const ARTICULOS_LEY = [
   {
     numero: 'Artículo 14 ter',
-    titulo: 'El Registro de Actividades de Tratamiento (RAT) - Tramo 1',
-    resumen: 'Obligación formal de documentar e inventariar todas las operaciones de tratamiento de datos personales y sensibles que realiza la empresa.',
+    titulo: 'El Registro de Actividades de Tratamiento (RAT) - Tramo 1 Obligatorio',
+    resumen: 'Obligación formal de inventariar todas las operaciones de tratamiento de datos personales y sensibles.',
     contenido: `Todo responsable del tratamiento deberá llevar y mantener permanentemente actualizado un Registro de Actividades de Tratamiento (RAT). 
 
 El RAT debe contener obligatoriamente:
@@ -22,7 +22,7 @@ Este registro deberá ponerse a disposición de la Agencia de Protección de Dat
   },
   {
     numero: 'Artículo 12 y 13',
-    titulo: 'Bases de Licitud del Tratamiento',
+    titulo: 'Bases de Licitud del Tratamiento de Datos',
     resumen: 'Condiciones jurídicas que habilitan a una empresa a tratar datos personales legítimamente en Chile.',
     contenido: `El tratamiento de datos personales es lícito únicamente cuando concurre alguna de las siguientes bases legales:
 
@@ -31,7 +31,7 @@ Este registro deberá ponerse a disposición de la Agencia de Protección de Dat
 • Art. 13 letra b) - Obligación Legal: Cuando el tratamiento sea exigido expresamente por una ley (ej. retención de impuestos SII, normativas de la Dirección del Trabajo).
 • Art. 13 letra e) - Interés Legítimo: Tratamiento necesario para la satisfacción de intereses legítimos perseguidos por el responsable, siempre que sobre ellos no prevalezcan los derechos y libertades del titular (ej. videovigilancia de seguridad).`,
     obligatorio: true,
-    tag: 'Legalidad',
+    tag: 'Bases de Licitud',
   },
   {
     numero: 'Artículos 5 al 11',
@@ -49,7 +49,7 @@ Plazos legales perentorios:
 • Bloqueo Temporal: Máximo 2 días hábiles (Art. 10 bis).
 • Resto de derechos ARCO+: Máximo 30 días corridos (Art. 11).`,
     obligatorio: true,
-    tag: 'Derechos Titulares',
+    tag: 'Derechos ARCO+',
   },
   {
     numero: 'Artículos 40 al 52',
@@ -63,7 +63,7 @@ Plazos legales perentorios:
 
 Beneficio Pyme (Ley 20.416): Las Micro y Pequeñas empresas sin reincidencia previa pueden optar a amonestación escrita en la primera infracción, bajo la obligación imperativa de regularizar inmediatamente mediante la presentación de su RAT (Art. 14 ter).`,
     obligatorio: true,
-    tag: 'Fiscalización & Multas',
+    tag: 'Sanciones & APDP',
   },
   {
     numero: 'Artículo 4',
@@ -98,110 +98,105 @@ const LegalArticlesGuide: React.FC<LegalArticlesGuideProps> = ({ onGoToRat }) =>
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 bg-blue-950/80 border border-blue-700/60 px-3 py-1 rounded-full text-xs text-blue-300 font-mono mb-3">
-          <span className="material-symbols-outlined text-sm text-blue-400">menu_book</span>
-          <span>COMPENDIO NORMATIVO CHILENO</span>
-        </div>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-white">
-          Guía Legal de la Nueva Ley 21.719
-        </h1>
-        <p className="text-sm sm:text-base text-slate-300 mt-2">
-          Análisis práctico y articulado oficial de la ley que moderniza la protección de datos en Chile 
-          y crea la Agencia de Protección de Datos Personales (APDP).
-        </p>
-      </div>
-
-      {/* Search Input */}
-      <div className="max-w-xl mx-auto mb-8">
-        <div className="relative">
-          <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg">
-            search
-          </span>
-          <input
-            type="text"
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            placeholder="Buscar por artículo, tema (ej. RAT, multas, bloqueo, consentimiento)..."
-            className="w-full bg-[#0b1633] border border-blue-900 rounded-2xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 shadow-lg"
-          />
-        </div>
-      </div>
-
-      {/* Articles Accordion */}
-      <div className="space-y-4 max-w-4xl mx-auto">
-        {articulosFiltrados.map((art) => {
-          const isOpen = articuloAbierto === art.numero;
-
-          return (
-            <div
-              key={art.numero}
-              className={`rounded-2xl border transition-all overflow-hidden ${
-                isOpen
-                  ? 'bg-[#0b1633] border-blue-500/80 shadow-xl'
-                  : 'bg-[#08122c] border-blue-900/40 hover:border-blue-800'
-              }`}
-            >
-              <button
-                onClick={() => setArticuloAbierto(isOpen ? '' : art.numero)}
-                className="w-full p-5 text-left flex items-center justify-between gap-4"
-              >
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-mono font-bold text-blue-400">
-                      {art.numero}
-                    </span>
-                    <span className="text-[10px] bg-blue-950 text-blue-300 border border-blue-800 px-2 py-0.5 rounded font-mono">
-                      {art.tag}
-                    </span>
-                  </div>
-                  <h3 className="text-base sm:text-lg font-bold text-white">
-                    {art.titulo}
-                  </h3>
-                  <p className="text-xs text-slate-400 mt-1">
-                    {art.resumen}
-                  </p>
-                </div>
-
-                <div className="shrink-0 w-8 h-8 rounded-full bg-[#08122c] border border-blue-900/80 flex items-center justify-center text-slate-400">
-                  <span className="material-symbols-outlined text-sm transition-transform duration-200" style={{ transform: isOpen ? 'rotate(180deg)' : 'none' }}>
-                    expand_more
-                  </span>
-                </div>
-              </button>
-
-              {isOpen && (
-                <div className="px-5 pb-6 pt-2 border-t border-blue-900/40 text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-line">
-                  {art.contenido}
-
-                  {art.numero === 'Artículo 14 ter' && (
-                    <div className="mt-5 p-4 rounded-xl bg-blue-950/80 border border-blue-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                      <div>
-                        <strong className="text-white block text-xs">
-                          Cumple con el Art. 14 ter en 3 minutos
-                        </strong>
-                        <span className="text-[11px] text-blue-200">
-                          Nuestro Agente de IA genera el documento oficial requerido.
-                        </span>
-                      </div>
-                      <button
-                        onClick={onGoToRat}
-                        className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-lg text-xs transition-all shrink-0"
-                      >
-                        Crear mi RAT ahora
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
+    <div className="bg-slate-50 min-h-screen py-8 border-b border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header */}
+        <div className="bg-white p-5 sm:p-6 rounded-xl border border-slate-200 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1 text-xs">
+              <span className="font-mono font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                COMPENDIO NORMATIVO CHILE
+              </span>
+              <span className="text-slate-500 font-mono">
+                Ley Nº 21.719 en el Diario Oficial
+              </span>
             </div>
-          );
-        })}
-      </div>
+            <h1 className="text-xl sm:text-2xl font-black text-slate-900">
+              Guía Legal Articulada de Protección de Datos
+            </h1>
+            <p className="text-xs text-slate-600 mt-0.5">
+              Acceso directo a las exigencias normativas esenciales para preparar a tu empresa ante la APDP.
+            </p>
+          </div>
 
+          <div className="w-full md:w-72">
+            <input
+              type="text"
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              placeholder="Buscar por artículo, término..."
+              className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900 focus:bg-white focus:outline-none focus:border-blue-900"
+            />
+          </div>
+        </div>
+
+        {/* Articles Accordion List */}
+        <div className="space-y-3">
+          {articulosFiltrados.map((art) => {
+            const isOpen = articuloAbierto === art.numero;
+
+            return (
+              <div
+                key={art.numero}
+                className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+              >
+                <button
+                  onClick={() => setArticuloAbierto(isOpen ? '' : art.numero)}
+                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50/50 transition-colors"
+                >
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs font-mono font-bold text-blue-900 bg-blue-50 px-2 py-0.2 rounded border border-blue-200">
+                        {art.numero}
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-600 bg-slate-100 px-1.5 py-0.2 rounded border border-slate-200">
+                        {art.tag}
+                      </span>
+                    </div>
+                    <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                      {art.titulo}
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      {art.resumen}
+                    </p>
+                  </div>
+
+                  <span className="material-symbols-outlined text-slate-400 text-sm">
+                    {isOpen ? 'expand_less' : 'expand_more'}
+                  </span>
+                </button>
+
+                {isOpen && (
+                  <div className="px-5 pb-5 pt-2 border-t border-slate-200 text-xs text-slate-700 leading-relaxed whitespace-pre-line bg-slate-50/30">
+                    {art.contenido}
+
+                    {art.numero === 'Artículo 14 ter' && (
+                      <div className="mt-4 p-3.5 rounded-lg bg-blue-50 border border-blue-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                          <strong className="text-xs text-blue-950 block">
+                            Genera tu RAT conforme al Art. 14 ter
+                          </strong>
+                          <span className="text-[11px] text-blue-800">
+                            El Agente de IA entrevista a tu empresa en 3 minutos y descarga la ficha en JSON/PDF.
+                          </span>
+                        </div>
+                        <button
+                          onClick={onGoToRat}
+                          className="bg-blue-900 hover:bg-blue-800 text-white font-bold px-4 py-2 rounded-lg text-xs shrink-0"
+                        >
+                          Crear mi RAT ahora →
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
     </div>
   );
 };

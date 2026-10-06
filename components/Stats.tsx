@@ -7,94 +7,82 @@ interface StatsProps {
 
 const Stats: React.FC<StatsProps> = ({ onGoToRat, onGoToCalculator }) => {
   return (
-    <section className="bg-[#08122c] py-14 px-4 sm:px-6 lg:px-8 border-y border-blue-900/40">
+    <section className="bg-white py-10 px-4 sm:px-6 lg:px-8 border-b border-slate-200">
       <div className="max-w-7xl mx-auto">
         
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-blue-400 font-mono text-xs uppercase tracking-wider font-semibold">
-            Cifras Clave de la Ley 21.719 en Chile
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
-            Impacto Real en el Ecosistema Empresarial
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-300 mt-2">
-            La privacidad ya no es una recomendación opcional: es una exigencia legal vinculante fiscalizada por la APDP.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           
           {/* Stat 1 */}
           <div 
             onClick={onGoToCalculator}
-            className="p-6 rounded-2xl bg-[#0b1633] border border-blue-900/60 hover:border-red-600/60 transition-all cursor-pointer group"
+            className="p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-all cursor-pointer group"
           >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-mono text-slate-400">MULTA TOPE</span>
-              <span className="material-symbols-outlined text-red-400 text-lg group-hover:scale-110 transition-transform">gavel</span>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[10px] font-mono text-slate-500 font-bold uppercase">Sanción Máxima</span>
+              <span className="material-symbols-outlined text-slate-400 text-sm group-hover:text-red-700">gavel</span>
             </div>
-            <p className="text-3xl sm:text-4xl font-black text-red-400 font-mono tracking-tight">
-              20.000 <span className="text-lg">UTM</span>
+            <p className="text-2xl sm:text-3xl font-black text-slate-900 font-mono tracking-tight">
+              20.000 <span className="text-sm font-sans text-slate-500">UTM</span>
             </p>
-            <p className="text-xs text-slate-300 mt-1 font-medium">
-              Hasta ~$1.320.000.000 CLP o 4% de ventas anuales en reincidencia.
+            <p className="text-[11px] text-slate-600 mt-0.5">
+              Hasta ~$1.320.000.000 CLP o 4% de ventas en reincidencia.
             </p>
-            <span className="text-[11px] text-red-300 mt-3 inline-block font-semibold group-hover:underline">
-              Ver simulador UTM →
+            <span className="text-[10px] text-red-700 font-semibold font-mono mt-2 inline-block">
+              Simular cálculo →
             </span>
           </div>
 
           {/* Stat 2 */}
           <div 
             onClick={onGoToRat}
-            className="p-6 rounded-2xl bg-[#0e224e] border-2 border-emerald-500/60 hover:border-emerald-400 transition-all cursor-pointer group shadow-lg shadow-emerald-950/40"
+            className="p-4 rounded-xl bg-blue-50/60 border border-blue-200 hover:border-blue-300 transition-all cursor-pointer group"
           >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-mono text-emerald-300 font-bold">AGENTE DE IA</span>
-              <span className="material-symbols-outlined text-emerald-400 text-lg group-hover:scale-110 transition-transform">bolt</span>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[10px] font-mono text-blue-900 font-bold uppercase">Agente IA RAT</span>
+              <span className="material-symbols-outlined text-blue-900 text-sm">bolt</span>
             </div>
-            <p className="text-3xl sm:text-4xl font-black text-white font-mono tracking-tight">
-              3 <span className="text-lg text-emerald-300">Minutos</span>
+            <p className="text-2xl sm:text-3xl font-black text-blue-950 font-mono tracking-tight">
+              3 <span className="text-sm font-sans text-blue-800">Minutos</span>
             </p>
-            <p className="text-xs text-emerald-100 mt-1 font-medium">
-              Para generar tu Ficha Oficial RAT (Art. 14 ter) con clasificación automática.
+            <p className="text-[11px] text-blue-900 mt-0.5">
+              Para generar y exportar la Ficha Oficial RAT (Art. 14 ter).
             </p>
-            <span className="text-[11px] text-emerald-300 mt-3 inline-block font-bold group-hover:underline">
+            <span className="text-[10px] text-blue-900 font-bold font-mono mt-2 inline-block">
               Iniciar prueba gratuita →
             </span>
           </div>
 
           {/* Stat 3 */}
-          <div className="p-6 rounded-2xl bg-[#0b1633] border border-blue-900/60 transition-all">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-mono text-slate-400">SLA CRÍTICO</span>
-              <span className="material-symbols-outlined text-amber-400 text-lg">alarm</span>
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[10px] font-mono text-slate-500 font-bold uppercase">SLA Bloqueo</span>
+              <span className="material-symbols-outlined text-slate-400 text-sm">alarm</span>
             </div>
-            <p className="text-3xl sm:text-4xl font-black text-amber-400 font-mono tracking-tight">
-              2 <span className="text-lg">Días</span>
+            <p className="text-2xl sm:text-3xl font-black text-slate-900 font-mono tracking-tight">
+              2 <span className="text-sm font-sans text-slate-500">Días Hábiles</span>
             </p>
-            <p className="text-xs text-slate-300 mt-1 font-medium">
-              Plazo legal máximo para ejecutar el Bloqueo Temporal de datos ante reclamos.
+            <p className="text-[11px] text-slate-600 mt-0.5">
+              Plazo más estricto de la ley para congelar datos ante reclamos.
             </p>
-            <span className="text-[11px] text-slate-400 mt-3 inline-block">
-              30 días para resto de ARCO+
+            <span className="text-[10px] text-slate-500 font-mono mt-2 inline-block">
+              30 días corridos para ARCO+
             </span>
           </div>
 
           {/* Stat 4 */}
-          <div className="p-6 rounded-2xl bg-[#0b1633] border border-blue-900/60 transition-all">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-mono text-slate-400">ALCANCE LEGAL</span>
-              <span className="material-symbols-outlined text-blue-400 text-lg">domain</span>
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[10px] font-mono text-slate-500 font-bold uppercase">Alcance General</span>
+              <span className="material-symbols-outlined text-slate-400 text-sm">domain</span>
             </div>
-            <p className="text-3xl sm:text-4xl font-black text-blue-400 font-mono tracking-tight">
+            <p className="text-2xl sm:text-3xl font-black text-slate-900 font-mono tracking-tight">
               100%
             </p>
-            <p className="text-xs text-slate-300 mt-1 font-medium">
-              De empresas en Chile obligadas si tratan datos de clientes, empleados o proveedores.
+            <p className="text-[11px] text-slate-600 mt-0.5">
+              Empresas en Chile que traten datos de personas naturales.
             </p>
-            <span className="text-[11px] text-blue-300 mt-3 inline-block font-semibold">
-              Estatuto Pyme ampara 1ra falta
+            <span className="text-[10px] text-emerald-800 font-semibold font-mono mt-2 inline-block">
+              Beneficio Pyme Ley 20.416
             </span>
           </div>
 

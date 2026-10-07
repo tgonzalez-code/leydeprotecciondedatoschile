@@ -107,7 +107,7 @@ export const ACTIVIDADES_PREDEFINIDAS_RAT: ActividadRAT[] = [
 
 export const DEFAULT_EMPRESA_RAT: Omit<import('../types').DatosEmpresaRAT, 'codigoCertificadoRAT'> = {
   razonSocial: 'Comercial & Servicios SpA',
-  rutEmpresa: '76.845.120-K',
+  rutEmpresa: '76.845.120-6',
   representanteLegal: 'Carlos Muñoz Rojas',
   rubro: 'Servicios Profesionales y Comercio',
   clasificacionTamano: 'Pequeña Pyme',

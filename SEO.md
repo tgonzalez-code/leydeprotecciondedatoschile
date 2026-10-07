@@ -1,55 +1,109 @@
 # Estrategia de SEO & Structured Data - leydedatospersonaleschile.cl
 
-Este documento resume la implementación técnica de Search Engine Optimization (SEO), metadatos sociales y datos estructurados Schema.org.
+Este documento describe la arquitectura técnica de Search Engine Optimization (SEO), metadatos dinámicos por ruta, silos temáticos y datos estructurados Schema.org conforme al esquema oficial del proyecto.
 
 ---
 
-## 1. Metadatos Principales en `index.html`
+## 1. Esquema de Arquitectura Temática y Silos SEO
 
-- **Title Tag**: `Ley 21.719 Chile | Cumplimiento y Diagnóstico de Datos Personales para Empresas` (68 caracteres, enfocado en intención de búsqueda transaccional e informativa).
-- **Meta Description**: `Plataforma moderna de Data Privacy Compliance para la Ley 21.719 en Chile. Evalúa tu empresa en 3 minutos, genera tu Registro RAT (Art. 14 ter) con IA y cumple sin frenar el negocio.` (178 caracteres, con llamado a la acción directo).
-- **Keywords**: `Ley 21.719, Ley de datos personales Chile, proteccion de datos personales Chile, cumplimiento Ley 21.719, RAT Chile, Registro de Actividades de Tratamiento, derechos ARCOP, compliance proteccion de datos, asesoria Ley 21.719`.
+La estructura semántica del sitio se organiza en 3 grandes silos temáticos derivados del nodo central (*Hub*):
+
+```
+                 LEY DE DATOS PERSONALES (Root / Hub)
+                          |
+        +-----------------+-----------------+
+        |                 |                 |
+        v                 v                 v
+    Ley 21.719       Ley 19.628        Cumplimiento
+        |                 |                 |
+        v                 v                 v
+      ARCOP              RAT            Diagnóstico
+                                            |
+                                            v
+                                       Calculadora
+                                            |
+                                            v
+                                        Servicios
+```
+
+- **Pilar Central (Root/Hub)**: `inicio` (Ley de Datos Personales en Chile).
+- **Silo 1 (Reforma & APDP)**: `ley-21719` -> Subtema: `derechos-arcop` (SLA de 2 días y catálogo de derechos).
+- **Silo 2 (Norma Base Reformada)**: `compendio-legal` -> Subtema: `agente-rat` (Registro RAT Art. 14 ter obligatorio).
+- **Silo 3 (Ruta de Cumplimiento Empresarial)**: `test-cumplimiento` -> Subtema 1: `test-cumplimiento` (Diagnóstico 60s) -> Subtema 2: `multas-utm` (Calculadora APDP) -> Subtema 3: `casos-pymes` (Servicios y casos prácticos).
+
+---
+
+## 2. Metadatos Principales en `index.html` (Entry Point)
+
+- **Title Tag**: `Ley de Datos Personales Chile - Agente RAT | Ley 21.719` (59 caracteres, respetando el rango de 30–60 caracteres).
+- **Meta Description**: `Plataforma oficial de orientación Ley 21.719 y Agente de IA para el Registro de Actividades de Tratamiento (RAT - Art. 14 ter) para Pymes en Chile.` (150 caracteres, respetando el rango de 120–160 caracteres).
+- **Keywords**: `Ley 21.719, Ley de datos personales Chile, proteccion de datos personales Chile, cumplimiento Ley 21.719, RAT Chile, Registro de Actividades de Tratamiento, derechos ARCOP, compliance proteccion de datos, asesoria Ley 21.719, APDP`.
+- **Robots Tag**: `<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">`.
+- **Geolocalización & Idioma**: `<meta name="geo.region" content="CL">`, `<meta name="geo.placename" content="Santiago, Chile">`, hreflang `es-cl` y `x-default`.
 - **Canonical Tag**: `<link rel="canonical" href="https://leydedatospersonaleschile.cl">`.
 
 ---
 
-## 2. Redes Sociales y Tarjetas de Enlace (OpenGraph & Twitter Cards)
+## 3. SEO Dinámico por Ruta (`usePageSeo`)
 
-Optimizadas para previsualizaciones en Slack, LinkedIn, WhatsApp y Twitter/X:
-- `og:type`: `website`
-- `og:site_name`: `leydedatospersonaleschile.cl`
-- `og:locale`: `es_CL`
-- `twitter:card`: `summary_large_image`
-- `twitter:title` y `og:title` sincronizados.
+El hook `usePageSeo(currentPage)` sincroniza en tiempo real cada navegación:
+- `document.title` según `SEO_PAGE_METAS[currentPage]`.
+- `<meta name="description">` específico y optimizado (120–160 caracteres).
+- `<link rel="canonical">` apuntando a la URL canónica de la sección.
+- Tags de OpenGraph (`og:title`, `og:description`, `og:url`, `og:site_name`, `og:locale`).
+- Tarjetas de Twitter (`twitter:card`, `twitter:title`, `twitter:description`).
+- Script JSON-LD inyectado dinámicamente (`#dynamic-breadcrumb-schema`) con el `BreadcrumbList` de la ruta activa.
 
 ---
 
-## 3. Datos Estructurados Schema.org (JSON-LD)
+## 4. Datos Estructurados Schema.org (JSON-LD)
 
-Incrustados en el encabezado mediante `<script type="application/ld+json">`:
+Incrustados en el encabezado mediante `<script type="application/ld+json">` dentro de un `@graph` conectado:
 
-1. **`WebApplication`**:
-   - `name`: "Portal Ley de Datos Personales Chile & Agente RAT"
-   - `applicationCategory`: "BusinessApplication"
-   - `offers`: Precio $0 CLP para el diagnóstico y asistente inicial.
+1. **`Organization`**:
+   - Entidad publicadora legal y técnica en Chile.
+   - Logo oficial y área geográfica de servicio (`CL`).
 
-2. **`FAQPage`**:
-   - Responde directamente a las consultas de búsqueda más frecuentes en Chile:
+2. **`WebSite`**:
+   - Referencia canónica con `@id: ".../#website"`.
+   - Propiedad `hasPart` detallando todas las páginas correspondientes a los silos temáticos.
+
+3. **`SiteNavigationElement`**:
+   - Modelo de navegación semántica estructurado según los 3 silos temáticos.
+
+4. **`BreadcrumbList`**:
+   - Listado jerárquico de migas de pan para snippets de Google Search.
+
+5. **`WebApplication`**:
+   - Nombre: `Ley de Datos Personales Chile - Agente RAT`.
+   - Categoría: `BusinessApplication`.
+   - Requerimientos: `Requires JavaScript. Requires HTML5.`.
+   - Versión de software: `2.1.0`.
+   - Lista de características principales (Generador RAT con IA, Diagnóstico 60s, Calculadora UTM, Monitor ARCOP 2 días).
+   - Oferta libre de costo ($0 CLP).
+
+6. **`FAQPage`**:
+   - Preguntas clave con respuesta oficial para calificar a Rich Snippets:
      - *¿Qué es la Ley 21.719 de Protección de Datos Personales en Chile?*
-     - *¿Qué son los derechos ARCOP en Chile?*
-     - *¿Qué es el Registro de Actividades de Tratamiento (RAT) y el Art. 14 ter?*
-     - *¿Cuál es el beneficio para Pymes bajo la Ley 20.416?*
-     - *¿Cuáles son las multas que puede cursar la APDP?*
-
-Esto permite calificar para **Rich Snippets (Fragmentos enriquecidos)** en los resultados de Google.
+     - *¿Qué son los derechos ARCOP en Chile y cuál es su SLA legal?*
+     - *¿Qué es el Registro de Actividades de Tratamiento (RAT) del Artículo 14 ter de la Ley 19.628?*
+     - *¿Cómo beneficia el Estatuto Pyme (Ley 20.416) en las multas de la APDP?*
+     - *¿Cuál es la ruta recomendada de cumplimiento para una empresa?*
 
 ---
 
-## 4. Accesibilidad y Estructura Semántica
+## 5. Migas de Pan Semánticas con Microdata (`Breadcrumbs.tsx`)
 
-- **Jerarquía de Encabezados**: Un único `<h1>` por página (`id="main-heading"`), seguido ordenadamente por `<h2>` y `<h3>`.
-- **Etiquetas ARIA**: 
-  - `role="checkbox"` y `aria-checked` para ítems interactivos de evaluación.
-  - `role="progressbar"` para el termómetro de cumplimiento.
-  - `aria-label` para controles del carrusel y menú móvil.
-- **Contraste y Legibilidad**: Cumplimiento del estándar WCAG AA con tipografías `Plus Jakarta Sans` y `JetBrains Mono`.
+Renderizado en todas las subpáginas:
+- `<ol itemscope itemtype="https://schema.org/BreadcrumbList">`
+- Cada nivel con `itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"`.
+- Marcado de `itemprop="name"`, `itemprop="item"` y `itemprop="position"`.
+- Conectado a la jerarquía de silos en `BREADCRUMB_MAP`.
+
+---
+
+## 6. Componente Visual de Arquitectura Temática (`ThematicArchitectureSilo.tsx`)
+
+Desplegado en la página principal (`inicio`):
+- Muestra el diagrama interactivo del árbol: Hub central -> Silo 1 (Ley 21.719 / ARCOP), Silo 2 (Ley 19.628 / RAT) y Silo 3 (Cumplimiento: Diagnóstico -> Calculadora -> Servicios).
+- Facilita el rastreo de bots de búsqueda mediante enlaces semánticos y botones contextuales a cada nodo.

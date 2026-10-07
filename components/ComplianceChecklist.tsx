@@ -1,28 +1,18 @@
-import React, { useState } from 'react';
-import { COMPLIANCE_QUESTIONS } from '../config/assessment.config';
-import { calcularPuntajeCumplimiento, evaluarDiagnostico } from '../lib/calculations/complianceScoring';
+import React from 'react';
+import { useComplianceAssessment } from '../hooks/useComplianceAssessment';
 
 interface ComplianceChecklistProps {
   onGoToRat: () => void;
 }
 
 const ComplianceChecklist: React.FC<ComplianceChecklistProps> = ({ onGoToRat }) => {
-  const [respuestas, setRespuestas] = useState<Record<string, boolean>>({
-    rat: false,
-    base_licitud: false,
-    bloqueo_2dias: false,
-    derechos_arcop: true,
-    seguridad_tecnica: true,
-    contratos_encargados: false,
-  });
-
-  const toggleRespuesta = (id: string) => {
-    setRespuestas(prev => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  // Lógica de cálculo delegada al módulo de dominio
-  const puntajeTotal = calcularPuntajeCumplimiento(respuestas);
-  const diag = evaluarDiagnostico(puntajeTotal);
+  const {
+    respuestas,
+    toggleRespuesta,
+    puntajeTotal,
+    diagnostico: diag,
+    preguntas,
+  } = useComplianceAssessment();
 
   return (
     <section id="test-cumplimiento" aria-labelledby="heading-checklist" className="py-14 bg-white border-b border-zinc-200">
@@ -68,7 +58,7 @@ const ComplianceChecklist: React.FC<ComplianceChecklistProps> = ({ onGoToRat }) 
           
           {/* Questions list */}
           <div className="lg:col-span-8 space-y-3">
-            {COMPLIANCE_QUESTIONS.map((item) => {
+            {preguntas.map((item) => {
               const checked = !!respuestas[item.id];
               return (
                 <div

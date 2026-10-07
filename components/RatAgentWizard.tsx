@@ -1,65 +1,26 @@
-import React, { useState } from 'react';
-import { ACTIVIDADES_PREDEFINIDAS_RAT, DEFAULT_EMPRESA_RAT } from '../config/rat.config';
-import { exportarRATaJSON, generarCodigoCertificadoRAT } from '../lib/rat/ratGenerator';
-import { ActividadRAT, DatosEmpresaRAT } from '../types';
+import React from 'react';
+import { useRatWizard } from '../hooks/useRatWizard';
 
 const RatAgentWizard: React.FC = () => {
-  const [paso, setPaso] = useState<number>(1);
-  const [datosEmpresa, setDatosEmpresa] = useState<DatosEmpresaRAT>({
-    ...DEFAULT_EMPRESA_RAT,
-    codigoCertificadoRAT: generarCodigoCertificadoRAT(DEFAULT_EMPRESA_RAT.rutEmpresa),
-  });
-
-  const [actividades, setActividades] = useState<ActividadRAT[]>(ACTIVIDADES_PREDEFINIDAS_RAT);
-  const [filtroCategoria, setFiltroCategoria] = useState<string>('todas');
-  const [nuevaActividadNombre, setNuevaActividadNombre] = useState('');
-  const [nuevaActividadFinalidad, setNuevaActividadFinalidad] = useState('');
-  const [mostrarModalNueva, setMostrarModalNueva] = useState(false);
-
-  const toggleSeleccion = (id: string) => {
-    setActividades(prev =>
-      prev.map(a => (a.id === id ? { ...a, seleccionada: !a.seleccionada } : a))
-    );
-  };
-
-  const agregarActividadPersonalizada = () => {
-    if (!nuevaActividadNombre.trim()) return;
-    const nueva: ActividadRAT = {
-      id: `act-custom-${Date.now()}`,
-      categoria: 'clientes',
-      nombre: nuevaActividadNombre,
-      finalidad: nuevaActividadFinalidad || 'Finalidad operativa definida por la empresa',
-      titulares: ['Clientes o Usuarios'],
-      datosTratados: ['Nombre', 'RUT', 'Email', 'Teléfono'],
-      contieneSensibles: false,
-      categoriasSensibles: [],
-      baseLicitud: 'Art. 13 letra a) - Ejecución de contrato o relación laboral/comercial',
-      justificacionLegal: 'Tratamiento necesario para el desarrollo de la actividad comercial.',
-      almacenamiento: 'Sistemas informáticos internos de la empresa',
-      plazoConservacion: 'Durante la vigencia de la relación + 3 años de prescripción ordinaria.',
-      destinatarios: 'Uso interno de la empresa.',
-      medidasSeguridad: ['Acceso restringido mediante usuario y clave'],
-      seleccionada: true,
-    };
-    setActividades(prev => [...prev, nueva]);
-    setNuevaActividadNombre('');
-    setNuevaActividadFinalidad('');
-    setMostrarModalNueva(false);
-  };
-
-  const actividadesSeleccionadas = actividades.filter(a => a.seleccionada);
-  const actividadesFiltradas = actividades.filter(a => filtroCategoria === 'todas' || a.categoria === filtroCategoria);
-
-  const exportarJSON = () => {
-    const jsonStr = exportarRATaJSON(datosEmpresa, actividades);
-    const blob = new Blob([jsonStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `RAT_${datosEmpresa.rutEmpresa.replace(/\./g, '').replace(/-/g, '_')}_APDP.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-  };
+  const {
+    paso,
+    setPaso,
+    datosEmpresa,
+    setDatosEmpresa,
+    toggleActividad: toggleSeleccion,
+    filtroCategoria,
+    setFiltroCategoria,
+    mostrarModalNueva,
+    setMostrarModalNueva,
+    nuevaActividadNombre,
+    setNuevaActividadNombre,
+    nuevaActividadFinalidad,
+    setNuevaActividadFinalidad,
+    agregarActividadPersonalizada,
+    actividadesSeleccionadas,
+    actividadesFiltradas,
+    exportarJSON,
+  } = useRatWizard();
 
   return (
     <div id="agente-rat" className="py-14 bg-white border-b border-zinc-200">

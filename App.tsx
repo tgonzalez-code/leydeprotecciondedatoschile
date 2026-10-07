@@ -3,6 +3,9 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import TrustBar from './components/TrustBar';
 import InformativeCarousel from './components/InformativeCarousel';
+import { ThematicArchitectureSilo } from './components/ThematicArchitectureSilo';
+import { Breadcrumbs } from './components/Breadcrumbs';
+import { usePageSeo } from './hooks';
 import { HOME_METRICS, HOME_TOOLS_CONTENT, HOME_CTA_CONTENT } from './content/home';
 import { SITE_PAGES } from './config/site.config';
 import TimelineVigencia from './components/TimelineVigencia';
@@ -39,6 +42,9 @@ const App: React.FC = () => {
 
   const [isAiOpen, setIsAiOpen] = useState(false);
 
+  // Synchronize dynamic SEO metadata, canonical, OpenGraph and JSON-LD schema per route
+  usePageSeo(currentPage);
+
   // Sync hash changes (e.g. browser back/forward buttons)
   useEffect(() => {
     const handleHashChange = () => {
@@ -70,45 +76,12 @@ const App: React.FC = () => {
         onOpenAiChat={() => setIsAiOpen(true)}
       />
 
-      {/* Page Breadcrumb (for subpages) */}
-      {currentPage !== 'inicio' && (
-        <div className="bg-zinc-50 border-b border-zinc-200 py-3.5 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-2 text-xs font-mono">
-            <div className="flex items-center gap-2 text-zinc-500">
-              <button 
-                onClick={() => handleNavigate('inicio')}
-                className="hover:text-orange-600 transition-colors flex items-center gap-1 font-bold text-zinc-700"
-              >
-                <span className="material-symbols-outlined text-sm">home</span>
-                <span>Inicio</span>
-              </button>
-              <span className="text-zinc-300">/</span>
-              <span className="text-orange-600 font-bold truncate max-w-xs sm:max-w-md">
-                {SITE_PAGES[currentPage]?.title}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              {currentPage !== 'agente-rat' && (
-                <button
-                  onClick={() => handleNavigate('agente-rat')}
-                  className="inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-[11px] px-3 py-1.5 rounded-lg shadow-sm transition-all"
-                >
-                  <span className="material-symbols-outlined text-xs">psychology</span>
-                  <span>Agente RAT (3 min)</span>
-                </button>
-              )}
-              <button
-                onClick={() => setIsAiOpen(true)}
-                className="inline-flex items-center gap-1 bg-white hover:bg-zinc-100 border border-zinc-300 text-zinc-800 text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition-colors"
-              >
-                <span className="material-symbols-outlined text-xs text-orange-500">smart_toy</span>
-                <span>Asistente IA</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Page Breadcrumb with Schema.org Microdata & Thematic Silo Hierarchy */}
+      <Breadcrumbs
+        currentPage={currentPage}
+        onNavigate={handleNavigate}
+        onOpenAiChat={() => setIsAiOpen(true)}
+      />
 
       {/* Dedicated Section Page Routing */}
       <main className="flex-1">
@@ -124,6 +97,9 @@ const App: React.FC = () => {
 
             {/* Barra de confianza ejecutiva */}
             <TrustBar />
+
+            {/* Arquitectura Temática & Regulatoria Oficial (Silos SEO) */}
+            <ThematicArchitectureSilo onNavigate={handleNavigate} />
 
             {/* Carrusel Informativo de Actualidad Regulatoria (con enlace a cada post) */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

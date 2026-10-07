@@ -1,34 +1,32 @@
-import React, { useState } from 'react';
-import { BUSINESS_CONFIG } from '../config/business.config';
-import { CALCULATOR_OPTIONS, INFRACCIONES_CONFIG } from '../config/calculator.config';
-import { calcularMultaAPDP, formatearCLP, formatearUTM } from '../lib/calculations/utmCalculator';
-import { TipoInfraccion } from '../types';
+import React from 'react';
+import { usePenaltyCalculator } from '../hooks/usePenaltyCalculator';
 
 interface UTMCalculatorProps {
   onGoToRat: () => void;
 }
 
 const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
-  const [tipoInfraccion, setTipoInfraccion] = useState<TipoInfraccion>('grave');
-  const [esPyme, setEsPyme] = useState<boolean>(true);
-  const [esReincidente, setEsReincidente] = useState<boolean>(false);
-
-  // Factores operativos del termómetro de riesgo
-  const [tieneRAT, setTieneRAT] = useState<boolean>(false);
-  const [respondeBloqueo2Dias, setRespondeBloqueo2Dias] = useState<boolean>(false);
-  const [manejaDatosSensibles, setManejaDatosSensibles] = useState<boolean>(true);
-
-  // Ejecución del cálculo a través del módulo de dominio
-  const resultado = calcularMultaAPDP({
+  const {
     tipoInfraccion,
+    setTipoInfraccion,
     esPyme,
+    setEsPyme,
     esReincidente,
+    setEsReincidente,
     tieneRAT,
+    setTieneRAT,
     respondeBloqueo2Dias,
+    setRespondeBloqueo2Dias,
     manejaDatosSensibles,
-  });
-
-  const detalleInfraccion = INFRACCIONES_CONFIG[tipoInfraccion];
+    setManejaDatosSensibles,
+    resultado,
+    detalleInfraccion,
+    options,
+    utmOficialCLP,
+    utmFuente,
+    formatCLP,
+    formatUTM,
+  } = usePenaltyCalculator();
 
   return (
     <div id="multas-utm" className="py-14 bg-zinc-50 border-b border-zinc-200">
@@ -56,9 +54,9 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
             <div>
               <span className="text-zinc-500 block text-[10px] uppercase font-bold">VALOR OFICIAL UTM FIJADO:</span>
               <strong className="text-zinc-950 text-sm font-black">
-                {formatearCLP(BUSINESS_CONFIG.utm.valorOficialCLP)}
+                {formatCLP(utmOficialCLP)}
               </strong>
-              <span className="text-[10px] text-orange-600 ml-1.5 font-bold">({BUSINESS_CONFIG.utm.fuente})</span>
+              <span className="text-[10px] text-orange-600 ml-1.5 font-bold">({utmFuente})</span>
             </div>
           </div>
         </div>
@@ -75,7 +73,7 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
                 1. Selecciona la Gravedad de la Infracción
               </label>
               <div className="grid grid-cols-3 gap-3">
-                {CALCULATOR_OPTIONS.map((g) => (
+                {options.map((g) => (
                   <button
                     key={g.key}
                     type="button"
@@ -108,7 +106,7 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
               </div>
               <div className="text-right shrink-0">
                 <span className="text-sm sm:text-base font-mono font-black text-orange-600">
-                  {formatearCLP(BUSINESS_CONFIG.utm.valorOficialCLP)}
+                  {formatCLP(utmOficialCLP)}
                 </span>
                 <span className="text-[10px] font-mono text-zinc-400 block">1 UTM</span>
               </div>
@@ -119,7 +117,7 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
               <div>
                 <div className="flex items-center gap-1.5 font-display font-bold text-sm text-zinc-950">
                   <span className="material-symbols-outlined text-orange-500 text-lg">verified</span>
-                  Beneficio Pyme: Amonestación Escrita ({BUSINESS_CONFIG.beneficioPyme.leyNumero})
+                  Beneficio Pyme: Amonestación Escrita (Ley 20.416)
                 </div>
                 <p className="text-xs text-zinc-600 mt-1 leading-relaxed">
                   Para Micro y Pequeñas empresas sin reincidencia, la APDP sustituye la multa por amonestación escrita, 
@@ -180,13 +178,13 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
                   Sanción Máxima Proyectada
                 </span>
                 <span className="text-xs font-mono font-bold bg-orange-100 text-orange-900 px-2.5 py-1 rounded-full border border-orange-300">
-                  {formatearUTM(resultado.maxUtm)}
+                  {formatUTM(resultado.maxUtm)}
                 </span>
               </div>
 
               <div>
                 <p className="text-3xl sm:text-4xl font-display font-black text-zinc-950 tracking-tight">
-                  {formatearCLP(resultado.montoMaximoCLP)}
+                  {formatCLP(resultado.montoMaximoCLP)}
                 </p>
                 <span className="text-xs font-mono text-orange-600 font-bold block mt-1">
                   Potestad sancionatoria de la APDP
@@ -201,7 +199,7 @@ const UTMCalculator: React.FC<UTMCalculatorProps> = ({ onGoToRat }) => {
                     Atenuante Activa: Amonestación Escrita
                   </div>
                   <p className="leading-relaxed text-zinc-700">
-                    Bajo el Estatuto Pyme ({BUSINESS_CONFIG.beneficioPyme.leyNumero}), la APDP no cobra la multa si 
+                    Bajo el Estatuto Pyme (Ley 20.416), la APDP no cobra la multa si 
                     <strong> acreditas de inmediato el RAT (Art. 14 ter)</strong>. Si no tienes el RAT, la multa se aplica en su totalidad.
                   </p>
                 </div>

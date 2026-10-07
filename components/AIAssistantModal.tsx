@@ -1,7 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { getAiResponse } from '../services/geminiService';
-import { MensajeChat } from '../types';
-import { PREGUNTAS_RAPIDAS_CHAT, MENSAJE_INICIAL_CHAT } from '../content/chat';
+import React, { useRef, useEffect } from 'react';
+import { useAiAssistant } from '../hooks/useAiAssistant';
 
 interface AIAssistantModalProps {
   isOpen: boolean;
@@ -10,9 +8,14 @@ interface AIAssistantModalProps {
 }
 
 const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose, onGoToRat }) => {
-  const [mensajes, setMensajes] = useState<MensajeChat[]>([MENSAJE_INICIAL_CHAT]);
-  const [input, setInput] = useState('');
-  const [cargando, setCargando] = useState(false);
+  const {
+    mensajes,
+    input,
+    setInput,
+    cargando,
+    enviarMensaje,
+  } = useAiAssistant();
+
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,41 +36,8 @@ const AIAssistantModal: React.FC<AIAssistantModalProps> = ({ isOpen, onClose, on
 
   if (!isOpen) return null;
 
-  const handleEnviar = async (textoAEnviar?: string) => {
-    const texto = (textoAEnviar || input).trim();
-    if (!texto || cargando) return;
-
-    setInput('');
-    const userMsg: MensajeChat = {
-      id: `user-${Date.now()}`,
-      remitente: 'usuario',
-      texto,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    };
-
-    setMensajes((prev) => [...prev, userMsg]);
-    setCargando(true);
-
-    try {
-      const respuesta = await getAiResponse(texto);
-      const assistantMsg: MensajeChat = {
-        id: `asistente-${Date.now()}`,
-        remitente: 'asistente',
-        texto: respuesta,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      };
-      setMensajes((prev) => [...prev, assistantMsg]);
-    } catch (e) {
-      const errorMsg: MensajeChat = {
-        id: `asistente-${Date.now()}`,
-        remitente: 'asistente',
-        texto: 'Interrupción temporal. Recuerda que para evitar multas de la APDP, el primer paso es contar con tu Registro de Actividades de Tratamiento (RAT - Art. 14 ter). ¿Quieres que generemos tu RAT en 3 minutos?',
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      };
-      setMensajes((prev) => [...prev, errorMsg]);
-    } finally {
-      setCargando(false);
-    }
+  const handleEnviar = (textoAEnviar?: string) => {
+    enviarMensaje(textoAEnviar);
   };
 
   const handleIrARAT = () => {

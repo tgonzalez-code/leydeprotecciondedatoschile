@@ -81,10 +81,11 @@ export const SITE_PAGES: Record<import('../types').PageId, { title: string; subt
 
 export const MAIN_NAV_ITEMS: { id: import('../types').PageId; label: string; badge?: string }[] = [
   { id: 'inicio', label: 'Inicio' },
-  { id: 'agente-rat', label: 'Agente RAT (IA)', badge: 'IA' },
+  { id: 'ley-21719', label: 'Ley 21.719' },
+  { id: 'derechos-arcop', label: 'ARCOP (2 días)' },
+  { id: 'compendio-legal', label: 'Ley 19.628' },
+  { id: 'agente-rat', label: 'RAT (IA)', badge: 'IA' },
   { id: 'test-cumplimiento', label: 'Diagnóstico' },
   { id: 'multas-utm', label: 'Multas UTM' },
-  { id: 'derechos-arcop', label: 'ARCOP (2 días)' },
-  { id: 'ley-21719', label: 'Ley 21.719' },
-  { id: 'guias-recursos', label: 'Recursos' },
+  { id: 'casos-pymes', label: 'Servicios' },
 ];

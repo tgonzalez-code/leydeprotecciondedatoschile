@@ -1,29 +1,23 @@
-import { ASSESSMENT_RESULTS_CONTENT, ASSESSMENT_THRESHOLDS, COMPLIANCE_QUESTIONS } from '../../config/assessment.config';
+import { DEFAULT_ASSESSMENT_CONFIG } from '../../domain/assessment/assessmentRules';
+import {
+  calculateAssessmentScore,
+  evaluateAssessment,
+} from '../../domain/assessment/scoringEngine';
 import { DiagnosticoCumplimiento } from '../../types';
 
 export function calcularPuntajeCumplimiento(respuestas: Record<string, boolean>): number {
-  return COMPLIANCE_QUESTIONS.reduce((acc, p) => {
-    return acc + (respuestas[p.id] ? p.ponderacion : 0);
-  }, 0);
+  return calculateAssessmentScore(respuestas, DEFAULT_ASSESSMENT_CONFIG.questions);
 }
 
 export function evaluarDiagnostico(puntaje: number): DiagnosticoCumplimiento {
-  if (puntaje >= ASSESSMENT_THRESHOLDS.avanzadoMin) {
-    return {
-      ...ASSESSMENT_RESULTS_CONTENT.avanzado,
-      puntaje,
-    };
-  }
-
-  if (puntaje >= ASSESSMENT_THRESHOLDS.moderadoMin) {
-    return {
-      ...ASSESSMENT_RESULTS_CONTENT.moderado,
-      puntaje,
-    };
-  }
+  const result = evaluateAssessment(puntaje, DEFAULT_ASSESSMENT_CONFIG);
 
   return {
-    ...ASSESSMENT_RESULTS_CONTENT.critico,
-    puntaje,
+    nivel: result.label,
+    categoria: result.level,
+    mensaje: result.message,
+    color: result.color,
+    recomendaciones: result.recommendaciones,
+    puntaje: result.score,
   };
 }
